@@ -2,6 +2,10 @@
 
 Robot description for the freddy robot in form of URDF files, controllers and meshes
 
+## Environment
+Tested on:
+  Ubuntu: 22.04
+  ROS2: Rolling
 
 ## Setup
 
@@ -12,7 +16,7 @@ Robot description for the freddy robot in form of URDF files, controllers and me
   mkdir -p ~/freddy_ws/src && cd ~/freddy_ws/src
 
   # Clone repository
-  git clone https://github.com/a2s-institute/freddy_description.git -b rolling
+  git clone https://github.com/a2s-institute/freddy_description.git -b devel
   ```
 
 - Import dependent repositories
