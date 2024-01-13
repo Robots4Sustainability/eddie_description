@@ -11,7 +11,13 @@
   <author email="dharmingeo@gmail.com">Dharmin B.</author>
   <author email="sushant.chavan@smail.inf.h-brs.de">Sushant Chavan</author>
 
-  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
   <exec_depend>freddy_base_description</exec_depend>
   <exec_depend>freddy_torso_description</exec_depend>
+  <exec_depend>kortex_description</exec_depend>
+  <exec_depend>ros2launch</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
 </package>
