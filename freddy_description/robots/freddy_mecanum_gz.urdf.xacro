@@ -1,0 +1,18 @@
+<?xml version='1.0'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="freddy">
+    <xacro:arg name="use_gpu_2d_laser" default="false" />
+
+    <!-- Robot prefix -->
+    <xacro:arg name="tf_prefix" default="" />
+
+    <xacro:include filename="$(find freddy_base_description)/urdf/common.xacro" />
+    <xacro:include filename="$(find freddy_base_description)/urdf/freddy_base_mecanum_gz.urdf.xacro" />
+
+    <link name="base_link"/>
+
+    <xacro:freddy_base name="freddy_base" parent="base_link"
+        use_gpu_2d_laser="$(arg use_gpu_2d_laser)">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    </xacro:freddy_base>
+
+</robot>
