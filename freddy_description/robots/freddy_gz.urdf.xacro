@@ -8,6 +8,7 @@
 
     <xacro:include filename="$(find freddy_base_description)/urdf/common.xacro" />
     <xacro:include filename="$(find freddy_base_description)/urdf/freddy_base_gz.urdf.xacro" />
+    <xacro:include filename="$(find freddy_torso_description)/urdf/freddy_torso_gz.urdf.xacro" />
 
     <link name="base_link"/>
 
@@ -16,16 +17,8 @@
         <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
     </xacro:freddy_base>
 
-    <gazebo>
-    <plugin
-        filename="gz-sim-velocity-control-system"
-        name="gz::sim::systems::VelocityControl">
-        <initial_linear>0.0 0 0</initial_linear>
-        <initial_angular>0 0 0.0</initial_angular>
-        <!-- <link_name>base_link</link_name> -->
-        <!-- <topic>cmd_vel</topic> -->
-    </plugin>
-    </gazebo>
-
+    <xacro:freddy_torso name="freddy_torso" parent="base_link">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    </xacro:freddy_torso>
 
 </robot>
