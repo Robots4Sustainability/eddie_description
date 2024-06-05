@@ -7,12 +7,22 @@
 
     <xacro:include filename="$(find freddy_base_description)/urdf/common.xacro" />
 
-    <xacro:macro name="kelo_wheel" params="name parent *origin">
+    <xacro:macro name="kelo_wheel" params="name parent *origin material_name">
+        <joint name="${name}_joint" type="revolute">
+            <xacro:insert_block name="origin" />
+            <parent link="${parent}"/>
+            <child link="${name}_link"/>
+            <!-- Joint axis and limits (revolute) -->
+            <axis xyz="0 0 1" />
+            <limits effort="1000" velocity="10" lower="-1.79769e+308" upper="1.79769e+308" />
+            <!-- Joint axis and limits  -->
+        </joint>
         <link name="${name}_link">
             <visual>
                 <geometry>
                     <sphere radius="${wheel_radius}" />
                 </geometry>
+                <material name="${material_name}"/>
             </visual>
             <collision>
                 <geometry>
@@ -21,17 +31,11 @@
             </collision>
             <xacro:sphere_inertia mass="${wheel_mass}" radius="${wheel_radius}" />
         </link>
-        <joint name="${name}_joint" type="revolute">
-            <xacro:insert_block name="origin" />
-            <parent link="${parent}"/>
-            <child link="${name}_link"/>
-            <!-- Joint axis and limits (revolute) -->
-            <axis xyz="0 1 0" />
-            <limit effort="1000" velocity="100" lower="-1.79769e+308" upper="1.79769e+308" />
-            <dynamics damping="0.7"/>
-            <!-- Joint axis and limits  -->
-        </joint>
-
+        <gazebo reference="${name}_link">
+            <mu1>0.0</mu1>
+            <mu2>0.0</mu2>
+            <material>Gazebo/Black</material>
+        </gazebo>
     </xacro:macro>
 
 </robot>
