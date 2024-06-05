@@ -1,0 +1,77 @@
+<?xml version='1.0'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="freddy">
+
+    <xacro:arg name="use_gpu_2d_laser" default="false" />
+
+    <!-- Robot tf_prefix -->
+    <xacro:arg name="tf_prefix" default="" />
+
+    <xacro:arg name="sim_gz" default="true" />
+
+    <xacro:include filename="$(find freddy_base_description)/urdf/common.xacro" />
+    <xacro:include filename="$(find freddy_base_description)/urdf/freddy_base_gz.urdf.xacro" />
+    <xacro:include filename="$(find freddy_torso_description)/urdf/freddy_torso_gz.urdf.xacro" />
+    <xacro:include filename="$(find kortex_description)/robots/kortex_robot.xacro" />
+
+    <link name="base_link"/>
+
+    <xacro:freddy_base name="freddy_base" parent="base_link"
+        use_gpu_2d_laser="$(arg use_gpu_2d_laser)">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    </xacro:freddy_base>
+
+    <xacro:freddy_torso name="freddy_torso" parent="base_link">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    </xacro:freddy_torso>
+
+    <!-- ARMS -->
+    <!-- LEFT ARM -->
+    <xacro:load_robot
+        parent="freddy_torso_shoulder_left_arm_attach_link"
+        arm="$(arg arm)"
+        gripper="$(arg gripper)"
+        gripper_joint_name="$(arg gripper_joint_name)"
+        gripper_max_velocity="$(arg gripper_max_velocity)"
+        gripper_max_force="$(arg gripper_max_force)"
+        dof="$(arg dof)"
+        vision="$(arg vision)"
+        robot_ip="$(arg robot_ip_left)"
+        username="$(arg username)"
+        password="$(arg password)"
+        port="$(arg port)"
+        port_realtime="$(arg port_realtime)"
+        session_inactivity_timeout_ms="$(arg session_inactivity_timeout_ms)"
+        connection_inactivity_timeout_ms="$(arg connection_inactivity_timeout_ms)"
+        use_internal_bus_gripper_comm="$(arg use_internal_bus_gripper_comm)"
+        prefix="$(arg prefix_arm_left)"
+        use_fake_hardware="$(arg use_fake_hardware)"
+        fake_sensor_commands="$(arg fake_sensor_commands)"
+        sim_gazebo="$(arg sim_gazebo)"
+        sim_ignition="$(arg sim_ignition)"
+        sim_isaac="$(arg sim_isaac)"
+        initial_positions="${xacro.load_yaml(initial_positions_file)}">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+    </xacro:load_robot>
+
+    <!-- GRASP LINKS -->
+    <link name="kinova_left_grasp_link" />
+
+    <!-- GRASP LINK J0INTS -->
+    <joint name="kinova_left_grasp_link_joint" type="fixed">
+        <origin xyz="0 0 0.15" rpy="0 0 0" />
+        <parent link="kinova_left_robotiq_85_base_link" />
+        <child link="kinova_left_grasp_link" />
+    </joint>
+
+    <xacro:if value="$(arg sim_gz)">
+        <!-- Gazebo plugins -->
+        <gazebo reference="world">
+        </gazebo>
+        <gazebo>
+            <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+                <parameters>$(arg simulation_controllers)</parameters>
+            </plugin>
+        </gazebo>
+    </xacro:if>
+
+</robot>
