@@ -9,7 +9,6 @@
 
     <xacro:arg name="arm" default="gen3" />
     <xacro:arg name="dof" default="7" />
-    <xacro:arg name="sim_gz" default="true" />
     <xacro:arg name="vision" default="true" />
     <xacro:arg name="robot_ip_left" default="192.168.1.10" />
     <xacro:arg name="robot_ip_right" default="192.168.1.11" />
@@ -31,6 +30,7 @@
     <xacro:arg name="sim_gazebo" default="false" />
     <xacro:arg name="sim_ignition" default="false" />
     <xacro:arg name="sim_isaac" default="false" />
+    <xacro:arg name="sim_gz" default="false" />
     <xacro:arg name="gazebo_renderer" default="ogre" />
     <xacro:arg name="camera_width" default="640" />
     <xacro:arg name="camera_height" default="480" />
@@ -45,7 +45,7 @@
     <xacro:include filename="$(find freddy_base_description)/urdf/common.xacro" />
     <xacro:include filename="$(find freddy_base_description)/urdf/freddy_base_gz.urdf.xacro" />
     <xacro:include filename="$(find freddy_torso_description)/urdf/freddy_torso_gz.urdf.xacro" />
-    <xacro:include filename="$(find kortex_description)/robots/kortex_robot.xacro" />
+    <xacro:include filename="$(find kortex_description)/robots/kortex_robot_gz.xacro" />
 
     <link name="base_link"/>
 
@@ -82,6 +82,7 @@
         fake_sensor_commands="$(arg fake_sensor_commands)"
         sim_gazebo="$(arg sim_gazebo)"
         sim_ignition="$(arg sim_ignition)"
+        sim_gz="$(arg sim_gz)"
         sim_isaac="$(arg sim_isaac)"
         initial_positions="${xacro.load_yaml(initial_positions_file)}">
         <origin xyz="0 0 0" rpy="0 0 0" />
@@ -103,7 +104,7 @@
             <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
                 <robot_param>robot_description</robot_param>
                 <robot_param_node>robot_state_publisher</robot_param_node>
-                <parameters>$(find freddy_gazebo)/config/base_controller.yaml</parameters>
+                <parameters>$(arg simulation_controllers)</parameters>
             </plugin>
         </gazebo>
     </xacro:if>
