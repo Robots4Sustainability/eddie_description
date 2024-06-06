@@ -20,6 +20,11 @@
     <xacro:macro name="freddy_torso" params="name parent *origin use_gpu_2d_laser:=true">
 
 
+<ros2_control name="GazeboSimSystem" type="system">
+    <hardware>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+</ros2_control>
    <!--<joint name="kinova_left_joint_1">
       <command_interface name="position">
           <param name="min">{-2*pi}</param>
