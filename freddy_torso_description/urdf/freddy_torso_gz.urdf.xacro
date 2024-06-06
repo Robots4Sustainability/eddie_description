@@ -127,8 +127,8 @@
             </collision>
             
             <!-- This is causing the base to topple over under combined x y velocity -->
-            <!-- <xacro:cuboid_inertia mass="${base_mass}" length="${base_size_x}"
-                breadth="${base_size_y}" height="${base_size_z}" /> -->
+            <xacro:cuboid_inertia mass="${base_mass}" length="${base_size_x}"
+                breadth="${base_size_y}" height="${base_size_z}" />
         </link>
 
         <joint name="${name}_shoulder_right_arm_joint" type="fixed">

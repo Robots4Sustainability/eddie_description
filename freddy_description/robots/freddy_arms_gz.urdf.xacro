@@ -1,11 +1,11 @@
 <?xml version='1.0'?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="freddy">
 
-    <xacro:arg name="use_gpu_2d_laser" default="false" />
-
     <!-- Robot tf_prefix -->
     <xacro:arg name="tf_prefix" default="" />
     <xacro:arg name="prefix_arm_left" default="kinova_left_" />
+
+    <xacro:arg name="use_gpu_2d_laser" default="false" />
 
     <xacro:arg name="arm" default="gen3" />
     <xacro:arg name="dof" default="7" />
@@ -35,7 +35,7 @@
     <xacro:arg name="camera_width" default="640" />
     <xacro:arg name="camera_height" default="480" />
     <xacro:arg name="camera_fps" default="6" />
-    <xacro:arg name="simulation_controllers" default="$(find kortex_description)/arm/$(arg arm)/$(arg dof)dof/config/ros2_controllers.yaml" />
+    <xacro:arg name="simulation_controllers" default="$(find kortex_description)/arms/$(arg arm)/$(arg dof)dof/config/ros2_controllers.yaml" />
 
     <!-- Initial position for simulations (Mock Hardware, Gazebo, Ignition) -->
     <xacro:arg name="initial_positions_file" default="$(find freddy_description)/config/initial_positions.yaml" />
