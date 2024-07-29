@@ -45,7 +45,7 @@
     <xacro:include filename="$(find freddy_base_description)/urdf/common.xacro" />
     <xacro:include filename="$(find freddy_base_description)/urdf/freddy_base_gz.urdf.xacro" />
     <xacro:include filename="$(find freddy_torso_description)/urdf/freddy_torso_gz.urdf.xacro" />
-    <xacro:include filename="$(find kortex_description)/robots/kortex_robot_gz.xacro" />
+    <xacro:include filename="$(find kortex_description)/robots/kortex_robot.xacro" />
 
     <link name="base_link"/>
 
