@@ -11,10 +11,6 @@ install(DIRECTORY robots
         DESTINATION share/${PROJECT_NAME}
 )
 
-install(DIRECTORY ros2_control
-        DESTINATION share/${PROJECT_NAME}
-)
-
 install(DIRECTORY launch
         DESTINATION share/${PROJECT_NAME}
 )
