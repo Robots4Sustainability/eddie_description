@@ -1,0 +1,51 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 1000  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    base_position_controller:
+      type: position_controllers/JointGroupPositionController
+
+    base_velocity_controller:
+      type: velocity_controllers/JointGroupVelocityController
+
+    base_effort_controller:
+      type: effort_controllers/JointGroupEffortController
+
+base_position_controller:
+  ros__parameters:
+    joints:
+      - kelo_drive_front_left_hub_left_joint
+      - kelo_drive_front_left_hub_right_joint
+      - kelo_drive_front_right_hub_left_joint
+      - kelo_drive_front_right_hub_right_joint
+      - kelo_drive_rear_right_hub_left_joint
+      - kelo_drive_rear_right_hub_right_joint
+      - kelo_drive_rear_left_hub_left_joint
+      - kelo_drive_rear_left_hub_right_joint
+
+base_velocity_controller:
+  ros__parameters:
+    joints:
+      - kelo_drive_front_left_hub_left_joint
+      - kelo_drive_front_left_hub_right_joint
+      - kelo_drive_front_right_hub_left_joint
+      - kelo_drive_front_right_hub_right_joint
+      - kelo_drive_rear_right_hub_left_joint
+      - kelo_drive_rear_right_hub_right_joint
+      - kelo_drive_rear_left_hub_left_joint
+      - kelo_drive_rear_left_hub_right_joint
+
+base_effort_controller:
+  ros__parameters:
+    joints:
+      - kelo_drive_front_left_hub_left_joint
+      - kelo_drive_front_left_hub_right_joint
+      - kelo_drive_front_right_hub_left_joint
+      - kelo_drive_front_right_hub_right_joint
+      - kelo_drive_rear_right_hub_left_joint
+      - kelo_drive_rear_right_hub_right_joint
+      - kelo_drive_rear_left_hub_left_joint
+      - kelo_drive_rear_left_hub_right_joint

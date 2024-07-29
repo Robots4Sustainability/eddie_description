@@ -13,20 +13,9 @@
     <xacro:property name="base_size_z" value="${base_size_z_bottom + laser_slit_height + base_size_z_top}"/>
     <xacro:property name="base_mass" value="40.0"/>
 
-    <xacro:include filename="$(find freddy_base_description)/urdf/kelo_wheel_gz.urdf.xacro" />
+    <xacro:include filename="$(find freddy_base_description)/urdf/kelo_double_wheel_gz.urdf.xacro" />
 
     <xacro:macro name="freddy_base" params="name parent *origin use_gpu_2d_laser:=true">
-        <!-- VELOCITY CONTROL PLUGIN -->
-        <gazebo>
-            <plugin
-                filename="gz-sim-velocity-control-system"
-                name="gz::sim::systems::VelocityControl">
-                <initial_linear>0.0 0 0</initial_linear>
-                <initial_angular>0 0 0.0</initial_angular>
-                <!-- <link_name>base_link</link_name> -->
-                <!-- <topic>cmd_vel</topic> -->
-            </plugin>
-        </gazebo>
 
         <!-- BASE -->
         <link name="${name}_link">
@@ -76,30 +65,30 @@
         </joint>
 
         <!-- WHEELS -->
-        <xacro:kelo_wheel name="left_front_wheel" parent="${name}_link" >
+        <xacro:kelo_drive name="kelo_drive_front_left" parent="${name}_link" >
             <origin xyz="${base_size_x*0.5 - wheel_radius}
                          ${base_size_y*0.5 - wheel_radius}
                          ${wheel_radius}"
                     rpy="0 0 0"/>
-        </xacro:kelo_wheel>
-        <xacro:kelo_wheel name="right_front_wheel" parent="${name}_link" >
+        </xacro:kelo_drive>
+        <xacro:kelo_drive name="kelo_drive_front_right" parent="${name}_link" >
             <origin xyz="${base_size_x*0.5 - wheel_radius}
                          ${-(base_size_y*0.5 - wheel_radius)}
                          ${wheel_radius}"
                     rpy="0 0 0"/>
-        </xacro:kelo_wheel>
-        <xacro:kelo_wheel name="left_back_wheel" parent="${name}_link" >
+        </xacro:kelo_drive>
+        <xacro:kelo_drive name="kelo_drive_rear_right" parent="${name}_link" >
             <origin xyz="${-(base_size_x*0.5 - wheel_radius)}
                          ${base_size_y*0.5 - wheel_radius}
                          ${wheel_radius}"
                     rpy="0 0 0"/>
-        </xacro:kelo_wheel>
-        <xacro:kelo_wheel name="right_back_wheel" parent="${name}_link" >
+        </xacro:kelo_drive>
+        <xacro:kelo_drive name="kelo_drive_rear_left" parent="${name}_link" >
             <origin xyz="${-(base_size_x*0.5 - wheel_radius)}
                          ${-(base_size_y*0.5 - wheel_radius)}
                          ${wheel_radius}"
                     rpy="0 0 0"/>
-        </xacro:kelo_wheel>
+        </xacro:kelo_drive>
 
     </xacro:macro>
 </robot>
