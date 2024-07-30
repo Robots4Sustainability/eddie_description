@@ -54,7 +54,7 @@
                 </geometry>
             </collision>
 
-            <xacro:cuboid_inertia mass="${base_mass}" length="${base_size_x}"
+            <!-- <xacro:cuboid_inertia mass="${base_mass}" length="${base_size_x}" -->
                                   breadth="${base_size_y}" height="${base_size_z}"/>     
         </link>
 
