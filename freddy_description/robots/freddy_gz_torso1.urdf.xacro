@@ -37,7 +37,7 @@
     <xacro:arg name="simulation_controllers"
         default="$(find freddy_gazebo)/config/torso_controller.yaml" /> 
 
-    <xacro:include filename="$(find freddy_base_description)/urdf/materials.urdf.xacro" />
+    <!-- <xacro:include filename="$(find freddy_base_description)/urdf/materials.urdf.xacro" /> -->
 
     <xacro:include filename="$(find kortex_description)/robots/kortex_robot.xacro" />
 
