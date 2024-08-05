@@ -35,7 +35,7 @@
     <xacro:arg name="camera_height" default="480" />
     <xacro:arg name="camera_fps" default="6" />
     <xacro:arg name="simulation_controllers"
-        default="$(find freddy_gazebo)/config/torso_controller.yaml" /> 
+        default="$(find freddy_gazebo)/config/freddy_controller.yaml" /> 
 
     <!-- <xacro:include filename="$(find freddy_base_description)/urdf/materials.urdf.xacro" /> -->
 
@@ -134,7 +134,8 @@
             <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
                 <robot_param>robot_description</robot_param>
                 <robot_param_node>robot_state_publisher</robot_param_node>
-                <parameters>$(find freddy_gazebo)/config/torso_controller.yaml</parameters>         
+                <parameters>$(arg simulation_controllers)</parameters>
+                <!-- <parameters>$(find freddy_gazebo)/config/arms_controller.yaml</parameters>          -->
             </plugin>
    
     </gazebo> 
