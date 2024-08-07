@@ -58,13 +58,13 @@
     </xacro:freddy_torso>
 
     <!-- initial position for simulations (Mock Hardware, Gazebo, Ignition) -->
-    <xacro:arg name="initial_positions_file"
-        default="$(find freddy_description)/config/initial_positions.yaml" />
+    <xacro:arg name="initial_positions_file_left"
+        default="$(find freddy_description)/config/initial_positions_arm_left.yaml" />
     <xacro:arg name="initial_positions_file_right"
-        default="$(find freddy_description)/config/initial_positions_right.yaml" />
+        default="$(find freddy_description)/config/initial_positions_arm_right.yaml" />
 
     <!-- convert to property to use substitution in function -->
-    <xacro:property name="initial_positions_file" default="$(arg initial_positions_file)" />
+    <xacro:property name="initial_positions_file_left" default="$(arg initial_positions_file_left)" />
     <xacro:property name="initial_positions_file_right" default="$(arg initial_positions_file_right)" />
 
     <!-- Commented for testing -->
@@ -92,7 +92,7 @@
         sim_gazebo="$(arg sim_gazebo)"
         sim_ignition="$(arg sim_ignition)"
         sim_isaac="$(arg sim_isaac)"
-        initial_positions="${xacro.load_yaml(initial_positions_file)}">
+        initial_positions="${xacro.load_yaml(initial_positions_file_left)}">
         <origin xyz="0 0 0" rpy="0 0 0" />
     </xacro:load_robot>
 
@@ -131,5 +131,6 @@
             <robot_param_node>robot_state_publisher</robot_param_node>
             <parameters>$(arg simulation_controllers)</parameters>
         </plugin>
+        <self_collide>1</self_collide>
     </gazebo> 
 </robot>

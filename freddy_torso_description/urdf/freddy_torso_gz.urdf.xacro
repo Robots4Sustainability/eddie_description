@@ -74,7 +74,7 @@
             <!-- torso shoulder collision -->
             <collision>
                 <origin
-                    xyz="0 0 ${-torso_shoulder_thickness/2}"
+                    xyz="0 ${torso_shoulder_width/2} ${torso_shoulder_height/2}"
                     rpy="0 0 0" />
                 <geometry>
                     <box
@@ -82,8 +82,8 @@
                 </geometry>
             </collision>
 
-            <!-- <xacro:cuboid_inertia mass="${base_mass}" length="${base_size_x}"
-                breadth="${base_size_y}" height="${base_size_z}" /> -->
+            <xacro:cuboid_inertia mass="${base_mass}" length="${base_size_x}"
+                breadth="${base_size_y}" height="${base_size_z}" />
         </link>
 
         <joint name="${name}_shoulder_left_arm_joint" type="fixed">
@@ -119,7 +119,7 @@
             <!-- torso shoulder collision -->
             <collision>
                 <origin
-                    xyz="0 0 ${-torso_shoulder_thickness/2}"
+                    xyz="0 ${-torso_shoulder_width/2} ${torso_shoulder_height/2}"
                     rpy="0 0 0" />
                 <geometry>
                     <box
@@ -128,8 +128,8 @@
             </collision>
             
             <!-- This is causing the base to topple over under combined x y velocity -->
-            <!-- <xacro:cuboid_inertia mass="${base_mass}" length="${base_size_x}"
-                breadth="${base_size_y}" height="${base_size_z}" /> -->
+            <xacro:cuboid_inertia mass="${base_mass}" length="${base_size_x}"
+                breadth="${base_size_y}" height="${base_size_z}" />
         </link>
 
         <joint name="${name}_shoulder_right_arm_joint" type="fixed">
@@ -141,10 +141,6 @@
         </joint>
 
          <link name="${name}_shoulder_right_arm_attach_link" />
-
-        <gazebo reference="${name}_link">
-            <material>Gazebo/RustySteel</material>
-        </gazebo>
 
     </xacro:macro>
 </robot>
