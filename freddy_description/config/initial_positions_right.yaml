@@ -1,4 +1,4 @@
-# NOTE: Used for both 6 and 7 dof bots. The joint_7 value will be unused for 6 dof bots
+# Initial position of the right arm
 joint_1: 0.70
 joint_2: -2.05
 joint_3: 0.90

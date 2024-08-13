@@ -37,11 +37,8 @@
     <xacro:arg name="simulation_controllers"
         default="$(find freddy_gazebo)/config/freddy_controller.yaml" /> 
 
-    <!-- <xacro:include filename="$(find freddy_base_description)/urdf/materials.urdf.xacro" /> -->
 
-    <xacro:include filename="$(find kortex_description)/robots/kortex_robot.xacro" />
-
- <!-- Added it for testing -->
+ <xacro:include filename="$(find kortex_description)/robots/kortex_robot.xacro" />
   <xacro:include filename="$(find freddy_base_description)/urdf/common.xacro" />
     <xacro:include filename="$(find freddy_base_description)/urdf/freddy_base_gz.urdf.xacro" />
     <xacro:include filename="$(find freddy_torso_description)/urdf/freddy_torso_gz.urdf.xacro" />
@@ -71,8 +68,7 @@
     <xacro:property name="initial_positions_file" default="$(arg initial_positions_file)" />
      <xacro:property name="initial_positions_file_right" default="$(arg initial_positions_file_right)" />
 
-<!-- Commented for testing -->
-    
+   <!-- left arm  -->
     <xacro:load_robot
         parent="freddy_torso_shoulder_left_arm_attach_link"
         arm="$(arg arm)"
@@ -130,12 +126,12 @@
         <origin xyz="0 0 0" rpy="0 0 0" />
     </xacro:load_robot>
     
+    <!-- gazebo tag for ros2 control -->
     <gazebo>
             <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
                 <robot_param>robot_description</robot_param>
                 <robot_param_node>robot_state_publisher</robot_param_node>
                 <parameters>$(arg simulation_controllers)</parameters>
-                <!-- <parameters>$(find freddy_gazebo)/config/arms_controller.yaml</parameters>          -->
             </plugin>
    
     </gazebo> 
