@@ -18,7 +18,7 @@
     <xacro:arg name="session_inactivity_timeout_ms" default="60000" />
     <xacro:arg name="connection_inactivity_timeout_ms" default="2000" /> 
 
-     <xacro:arg name="gripper" default="robotiq_2f_85" />
+    <xacro:arg name="gripper" default="robotiq_2f_85" />
     <xacro:arg name="gripper_joint_name" default="finger_joint" />
     <xacro:arg name="gripper_max_velocity" default="100.0" />
     <xacro:arg name="gripper_max_force" default="100.0" />
@@ -29,7 +29,7 @@
     <xacro:arg name="sim_gz" default="true" /> 
     <xacro:arg name="sim_gazebo" default="false" /> 
     <xacro:arg name="sim_ignition" default="false" />
-     <xacro:arg name="sim_isaac" default="false" />
+    <xacro:arg name="sim_isaac" default="false" />
     <xacro:arg name="gazebo_renderer" default="ogre" />
     <xacro:arg name="camera_width" default="640" />
     <xacro:arg name="camera_height" default="480" />
@@ -38,11 +38,17 @@
         default="$(find freddy_gazebo)/config/freddy_controller.yaml" /> 
 
 
+<<<<<<< HEAD
  <xacro:include filename="$(find kortex_description)/robots/kortex_robot.xacro" />
   <xacro:include filename="$(find freddy_base_description)/urdf/common.xacro" />
+=======
+    <xacro:include filename="$(find kortex_description)/robots/kortex_robot.xacro" />
+
+    <!-- Added it for testing -->
+    <xacro:include filename="$(find freddy_base_description)/urdf/common.xacro" />
+>>>>>>> 57f177496089f529e2cf82a37d954f0b4a018dbf
     <xacro:include filename="$(find freddy_base_description)/urdf/freddy_base_gz.urdf.xacro" />
     <xacro:include filename="$(find freddy_torso_description)/urdf/freddy_torso_gz.urdf.xacro" />
-
 
     <link name="base_link"/>
 
@@ -55,20 +61,21 @@
         <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
     </xacro:freddy_torso>
 
-
-    
     <!-- initial position for simulations (Mock Hardware, Gazebo, Ignition) -->
-    <xacro:arg name="initial_positions_file"
-        default="$(find freddy_description)/config/initial_positions.yaml" />
+    <xacro:arg name="initial_positions_file_left"
+        default="$(find freddy_description)/config/initial_positions_arm_left.yaml" />
     <xacro:arg name="initial_positions_file_right"
-        default="$(find freddy_description)/config/initial_positions_right.yaml" />
-
+        default="$(find freddy_description)/config/initial_positions_arm_right.yaml" />
 
     <!-- convert to property to use substitution in function -->
-    <xacro:property name="initial_positions_file" default="$(arg initial_positions_file)" />
-     <xacro:property name="initial_positions_file_right" default="$(arg initial_positions_file_right)" />
+    <xacro:property name="initial_positions_file_left" default="$(arg initial_positions_file_left)" />
+    <xacro:property name="initial_positions_file_right" default="$(arg initial_positions_file_right)" />
 
+<<<<<<< HEAD
    <!-- left arm  -->
+=======
+    <!-- Commented for testing -->
+>>>>>>> 57f177496089f529e2cf82a37d954f0b4a018dbf
     <xacro:load_robot
         parent="freddy_torso_shoulder_left_arm_attach_link"
         arm="$(arg arm)"
@@ -93,11 +100,11 @@
         sim_gazebo="$(arg sim_gazebo)"
         sim_ignition="$(arg sim_ignition)"
         sim_isaac="$(arg sim_isaac)"
-        initial_positions="${xacro.load_yaml(initial_positions_file)}">
+        initial_positions="${xacro.load_yaml(initial_positions_file_left)}">
         <origin xyz="0 0 0" rpy="0 0 0" />
     </xacro:load_robot>
 
- <!-- right arm -->
+    <!-- right arm -->
     <xacro:load_robot
         parent="freddy_torso_shoulder_right_arm_attach_link"
         arm="$(arg arm)"
@@ -128,11 +135,11 @@
     
     <!-- gazebo tag for ros2 control -->
     <gazebo>
-            <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-                <robot_param>robot_description</robot_param>
-                <robot_param_node>robot_state_publisher</robot_param_node>
-                <parameters>$(arg simulation_controllers)</parameters>
-            </plugin>
-   
+        <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+            <robot_param>robot_description</robot_param>
+            <robot_param_node>robot_state_publisher</robot_param_node>
+            <parameters>$(arg simulation_controllers)</parameters>
+        </plugin>
+        <self_collide>1</self_collide>
     </gazebo> 
 </robot>

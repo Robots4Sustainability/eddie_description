@@ -74,7 +74,7 @@
             <!-- torso shoulder collision -->
             <collision>
                 <origin
-                    xyz="0 0 ${-torso_shoulder_thickness/2}"
+                    xyz="0 ${torso_shoulder_width/2} ${torso_shoulder_height/2}"
                     rpy="0 0 0" />
                 <geometry>
                     <box
@@ -119,7 +119,7 @@
             <!-- torso shoulder collision -->
             <collision>
                 <origin
-                    xyz="0 0 ${-torso_shoulder_thickness/2}"
+                    xyz="0 ${-torso_shoulder_width/2} ${torso_shoulder_height/2}"
                     rpy="0 0 0" />
                 <geometry>
                     <box
@@ -141,10 +141,6 @@
         </joint>
 
          <link name="${name}_shoulder_right_arm_attach_link" />
-
-        <gazebo reference="${name}_link">
-            <material>Gazebo/RustySteel</material>
-        </gazebo>
 
     </xacro:macro>
 </robot>
