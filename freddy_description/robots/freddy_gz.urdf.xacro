@@ -38,15 +38,8 @@
         default="$(find freddy_gazebo)/config/freddy_controller.yaml" /> 
 
 
-<<<<<<< HEAD
  <xacro:include filename="$(find kortex_description)/robots/kortex_robot.xacro" />
   <xacro:include filename="$(find freddy_base_description)/urdf/common.xacro" />
-=======
-    <xacro:include filename="$(find kortex_description)/robots/kortex_robot.xacro" />
-
-    <!-- Added it for testing -->
-    <xacro:include filename="$(find freddy_base_description)/urdf/common.xacro" />
->>>>>>> 57f177496089f529e2cf82a37d954f0b4a018dbf
     <xacro:include filename="$(find freddy_base_description)/urdf/freddy_base_gz.urdf.xacro" />
     <xacro:include filename="$(find freddy_torso_description)/urdf/freddy_torso_gz.urdf.xacro" />
 
@@ -71,11 +64,7 @@
     <xacro:property name="initial_positions_file_left" default="$(arg initial_positions_file_left)" />
     <xacro:property name="initial_positions_file_right" default="$(arg initial_positions_file_right)" />
 
-<<<<<<< HEAD
    <!-- left arm  -->
-=======
-    <!-- Commented for testing -->
->>>>>>> 57f177496089f529e2cf82a37d954f0b4a018dbf
     <xacro:load_robot
         parent="freddy_torso_shoulder_left_arm_attach_link"
         arm="$(arg arm)"
