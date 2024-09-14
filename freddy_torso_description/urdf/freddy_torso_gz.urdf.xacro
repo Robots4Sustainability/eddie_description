@@ -14,8 +14,6 @@
 
     <xacro:include filename="$(find freddy_base_description)/urdf/common.xacro" />
     <xacro:include filename="$(find freddy_base_description)/urdf/freddy_base_gz.urdf.xacro" />
-    
-
 
     <xacro:macro name="freddy_torso" params="name parent *origin use_gpu_2d_laser:=true">
         <!-- TORSO -->
