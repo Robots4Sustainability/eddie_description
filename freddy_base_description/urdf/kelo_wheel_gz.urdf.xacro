@@ -1,37 +1,159 @@
-<?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <xacro:property name="wheel_radius" value="0.05" />
-    <xacro:property name="wheel_mass" value="1.0" />
-    <xacro:property name="inertia_wheels" value="0.001" />
+  <!-- Property definitions -->
+  <xacro:property name="wheel_radius" value="0.05"/>
+  <xacro:property name="wheel_length" value="0.05"/>
+  <xacro:property name="wheel_separation" value="0.05"/>
+  <xacro:property name="wheel_mass" value="1.0"/>
+  <xacro:property name="wheel_inertia" value="0.001"/>
+  <xacro:property name="joint_friction" value="0.2"/>
+  <xacro:property name="joint_damping" value="0.2"/>
 
-    <xacro:include filename="$(find freddy_base_description)/urdf/common.xacro" />
+  <xacro:property name="pivot_height" value="0.1"/>
+  <xacro:property name="pivot_radius" value="0.02"/>
+  <xacro:property name="pivot_offset" value="0.01"/>
 
-    <xacro:macro name="kelo_wheel" params="name parent *origin">
-        <link name="${name}_link">
-            <visual>
-                <geometry>
-                    <sphere radius="${wheel_radius}" />
-                </geometry>
-            </visual>
-            <collision>
-                <geometry>
-                    <sphere radius="${wheel_radius}" />
-                </geometry>
-            </collision>
-            <xacro:sphere_inertia mass="${wheel_mass}" radius="${wheel_radius}" />
-        </link>
-        <joint name="${name}_joint" type="revolute">
-            <xacro:insert_block name="origin" />
-            <parent link="${parent}"/>
-            <child link="${name}_link"/>
-            <!-- Joint axis and limits (revolute) -->
-            <axis xyz="0 1 0" />
-            <limit effort="1000" velocity="100" lower="-1.79769e+308" upper="1.79769e+308" />
-            <dynamics damping="0.7"/>
-            <!-- Joint axis and limits  -->
-        </joint>
+  <!-- Pivot macro -->
+  <xacro:macro name="pivot" params="name">
+    <link name="${name}">
+      <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="${pivot_height}" radius="${pivot_radius}"/>
+        </geometry>
+        <material name="grey">
+          <color rgba="0.25 0.25 0.25 1"/>
+        </material>
+      </visual>
+      <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="${pivot_height}" radius="${pivot_radius}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="${wheel_mass}"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <inertia ixx="${wheel_inertia}" ixy="0" ixz="0" iyy="${wheel_inertia}" iyz="0" izz="${wheel_inertia}"/>
+      </inertial>
+    </link>
+  </xacro:macro>
 
-    </xacro:macro>
+  <!-- Wheel macro -->
+  <xacro:macro name="wheel" params="name">
+    <link name="${name}">
+      <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+        </geometry>
+        <material name="black">
+          <color rgba="0 0 0 1"/>
+        </material>
+      </visual>
+      <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="${wheel_mass}"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <inertia ixx="${wheel_inertia}" ixy="0" ixz="0" iyy="${wheel_inertia}" iyz="0" izz="${wheel_inertia}"/>
+      </inertial>
+    </link>
+  </xacro:macro>
+
+  <!-- Kelo drive macro -->
+  <xacro:macro name="kelo_drive" params="name parent *origin">
+    
+    <xacro:pivot name="${name}_pivot"/>
+    <xacro:wheel name="${name}_hub_left"/>
+    <xacro:wheel name="${name}_hub_right"/>
+
+    <!-- Joint between pivot and chassis -->
+    <joint name="${name}_pivot_joint" type="continuous">
+      <parent link="${parent}"/>
+      <child link="${name}_pivot"/>
+      <xacro:insert_block name="origin" />
+      <axis xyz="0 0 1"/>
+      <dynamics damping="${joint_damping}" friction="${joint_friction}"/>
+    </joint>
+
+    <!-- Joint between left wheel hub and pivot -->
+    <joint name="${name}_hub_left_joint" type="continuous">
+      <parent link="${name}_pivot"/>
+      <child link="${name}_hub_left"/>
+      <origin xyz="-${pivot_offset} ${wheel_separation} -${base_size_z_bottom*0.5 - wheel_radius}" rpy="-1.5708 0 0"/>
+      <axis xyz="0 0 1"/>
+      <!-- <limit effort="1000.0" lower="-15" upper="15" velocity="30"/> -->
+      <dynamics damping="${joint_damping}" friction="${joint_friction}"/>
+    </joint>
+
+    <!-- Joint between right wheel hub and pivot -->
+    <joint name="${name}_hub_right_joint" type="continuous">
+      <parent link="${name}_pivot"/>
+      <child link="${name}_hub_right"/>
+      <origin xyz="-${pivot_offset} -${wheel_separation} -${base_size_z_bottom*0.5 - wheel_radius}" rpy="-1.5708 0 0"/>
+      <axis xyz="0 0 1"/>
+      <!-- <limit effort="1000.0" lower="-15" upper="15" velocity="30"/> -->
+      <dynamics damping="${joint_damping}" friction="${joint_friction}"/>
+    </joint>
+
+    <!-- ros2 control tags -->
+    <ros2_control name="${name}" type="system">
+      <hardware>
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+      </hardware>
+      <joint name="${name}_hub_left_joint">
+        <command_interface name="position">
+          <param name="min">-1e+100</param>
+          <param name="max">1e+100</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-1e+100</param>
+          <param name="max">1e+100</param>
+        </command_interface>
+        <command_interface name="effort">
+          <param name="min">-1e+100</param>
+          <param name="max">1e+100</param>
+        </command_interface>
+        <state_interface name="position">
+           <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+      <transmission name="${name}_hub_left_joint_transmission">
+        <plugin>transmission_interface/SimpleTansmission</plugin>
+        <param name="joint_to_actuator">1</param>
+      </transmission>
+      <joint name="${name}_hub_right_joint">
+        <command_interface name="position">
+          <param name="min">-1e+100</param>
+          <param name="max">1e+100</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-1e+100</param>
+          <param name="max">1e+100</param>
+        </command_interface>
+        <command_interface name="effort">
+          <param name="min">-1e+100</param>
+          <param name="max">1e+100</param>
+        </command_interface>
+        <state_interface name="position">
+           <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+      <transmission name="${name}_hub_right_joint_transmission">
+        <plugin>transmission_interface/SimpleTansmission</plugin>
+        <param name="joint_to_actuator">1</param>
+      </transmission>
+    </ros2_control>
+
+  </xacro:macro>
 
 </robot>
