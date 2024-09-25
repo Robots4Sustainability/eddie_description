@@ -13,8 +13,7 @@
     <xacro:property name="torso_shoulder_thickness" value="0.02" />
 
     <xacro:include filename="$(find freddy_base_description)/urdf/common.xacro" />
-    <xacro:include filename="$(find freddy_base_description)/urdf/freddy_base.urdf.xacro" />
-
+    <xacro:include filename="$(find freddy_base_description)/urdf/freddy_base_gz.urdf.xacro" />
 
     <xacro:macro name="freddy_torso" params="name parent *origin use_gpu_2d_laser:=true">
         <!-- TORSO -->
@@ -34,7 +33,6 @@
                 <geometry>
                     <box size="${torso_thickness} ${torso_width} ${torso_height}" />
                 </geometry>
-                <material name="Grey" />
             </visual>
 
             <!-- torso collision -->
@@ -47,7 +45,7 @@
                 </geometry>
             </collision>
 
-            <xacro:cuboid_inertia mass="${base_mass}" length="${base_size_x}"
+            <xacro:cuboid_inertia mass="${base_mass/10000}" length="${base_size_x}"
                 breadth="${base_size_y}" height="${base_size_z}" />
         </link>
 
@@ -69,13 +67,12 @@
                     <box
                         size="${torso_shoulder_thickness} ${torso_shoulder_width} ${torso_shoulder_height}" />
                 </geometry>
-                <material name="Grey" />
             </visual>
 
             <!-- torso shoulder collision -->
             <collision>
                 <origin
-                    xyz="0 0 ${-torso_shoulder_thickness/2}"
+                    xyz="0 ${torso_shoulder_width/2} ${torso_shoulder_height/2}"
                     rpy="0 0 0" />
                 <geometry>
                     <box
@@ -115,22 +112,22 @@
                     <box
                         size="${torso_shoulder_thickness} ${torso_shoulder_width} ${torso_shoulder_height}" />
                 </geometry>
-                <material name="Grey" />
             </visual>
 
             <!-- torso shoulder collision -->
             <collision>
                 <origin
-                    xyz="0 0 ${-torso_shoulder_thickness/2}"
+                    xyz="0 ${-torso_shoulder_width/2} ${torso_shoulder_height/2}"
                     rpy="0 0 0" />
                 <geometry>
                     <box
                         size="${torso_shoulder_thickness} ${torso_shoulder_width} ${torso_shoulder_height}" />
                 </geometry>
             </collision>
-
+            
+            <!-- This is causing the base to topple over under combined x y velocity -->
             <xacro:cuboid_inertia mass="${base_mass}" length="${base_size_x}"
-                breadth="${base_size_y}" height="${base_size_z}" />
+                breadth="${base_size_y}" height="${base_size_z}" /> 
         </link>
 
         <joint name="${name}_shoulder_right_arm_joint" type="fixed">
@@ -141,11 +138,7 @@
             <child link="${name}_shoulder_right_arm_attach_link" />
         </joint>
 
-        <link name="${name}_shoulder_right_arm_attach_link" />
-
-        <gazebo reference="${name}_link">
-            <material>Gazebo/RustySteel</material>
-        </gazebo>
+         <link name="${name}_shoulder_right_arm_attach_link" />
 
     </xacro:macro>
 </robot>
