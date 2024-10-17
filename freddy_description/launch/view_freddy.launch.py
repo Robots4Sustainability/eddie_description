@@ -22,8 +22,9 @@ def generate_launch_description():
         description="Launch joint state gui publisher",
     )
 
+#  file changed to freddy_gz urdf with latest base and no gripper
     freddy_xacro_file = os.path.join(
-        get_package_share_directory("freddy_description"), "robots", "freddy.urdf.xacro"
+        get_package_share_directory("freddy_description"), "robots", "freddy_gz.urdf.xacro"
     )
 
     freddy_description_config = Command(
