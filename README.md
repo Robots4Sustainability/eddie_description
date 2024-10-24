@@ -17,7 +17,7 @@ Tested on:
   mkdir -p ~/eddie_ws/src && cd ~/eddie_ws/src
 
   # Clone repository
-  git clone https://github.com/a2s-institute/eddie_description.git -b gz-devel
+  git clone https://github.com/secorolab/eddie_description.git -b gz-devel
   ```
 
 - Build workspace
