@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>freddy_torso_description</name>
+  <name>eddie_torso_description</name>
   <version>0.1.0</version>
-  <description>Description of the torso of Freddy in form of URDF files and meshes</description>
+  <description>Description of the torso of Eddie in form of URDF files and meshes</description>
 
   <maintainer email="robotics@inf.h-brs.de">MAS robotics</maintainer>
 

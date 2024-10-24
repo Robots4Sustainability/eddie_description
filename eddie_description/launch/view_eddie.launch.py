@@ -22,30 +22,30 @@ def generate_launch_description():
         description="Launch joint state gui publisher",
     )
 
-#  file changed to freddy_gz urdf with latest base and no gripper
-    freddy_xacro_file = os.path.join(
-        get_package_share_directory("freddy_description"), "robots", "freddy_gz.urdf.xacro"
+#  file changed to eddie_gz urdf with latest base and no gripper
+    eddie_xacro_file = os.path.join(
+        get_package_share_directory("eddie_description"), "robots", "eddie_gz.urdf.xacro"
     )
 
-    freddy_description_config = Command(
-        [FindExecutable(name="xacro"), " ", freddy_xacro_file]
+    eddie_description_config = Command(
+        [FindExecutable(name="xacro"), " ", eddie_xacro_file]
     )
 
-    freddy_description = {
-        "robot_description": ParameterValue(freddy_description_config, value_type=str)
+    eddie_description = {
+        "robot_description": ParameterValue(eddie_description_config, value_type=str)
     }
 
     robot_state_publisher_node = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
         name="robot_state_publisher",
-        parameters=[freddy_description],
+        parameters=[eddie_description],
         output="screen",
     )
 
     # initial positions
     zero_positions_config = os.path.join(
-        get_package_share_directory("freddy_description"),
+        get_package_share_directory("eddie_description"),
         "config",
         "zero_positions.yaml",
     )
@@ -72,7 +72,7 @@ def generate_launch_description():
         package="rviz2",
         executable="rviz2",
         name="rviz2",
-        # arguments=["-d", os.path.join(get_package_share_directory("freddy_description"), "rviz", "freddy.rviz")],
+        # arguments=["-d", os.path.join(get_package_share_directory("eddie_description"), "rviz", "eddie.rviz")],
         output="screen",
     )
 

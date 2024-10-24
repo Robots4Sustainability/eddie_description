@@ -1,6 +1,6 @@
-# Freddy Description
+# Eddie Description
 
-Robot description for the freddy robot in form of URDF files, controllers and meshes.
+Robot description for the eddie robot in form of URDF files, controllers and meshes.
 Gripper not added.
 
 ## Environment
@@ -14,16 +14,16 @@ Tested on:
   
   ```bash
   # Create workspace
-  mkdir -p ~/freddy_ws/src && cd ~/freddy_ws/src
+  mkdir -p ~/eddie_ws/src && cd ~/eddie_ws/src
 
   # Clone repository
-  git clone https://github.com/a2s-institute/freddy_description.git -b gz-devel
+  git clone https://github.com/a2s-institute/eddie_description.git -b gz-devel
   ```
 
 - Build workspace
 
   ```bash
-  cd ~/freddy_ws
+  cd ~/eddie_ws
 
   colcon build
   ```
@@ -33,21 +33,21 @@ Tested on:
 - View robot in rviz
 
   ```bash
-  cd ~/freddy_ws
+  cd ~/eddie_ws
 
   # Source workspace
   source install/setup.bash
 
   # View robot in rviz
-  ros2 launch freddy_description view_freddy.launch.py joint_state_gui:=false
+  ros2 launch eddie_description view_eddie.launch.py joint_state_gui:=false
   ```
 
 - View robot in rviz with joint state gui
 
   ```bash
-  ros2 launch freddy_description view_freddy.launch.py joint_state_gui:=true
+  ros2 launch eddie_description view_eddie.launch.py joint_state_gui:=true
   ```
 
-## Freddy
+## Eddie
 
-![Freddy](media/freddy_default_rviz.png)
+![Eddie](media/eddie_default_rviz.png)

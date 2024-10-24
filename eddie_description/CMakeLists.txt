@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-project(freddy_description)
+project(eddie_description)
 
 find_package(ament_cmake REQUIRED)
 

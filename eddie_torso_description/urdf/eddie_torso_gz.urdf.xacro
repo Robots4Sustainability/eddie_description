@@ -12,10 +12,10 @@
     <xacro:property name="torso_shoulder_width" value="0.2" />
     <xacro:property name="torso_shoulder_thickness" value="0.02" />
 
-    <xacro:include filename="$(find freddy_base_description)/urdf/common.xacro" />
-    <xacro:include filename="$(find freddy_base_description)/urdf/freddy_base_gz.urdf.xacro" />
+    <xacro:include filename="$(find eddie_base_description)/urdf/common.xacro" />
+    <xacro:include filename="$(find eddie_base_description)/urdf/eddie_base_gz.urdf.xacro" />
 
-    <xacro:macro name="freddy_torso" params="name parent *origin use_gpu_2d_laser:=true">
+    <xacro:macro name="eddie_torso" params="name parent *origin use_gpu_2d_laser:=true">
         <!-- TORSO -->
         <joint name="${name}_joint" type="fixed">
             <origin

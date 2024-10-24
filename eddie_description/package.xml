@@ -1,18 +1,24 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>freddy_base_description</name>
+  <name>eddie_description</name>
   <version>0.1.0</version>
-  <description>Description of the base of Freddy in form of URDF files and meshes</description>
+  <description>Robot descriptions for the eddie robot in form of URDF files and meshes</description>
 
   <maintainer email="robotics@inf.h-brs.de">MAS robotics</maintainer>
 
   <license>GPLv3</license>
 
-  <author email="aleksandar.mitrevski@h-brs.de">Alex Mitrevski</author>
   <author email="dharmingeo@gmail.com">Dharmin B.</author>
   <author email="sushant.chavan@smail.inf.h-brs.de">Sushant Chavan</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
+  <exec_depend>eddie_base_description</exec_depend>
+  <exec_depend>eddie_torso_description</exec_depend>
+  <exec_depend>kortex_description</exec_depend>
+  <exec_depend>ros2launch</exec_depend>
+
+  <exec_depend>gz_ros2_control</exec_depend>
+  <exec_depend>ros_gz_bridge</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

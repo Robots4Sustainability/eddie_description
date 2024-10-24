@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <xacro:include filename="$(find freddy_base_description)/urdf/sensors/common.xacro" />
+    <xacro:include filename="$(find eddie_base_description)/urdf/sensors/common.xacro" />
 
     <xacro:macro name="hokuyo" params="*origin name:=base_laser_front topic:=base_scan parent:=base_link sample_size:=1080 update_rate:=40
     min_angle:=-2.35619 max_angle:=2.35619 min_range:=0.06 max_range:=10.0 robot_namespace:=/ use_gpu:=true visualize:=false" >
@@ -51,14 +51,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0" />
                 <geometry>
-                    <mesh filename="package://freddy_base_description/meshes/sensors/hokuyo.dae" />
+                    <mesh filename="package://eddie_base_description/meshes/sensors/hokuyo.dae" />
                 </geometry>
             </visual>
 
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0" />
                 <geometry>
-                    <mesh filename="package://freddy_base_description/meshes/sensors/hokuyo_convex.dae" />
+                    <mesh filename="package://eddie_base_description/meshes/sensors/hokuyo_convex.dae" />
                 </geometry>
             </collision>
         </link>

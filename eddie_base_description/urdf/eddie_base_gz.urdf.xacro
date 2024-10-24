@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <!-- simplified box collision geometry for base -->
-    <xacro:property name="robot_name" value="freddy"/>
+    <xacro:property name="robot_name" value="eddie"/>
 
     <xacro:property name="base_size_x" value="0.635"/>
     <xacro:property name="base_size_y" value="0.582"/>
@@ -13,9 +13,9 @@
     <xacro:property name="base_size_z" value="${base_size_z_bottom + laser_slit_height + base_size_z_top}"/>
     <xacro:property name="base_mass" value="40.0"/>
 
-    <xacro:include filename="$(find freddy_base_description)/urdf/kelo_wheel_gz.urdf.xacro" />
+    <xacro:include filename="$(find eddie_base_description)/urdf/kelo_wheel_gz.urdf.xacro" />
 
-    <xacro:macro name="freddy_base" params="name parent *origin use_gpu_2d_laser:=true">
+    <xacro:macro name="eddie_base" params="name parent *origin use_gpu_2d_laser:=true">
 
         <!-- BASE -->
         <link name="${name}_link">
