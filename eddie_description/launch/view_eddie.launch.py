@@ -24,7 +24,7 @@ def generate_launch_description():
 
 #  file changed to eddie_gz urdf with latest base and no gripper
     eddie_xacro_file = os.path.join(
-        get_package_share_directory("eddie_description"), "robots", "eddie_gz.urdf.xacro"
+        get_package_share_directory("eddie_description"), "robots", "eddie.urdf.xacro"
     )
 
     eddie_description_config = Command(

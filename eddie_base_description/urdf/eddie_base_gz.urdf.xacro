@@ -24,18 +24,21 @@
                 <geometry>
                     <box size="${base_size_x} ${base_size_y} ${base_size_z_bottom}" />
                 </geometry>
+                <material name="DarkGrey"/>
             </visual>
             <visual>
                 <origin xyz="0 0 ${wheel_slit_height + base_size_z_bottom + laser_slit_height/2}" rpy="0 0 0"/>
                 <geometry>
                     <box size="${base_size_x*0.7} ${base_size_y*0.7} ${laser_slit_height}" />
                 </geometry>
+                <material name="LightGrey"/>
             </visual>
             <visual>
                 <origin xyz="0 0 ${wheel_slit_height + base_size_z_bottom + laser_slit_height + base_size_z_top/2}" rpy="0 0 0"/>
                 <geometry>
                     <box size="${base_size_x} ${base_size_y} ${base_size_z_top}" />
                 </geometry>
+                <material name="DarkGrey"/>
             </visual>
 
             <!-- base bottom collisions -->

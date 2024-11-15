@@ -33,6 +33,7 @@
                 <geometry>
                     <box size="${torso_thickness} ${torso_width} ${torso_height}" />
                 </geometry>
+                <material name="Grey"/>
             </visual>
 
             <!-- torso collision -->
@@ -67,6 +68,7 @@
                     <box
                         size="${torso_shoulder_thickness} ${torso_shoulder_width} ${torso_shoulder_height}" />
                 </geometry>
+                <material name="DarkGrey"/>
             </visual>
 
             <!-- torso shoulder collision -->
@@ -112,6 +114,7 @@
                     <box
                         size="${torso_shoulder_thickness} ${torso_shoulder_width} ${torso_shoulder_height}" />
                 </geometry>
+                <material name="DarkGrey"/>
             </visual>
 
             <!-- torso shoulder collision -->
