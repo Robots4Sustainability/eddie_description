@@ -12,6 +12,10 @@ def generate_launch_description():
         get_package_share_directory("eddie_description"), "urdf", "eddie_robot.urdf.xacro"
     )
     
+    eddie_rviz_config_file = os.path.join(
+        get_package_share_directory("eddie_description"), "config/rviz", "eddie_rviz_config.rviz"
+    )
+    
     eddie_description_config = Command(
         [FindExecutable(name="xacro"), " ", eddie_xacro_file]
     )
@@ -39,6 +43,6 @@ def generate_launch_description():
             executable='rviz2',
             name='rviz2',
             output='screen',
-            arguments=['-d', 'config/rviz/eddie_rviz_config.rviz']
+            arguments=['-d', eddie_rviz_config_file]
         )
     ])
