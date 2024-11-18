@@ -2,11 +2,11 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="wheels_with_kelo_drive">
 
     <!-- Include the Wheel -->
-    <xacro:include filename="$(find eddie_base_description)/urdf/wheel.macro.xacro"/>
+    <xacro:include filename="$(find eddie_description)/urdf/wheel.macro.xacro"/>
     
     <xacro:macro name="wheels_with_kelo_drive" params="struct_prefix">
         <!-- Properties -->
-        <xacro:property name="mesh_package" value="eddie_base_description"/>
+        <xacro:property name="mesh_package" value="eddie_description"/>
         <xacro:property name="struct_mesh_file" value="kelo_drive.stl"/>
         <xacro:property name="struct_attachment_plate_mesh_file" value="kelo_drive_attachment_plates.stl"/>
 

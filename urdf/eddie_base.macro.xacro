@@ -2,11 +2,11 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="eddie_base_with_wheels">
 
     <!-- Include the Wheel and Structure Configuration -->
-    <xacro:include filename="$(find eddie_base_description)/urdf/wheels_with_kelo_drive.macro.xacro"/>
+    <xacro:include filename="$(find eddie_description)/urdf/wheels_with_kelo_drive.macro.xacro"/>
 
     <xacro:macro name="eddie_with_no_arm" params="">
         <!-- Properties -->
-        <xacro:property name="mesh_package" value="eddie_base_description"/>
+        <xacro:property name="mesh_package" value="eddie_description"/>
         <xacro:property name="eddie_base_file" value="kelo_base.stl"/>
         <xacro:property name="eddie_torso_file" value="kelo_torso.stl"/>
 
@@ -97,8 +97,6 @@
             <parent link="base_link"/>
             <child link="${corner2_prefix}struct_attachment_plate_link"/>
             <origin xyz="${corner2_origin_xyz}" rpy="${corner2_orientation_rpy}"/>
-            <axis xyz="0 0 1"/> <!-- Rotate about the z-axis -->
-            <limit effort="10" velocity="1.0" lower="-3.14" upper="3.14"/>
         </joint>
 
         <joint name="corner3_joint" type="fixed">

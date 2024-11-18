@@ -9,23 +9,9 @@ import os
 def generate_launch_description():
     
     eddie_xacro_file = os.path.join(
-        get_package_share_directory("eddie_base_description"), "urdf", "eddie_robot.urdf.xacro"
+        get_package_share_directory("eddie_description"), "urdf", "eddie_robot.urdf.xacro"
     )
-      
     
-    # eddie_xacro_file = os.path.join(
-    #     get_package_share_directory("eddie_base_description"), "urdf", "eddie_base.macro.xacro"
-    # )
-      
-      
-    # eddie_xacro_file = os.path.join(
-    #     get_package_share_directory("eddie_base_description"), "urdf", "wheels_with_kelo_drive.urdf.xacro"
-    # )
-    
-    # eddie_xacro_file = os.path.join(
-    #     get_package_share_directory("eddie_base_description"), "urdf", "wheel.urdf.xacro"
-    # )
-
     eddie_description_config = Command(
         [FindExecutable(name="xacro"), " ", eddie_xacro_file]
     )
@@ -53,6 +39,6 @@ def generate_launch_description():
             executable='rviz2',
             name='rviz2',
             output='screen',
-            # arguments=['-d', 'rviz/model_config.rviz']  # Optional RViz config file
+            arguments=['-d', 'config/rviz/eddie_rviz_config.rviz']
         )
     ])
