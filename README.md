@@ -4,9 +4,10 @@ Robot description for the Eddie robot in form of URDF files, controllers and mes
 Gripper not added.
 
 ## Environment
-Tested on:
-  Ubuntu: 22.04
-  ROS2: Humble
+
+  Ubuntu: 24.04
+  
+  ROS2: Jazzy
 
 ## Setup
 
@@ -55,6 +56,11 @@ Tested on:
   ```bash
   ros2 launch eddie_description eddie_display.launch.py joint_state_gui:=true
   ```
+
+## ROS Independent
+
+- The URDF and the mesh files for the whole Eddie robot including arms and Robotiq-2F-85 gripper are
+  available in the [eddie_urdf](eddie_urdf) folder.
 
 ## Eddie
 
