@@ -14,7 +14,7 @@ Tested on:
   
   ```bash
   # Create workspace
-  mkdir -p ~/eddie_ws/src && cd ~/freddy_ws/src
+  mkdir -p ~/eddie_ws/src && cd ~/eddie_ws/src
 
   # Clone repository
   git clone https://github.com/secorolab/eddie_description
