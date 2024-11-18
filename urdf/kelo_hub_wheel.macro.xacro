@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="wheel">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="kelo_hub_wheel">
     <xacro:arg name="wheel_prefix" default=""/>
 
     <!-- Define a macro for creating a wheel link with a prefix parameter -->
-    <xacro:macro name="wheel" params="wheel_prefix">
+    <xacro:macro name="kelo_hub_wheel" params="wheel_prefix">
         <!-- Properties -->
         <xacro:property name="mesh_package" value="eddie_description"/>
         <xacro:property name="wheel_mesh_file" value="hub_wheel.stl"/>
@@ -31,6 +31,4 @@
         </link>
     </xacro:macro>
 
-    <!-- Instantiate the wheel macro with a specified prefix -->
-    <!-- <xacro:wheel wheel_prefix=""/> -->
 </robot>

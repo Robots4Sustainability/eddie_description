@@ -13,7 +13,7 @@ def generate_launch_description():
     )
     
     eddie_rviz_config_file = os.path.join(
-        get_package_share_directory("eddie_description"), "config/rviz", "eddie_rviz_config.rviz"
+        get_package_share_directory("eddie_description"), "config/rviz", "eddie.rviz"
     )
     
     eddie_description_config = Command(

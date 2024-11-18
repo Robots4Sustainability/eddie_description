@@ -1,19 +1,20 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="eddie_base_with_wheels">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="eddie_base">
 
     <!-- Include the Wheel and Structure Configuration -->
-    <xacro:include filename="$(find eddie_description)/urdf/wheels_with_kelo_drive.macro.xacro"/>
+    <xacro:include filename="$(find eddie_description)/urdf/kelo_drive_unit.macro.xacro"/>
 
-    <xacro:macro name="eddie_with_no_arm" params="">
+    <xacro:macro name="eddie_base" params="prefix">
         <!-- Properties -->
         <xacro:property name="mesh_package" value="eddie_description"/>
         <xacro:property name="eddie_base_file" value="kelo_base.stl"/>
         <xacro:property name="eddie_torso_file" value="kelo_torso.stl"/>
 
-        <link name="world_link"/>
+        <!-- Base Footprint -->
+        <link name="${prefix}base_footprint"/>
 
         <!-- Additional Component at Center -->
-        <link name="base_link">
+        <link name="${prefix}base_link">
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 0"/> 
                 <geometry>
@@ -25,7 +26,8 @@
             </visual>
             <collision>
                 <geometry>
-                    <box size="0.622 0.659 0.308" />
+                    <!-- <box size="0.622 0.659 0.308" /> -->
+                    <mesh filename="package://${mesh_package}/meshes/${eddie_base_file}"/>
                 </geometry>
             </collision>
             <inertial>
@@ -34,7 +36,7 @@
             </inertial>
         </link>
 
-        <link name="torso_link">
+        <link name="${prefix}torso_link">
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 0"/> 
                 <geometry>
@@ -55,23 +57,18 @@
             </inertial>
         </link>
 
-        <link name="left_arm_link" />
-        <link name="right_arm_link" />               
+        <link name="${prefix}left_arm_attachment_link" />
+        <link name="${prefix}right_arm_attachment_link" />
 
-        <xacro:property name="corner1_prefix" value="front_left_"/>
-        <xacro:property name="corner2_prefix" value="rear_left_"/>
-        <xacro:property name="corner3_prefix" value="rear_right_"/>
-        <xacro:property name="corner4_prefix" value="front_right_"/>
+        <xacro:property name="front_left_origin_xyz" value="0.2078 0.1880 -0.0632"/>
+        <xacro:property name="rear_left_origin_xyz" value="-0.2078 0.1880 -0.0632"/>
+        <xacro:property name="rear_right_origin_xyz" value="-0.2078 -0.1880 -0.0632"/>
+        <xacro:property name="front_right_origin_xyz" value="0.2078 -0.1880 -0.0632"/>
 
-        <xacro:property name="corner1_origin_xyz" value="0.2078 0.1880 -0.0632"/>
-        <xacro:property name="corner2_origin_xyz" value="-0.2078 0.1880 -0.0632"/>
-        <xacro:property name="corner3_origin_xyz" value="-0.2078 -0.1880 -0.0632"/>
-        <xacro:property name="corner4_origin_xyz" value="0.2078 -0.1880 -0.0632"/>
-
-        <xacro:property name="corner1_orientation_rpy" value="0 0 1.5708"/>
-        <xacro:property name="corner2_orientation_rpy" value="0 0 1.5708"/>
-        <xacro:property name="corner3_orientation_rpy" value="0 0 -1.5708"/>
-        <xacro:property name="corner4_orientation_rpy" value="0 0 -1.5708"/>
+        <xacro:property name="front_left_orientation_rpy" value="0 0 1.5708"/>
+        <xacro:property name="rear_left_orientation_rpy" value="0 0 1.5708"/>
+        <xacro:property name="rear_right_orientation_rpy" value="0 0 -1.5708"/>
+        <xacro:property name="front_right_orientation_rpy" value="0 0 -1.5708"/>
 
         <xacro:property name="torso_origin_xyz" value="-0.1738 0.0003 0.4184"/>
         <xacro:property name="torso_orientation_rpy" value="0 0 1.5708"/>
@@ -80,63 +77,60 @@
         <xacro:property name="base_link_orientation_rpy" value="0 0 0"/>
 
         <!-- Four instances of the wheel units -->
-        <xacro:wheels_with_kelo_drive struct_prefix="${corner1_prefix}"/>
-        <xacro:wheels_with_kelo_drive struct_prefix="${corner2_prefix}"/>
-        <xacro:wheels_with_kelo_drive struct_prefix="${corner3_prefix}"/>
-        <xacro:wheels_with_kelo_drive struct_prefix="${corner4_prefix}"/>
+        <xacro:kelo_drive_unit struct_prefix="${prefix}front_left_"/>
+        <xacro:kelo_drive_unit struct_prefix="${prefix}rear_left_"/>
+        <xacro:kelo_drive_unit struct_prefix="${prefix}rear_right_"/>
+        <xacro:kelo_drive_unit struct_prefix="${prefix}front_right_"/>
 
         <!-- Joints -->
-        <joint name="world_frame" type="fixed">
-            <parent link="world_link"/>
-            <child link="base_link"/>
+        <joint name="${prefix}base_footprint_joint" type="fixed">
+            <parent link="${prefix}base_footprint"/>
+            <child link="${prefix}base_link"/>
             <origin xyz="${base_link_origin_xyz}" rpy="${base_link_orientation_rpy}"/>
         </joint>
 
-        <joint name="base_torso_joint" type="fixed">
-            <parent link="base_link"/>
-            <child link="torso_link"/>
+        <joint name="${prefix}base_torso_joint" type="fixed">
+            <parent link="${prefix}base_link"/>
+            <child link="${prefix}torso_link"/>
             <origin xyz="${torso_origin_xyz}" rpy="${torso_orientation_rpy}"/>
         </joint>
 
-        <joint name="corner1_joint" type="fixed">
-            <parent link="base_link"/>
-            <child link="${corner1_prefix}struct_attachment_link"/>
-            <origin xyz="${corner1_origin_xyz}" rpy="${corner1_orientation_rpy}"/>
+        <joint name="${prefix}front_left_joint" type="fixed">
+            <parent link="${prefix}base_link"/>
+            <child link="${prefix}${front_left_prefix}struct_attachment_link"/>
+            <origin xyz="${front_left_origin_xyz}" rpy="${front_left_orientation_rpy}"/>
         </joint>
 
-        <joint name="corner2_joint" type="fixed">
-            <parent link="base_link"/>
-            <child link="${corner2_prefix}struct_attachment_link"/>
-            <origin xyz="${corner2_origin_xyz}" rpy="${corner2_orientation_rpy}"/>
+        <joint name="${prefix}rear_left_joint" type="fixed">
+            <parent link="${prefix}base_link"/>
+            <child link="${prefix}${rear_left_prefix}struct_attachment_link"/>
+            <origin xyz="${rear_left_origin_xyz}" rpy="${rear_left_orientation_rpy}"/>
         </joint>
 
-        <joint name="corner3_joint" type="fixed">
-            <parent link="base_link"/>
-            <child link="${corner3_prefix}struct_attachment_link"/>
-            <origin xyz="${corner3_origin_xyz}" rpy="${corner3_orientation_rpy}"/>
+        <joint name="${prefix}rear_right_joint" type="fixed">
+            <parent link="${prefix}base_link"/>
+            <child link="${prefix}${rear_right_prefix}struct_attachment_link"/>
+            <origin xyz="${rear_right_origin_xyz}" rpy="${rear_right_orientation_rpy}"/>
         </joint>
 
-        <joint name="corner4_joint" type="fixed">
-            <parent link="base_link"/>
-            <child link="${corner4_prefix}struct_attachment_link"/>
-            <origin xyz="${corner4_origin_xyz}" rpy="${corner4_orientation_rpy}"/>
+        <joint name="${prefix}front_right_joint" type="fixed">
+            <parent link="${prefix}base_link"/>
+            <child link="${prefix}${front_right_prefix}struct_attachment_link"/>
+            <origin xyz="${front_right_origin_xyz}" rpy="${front_right_orientation_rpy}"/>
         </joint>
 
-        <joint name="left_arm_joint" type="fixed">
-            <parent link="torso_link"/>
-            <child link="left_arm_link"/>
+        <joint name="${prefix}left_arm_attachment_joint" type="fixed">
+            <parent link="${prefix}torso_link"/>
+            <child link="${prefix}left_arm_attachment_link"/>
             <origin xyz="0.0676 -0.0236 0.1160" rpy="0 0.09 -0.7783"/>
         </joint>
 
-        <joint name="right_arm_joint" type="fixed">
-            <parent link="torso_link"/>
-            <child link="right_arm_link"/>
+        <joint name="${prefix}right_arm_attachment_joint" type="fixed">
+            <parent link="${prefix}torso_link"/>
+            <child link="${prefix}right_arm_attachment_link"/>
             <origin xyz="-0.0676 -0.0236 0.1160" rpy="0 0.09 -2.3632"/>
         </joint>  
 
     </xacro:macro>
 
-    <!-- <xacro:eddie_with_no_arm/> -->
-
 </robot>
-

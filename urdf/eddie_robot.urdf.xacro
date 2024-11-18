@@ -4,9 +4,7 @@
     <!-- Include the Eddie Base -->
     <xacro:include filename="$(find eddie_description)/urdf/eddie_base.macro.xacro"/>
 
-    <xacro:eddie_with_no_arm/>
-
-    
+    <xacro:eddie_base prefix="eddie_"/>
 
 
 </robot>

@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="wheels_with_kelo_drive">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="kelo_drive_unit">
 
     <!-- Include the Wheel -->
-    <xacro:include filename="$(find eddie_description)/urdf/wheel.macro.xacro"/>
+    <xacro:include filename="$(find eddie_description)/urdf/kelo_hub_wheel.macro.xacro"/>
     
-    <xacro:macro name="wheels_with_kelo_drive" params="struct_prefix">
+    <xacro:macro name="kelo_drive_unit" params="struct_prefix">
         <!-- Properties -->
         <xacro:property name="mesh_package" value="eddie_description"/>
         <xacro:property name="struct_mesh_file" value="kelo_drive.stl"/>
@@ -62,13 +62,13 @@
         <xacro:property name="wheel_prefix_right" value="${struct_prefix}right_"/>
         <xacro:property name="wheel_orientation_rpy_right" value="-1.5708 0 0"/>
         <xacro:property name="wheel_origin_xyz_right" value="0.0008 -0.0403 -0.0366"/>
-        <xacro:wheel wheel_prefix="${wheel_prefix_right}"/>
+        <xacro:kelo_hub_wheel wheel_prefix="${wheel_prefix_right}"/>
 
         <!-- Left Wheel Instance -->
         <xacro:property name="wheel_prefix_left" value="${struct_prefix}left_"/>
         <xacro:property name="wheel_orientation_rpy_left" value="1.5708 0 0"/>
         <xacro:property name="wheel_origin_xyz_left" value="0.0008 0.0407 -0.0366"/>
-        <xacro:wheel wheel_prefix="${wheel_prefix_left}"/>
+        <xacro:kelo_hub_wheel wheel_prefix="${wheel_prefix_left}"/>
 
         <!-- Joints -->
         <joint name="${struct_prefix}struct_to_attachment_joint" type="continuous">
@@ -92,7 +92,5 @@
             <axis xyz="0 0 1"/>
         </joint>
     </xacro:macro>
-
-    <!-- <xacro:wheels_with_kelo_drive struct_prefix=""/> -->
 
 </robot>
