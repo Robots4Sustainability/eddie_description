@@ -1,0 +1,20 @@
+# NOTE: Used for both 6 and 7 dof bots. The joint_7 value will be unused for 6 dof bots
+joint_state_publisher:
+  ros__parameters:
+    zeros:
+      # left arm
+      kinova_left_joint_1: -0.70
+      kinova_left_joint_2: -2.05
+      kinova_left_joint_3: 2.14
+      kinova_left_joint_4: -2.44
+      kinova_left_joint_5: -1.57
+      kinova_left_joint_6: 0.00
+      kinova_left_joint_7: 0.00
+      # right arm
+      kinova_right_joint_1: 0.70
+      kinova_right_joint_2: -2.05
+      kinova_right_joint_3: 0.90
+      kinova_right_joint_4: 2.44
+      kinova_right_joint_5: 1.57
+      kinova_right_joint_6: 0.00
+      kinova_right_joint_7: 0.00

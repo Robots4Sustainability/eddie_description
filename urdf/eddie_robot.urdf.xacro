@@ -30,17 +30,22 @@
     <xacro:arg name="initial_positions_file_right"
         default="$(find eddie_description)/config/initial_positions_arm_right.yaml" />
 
+    <!-- convert to property to use substitution in function -->
+    <xacro:property name="initial_positions_file_left" default="$(arg initial_positions_file_left)" />
+    <xacro:property name="initial_positions_file_right"
+        default="$(arg initial_positions_file_right)" />
+
     <!-- Include the Eddie Base -->
     <xacro:include filename="$(find eddie_description)/urdf/eddie_base.macro.xacro"/>
 
     <!-- Include Gen3 Arm -->
-    <xacro:include filename="$(find kortex_description)/urdf/kinova_gen3.macro.xacro"/>
+    <xacro:include filename="$(find eddie_description)/urdf/kinova_gen3.macro.xacro"/>
 
-    <xacro:eddie_base prefix="${xacro:arg robot_name}" />
+    <xacro:eddie_base prefix="$(arg robot_name)" />
 
     <xacro:kinova_gen3
-        parent="${xacro:arg robot_name}left_arm_attachment_link"
-        prefix="${xacro:arg robot_name}left_arm_"
+        parent="$(arg robot_name)left_arm_attachment_link"
+        prefix="$(arg robot_name)left_arm_"
         gripper="robotiq_2f_85"
         robot_ip="$(arg robot_ip_left)"
         username="$(arg username)"
@@ -51,15 +56,13 @@
         connection_inactivity_timeout_ms="$(arg connection_inactivity_timeout_ms)"
         use_fake_hardware="$(arg use_fake_hardware)"
         fake_sensor_commands="$(arg fake_sensor_commands)"
-        initial_positions="${xacro.load_yaml(initial_positions_file_left)}"
-        >
-        <!-- TODO: Update origin -->
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        initial_positions="${xacro.load_yaml(initial_positions_file_left)}">
+        <origin xyz="0.01549 0 0" rpy="1.5708 -1.5708 1.5708" />
     </xacro:kinova_gen3>
 
     <xacro:kinova_gen3
-        parent="${xacro:arg robot_name}right_arm_attachment_link"
-        prefix="${xacro:arg robot_name}right_arm_"
+        parent="$(arg robot_name)right_arm_attachment_link"
+        prefix="$(arg robot_name)right_arm_"
         gripper="robotiq_2f_85"
         robot_ip="$(arg robot_ip_right)"
         username="$(arg username)"
@@ -70,10 +73,8 @@
         connection_inactivity_timeout_ms="$(arg connection_inactivity_timeout_ms)"
         use_fake_hardware="$(arg use_fake_hardware)"
         fake_sensor_commands="$(arg fake_sensor_commands)"
-        initial_positions="${xacro.load_yaml(initial_positions_file_right)}"
-        >
-        <!-- TODO: Update origin -->
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        initial_positions="${xacro.load_yaml(initial_positions_file_right)}">
+        <origin xyz="0.01549 0 0" rpy="1.5708 -1.5708 1.5708" />
     </xacro:kinova_gen3>
 
 </robot>

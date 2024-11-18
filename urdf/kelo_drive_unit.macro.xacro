@@ -5,12 +5,23 @@
     <xacro:include filename="$(find eddie_description)/urdf/kelo_hub_wheel.macro.xacro"/>
     
     <xacro:macro name="kelo_drive_unit" params="struct_prefix">
+
         <!-- Properties -->
         <xacro:property name="mesh_package" value="eddie_description"/>
         <xacro:property name="struct_mesh_file" value="kelo_drive.stl"/>
         <xacro:property name="struct_attachment_mesh_file" value="kelo_drive_attachments.stl"/>
 
-        <!-- Attachment plate link -->
+        <xacro:property name="attachment_origin_xyz" value="-0.0100 -0.0006 -0.0641"/>
+        <xacro:property name="attachment_orientation_rpy" value="0 0 1.5708"/>
+
+        <xacro:property name="wheel_prefix_left" value="${struct_prefix}left_"/>
+        <xacro:property name="wheel_prefix_right" value="${struct_prefix}right_"/>
+        <xacro:property name="wheel_orientation_rpy_right" value="-1.5708 0 0"/>
+        <xacro:property name="wheel_origin_xyz_right" value="0.0008 -0.0403 -0.0366"/>
+        <xacro:property name="wheel_orientation_rpy_left" value="1.5708 0 0"/>
+        <xacro:property name="wheel_origin_xyz_left" value="0.0008 0.0407 -0.0366"/>
+
+        <!-- Links -->
         <link name="${struct_prefix}struct_attachment_link">
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -32,7 +43,6 @@
             </inertial>
         </link>
 
-        <!-- Structure Link -->
         <link name="${struct_prefix}struct_link">
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -54,20 +64,8 @@
             </inertial>
         </link>
 
-        <!-- Attachment plate location -->
-        <xacro:property name="attachment_origin_xyz" value="-0.0100 -0.0006 -0.0641"/>
-        <xacro:property name="attachment_orientation_rpy" value="0 0 1.5708"/>
-
-        <!-- Right Wheel Instance -->
-        <xacro:property name="wheel_prefix_right" value="${struct_prefix}right_"/>
-        <xacro:property name="wheel_orientation_rpy_right" value="-1.5708 0 0"/>
-        <xacro:property name="wheel_origin_xyz_right" value="0.0008 -0.0403 -0.0366"/>
+        <!-- Instantiate wheels -->
         <xacro:kelo_hub_wheel wheel_prefix="${wheel_prefix_right}"/>
-
-        <!-- Left Wheel Instance -->
-        <xacro:property name="wheel_prefix_left" value="${struct_prefix}left_"/>
-        <xacro:property name="wheel_orientation_rpy_left" value="1.5708 0 0"/>
-        <xacro:property name="wheel_origin_xyz_left" value="0.0008 0.0407 -0.0366"/>
         <xacro:kelo_hub_wheel wheel_prefix="${wheel_prefix_left}"/>
 
         <!-- Joints -->

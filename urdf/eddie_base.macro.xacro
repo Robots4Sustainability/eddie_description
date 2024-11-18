@@ -97,25 +97,25 @@
 
         <joint name="${prefix}front_left_joint" type="fixed">
             <parent link="${prefix}base_link"/>
-            <child link="${prefix}${front_left_prefix}struct_attachment_link"/>
+            <child link="${prefix}front_left_struct_attachment_link"/>
             <origin xyz="${front_left_origin_xyz}" rpy="${front_left_orientation_rpy}"/>
         </joint>
 
         <joint name="${prefix}rear_left_joint" type="fixed">
             <parent link="${prefix}base_link"/>
-            <child link="${prefix}${rear_left_prefix}struct_attachment_link"/>
+            <child link="${prefix}rear_left_struct_attachment_link"/>
             <origin xyz="${rear_left_origin_xyz}" rpy="${rear_left_orientation_rpy}"/>
         </joint>
 
         <joint name="${prefix}rear_right_joint" type="fixed">
             <parent link="${prefix}base_link"/>
-            <child link="${prefix}${rear_right_prefix}struct_attachment_link"/>
+            <child link="${prefix}rear_right_struct_attachment_link"/>
             <origin xyz="${rear_right_origin_xyz}" rpy="${rear_right_orientation_rpy}"/>
         </joint>
 
         <joint name="${prefix}front_right_joint" type="fixed">
             <parent link="${prefix}base_link"/>
-            <child link="${prefix}${front_right_prefix}struct_attachment_link"/>
+            <child link="${prefix}front_right_struct_attachment_link"/>
             <origin xyz="${front_right_origin_xyz}" rpy="${front_right_orientation_rpy}"/>
         </joint>
 
