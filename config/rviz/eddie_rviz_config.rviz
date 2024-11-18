@@ -71,42 +71,42 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        front_left_cnr_left_wheel_link:
+        front_left_left_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        front_left_cnr_right_wheel_link:
+        front_left_right_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        front_left_cnr_struct_attachment_plate_link:
+        front_left_struct_attachment_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        front_left_cnr_struct_link:
+        front_left_struct_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        front_right_cnr_left_wheel_link:
+        front_right_left_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        front_right_cnr_right_wheel_link:
+        front_right_right_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        front_right_cnr_struct_attachment_plate_link:
+        front_right_struct_attachment_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        front_right_cnr_struct_link:
+        front_right_struct_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -115,42 +115,42 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        rear_left_cnr_left_wheel_link:
+        rear_left_left_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        rear_left_cnr_right_wheel_link:
+        rear_left_right_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        rear_left_cnr_struct_attachment_plate_link:
+        rear_left_struct_attachment_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        rear_left_cnr_struct_link:
+        rear_left_struct_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        rear_right_cnr_left_wheel_link:
+        rear_right_left_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        rear_right_cnr_right_wheel_link:
+        rear_right_right_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        rear_right_cnr_struct_attachment_plate_link:
+        rear_right_struct_attachment_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        rear_right_cnr_struct_link:
+        rear_right_struct_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -164,6 +164,10 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        world_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
       Mass Properties:
         Inertia: false
         Mass: false
@@ -179,43 +183,45 @@ Visualization Manager:
         All Enabled: true
         base_link:
           Value: true
-        front_left_cnr_left_wheel_link:
+        front_left_left_wheel_link:
           Value: true
-        front_left_cnr_right_wheel_link:
+        front_left_right_wheel_link:
           Value: true
-        front_left_cnr_struct_attachment_plate_link:
+        front_left_struct_attachment_link:
           Value: true
-        front_left_cnr_struct_link:
+        front_left_struct_link:
           Value: true
-        front_right_cnr_left_wheel_link:
+        front_right_left_wheel_link:
           Value: true
-        front_right_cnr_right_wheel_link:
+        front_right_right_wheel_link:
           Value: true
-        front_right_cnr_struct_attachment_plate_link:
+        front_right_struct_attachment_link:
           Value: true
-        front_right_cnr_struct_link:
+        front_right_struct_link:
           Value: true
         left_arm_link:
           Value: true
-        rear_left_cnr_left_wheel_link:
+        rear_left_left_wheel_link:
           Value: true
-        rear_left_cnr_right_wheel_link:
+        rear_left_right_wheel_link:
           Value: true
-        rear_left_cnr_struct_attachment_plate_link:
+        rear_left_struct_attachment_link:
           Value: true
-        rear_left_cnr_struct_link:
+        rear_left_struct_link:
           Value: true
-        rear_right_cnr_left_wheel_link:
+        rear_right_left_wheel_link:
           Value: true
-        rear_right_cnr_right_wheel_link:
+        rear_right_right_wheel_link:
           Value: true
-        rear_right_cnr_struct_attachment_plate_link:
+        rear_right_struct_attachment_link:
           Value: true
-        rear_right_cnr_struct_link:
+        rear_right_struct_link:
           Value: true
         right_arm_link:
           Value: true
         torso_link:
+          Value: true
+        world_link:
           Value: true
       Marker Scale: 1
       Name: TF
@@ -223,42 +229,43 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        base_link:
-          front_left_cnr_struct_attachment_plate_link:
-            front_left_cnr_struct_link:
-              front_left_cnr_left_wheel_link:
+        world_link:
+          base_link:
+            front_left_struct_attachment_link:
+              front_left_struct_link:
+                front_left_left_wheel_link:
+                  {}
+                front_left_right_wheel_link:
+                  {}
+            front_right_struct_attachment_link:
+              front_right_struct_link:
+                front_right_left_wheel_link:
+                  {}
+                front_right_right_wheel_link:
+                  {}
+            rear_left_struct_attachment_link:
+              rear_left_struct_link:
+                rear_left_left_wheel_link:
+                  {}
+                rear_left_right_wheel_link:
+                  {}
+            rear_right_struct_attachment_link:
+              rear_right_struct_link:
+                rear_right_left_wheel_link:
+                  {}
+                rear_right_right_wheel_link:
+                  {}
+            torso_link:
+              left_arm_link:
                 {}
-              front_left_cnr_right_wheel_link:
+              right_arm_link:
                 {}
-          front_right_cnr_struct_attachment_plate_link:
-            front_right_cnr_struct_link:
-              front_right_cnr_left_wheel_link:
-                {}
-              front_right_cnr_right_wheel_link:
-                {}
-          rear_left_cnr_struct_attachment_plate_link:
-            rear_left_cnr_struct_link:
-              rear_left_cnr_left_wheel_link:
-                {}
-              rear_left_cnr_right_wheel_link:
-                {}
-          rear_right_cnr_struct_attachment_plate_link:
-            rear_right_cnr_struct_link:
-              rear_right_cnr_left_wheel_link:
-                {}
-              rear_right_cnr_right_wheel_link:
-                {}
-          torso_link:
-            left_arm_link:
-              {}
-            right_arm_link:
-              {}
       Update Interval: 0
       Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: base_link
+    Fixed Frame: world_link
     Frame Rate: 30
   Name: root
   Tools:
@@ -316,10 +323,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.4603981375694275
+      Pitch: 0.41039836406707764
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.30039843916893005
+      Yaw: 0.32539841532707214
     Saved: ~
 Window Geometry:
   Displays:

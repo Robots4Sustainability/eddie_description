@@ -10,6 +10,8 @@
         <xacro:property name="eddie_base_file" value="kelo_base.stl"/>
         <xacro:property name="eddie_torso_file" value="kelo_torso.stl"/>
 
+        <link name="world_link"/>
+
         <!-- Additional Component at Center -->
         <link name="base_link">
             <visual>
@@ -26,10 +28,10 @@
                     <box size="0.622 0.659 0.308" />
                 </geometry>
             </collision>
-            <!-- <inertial>
+            <inertial>
                 <mass value="1.0"/>
                 <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
-            </inertial> -->
+            </inertial>
         </link>
 
         <link name="torso_link">
@@ -56,10 +58,10 @@
         <link name="left_arm_link" />
         <link name="right_arm_link" />               
 
-        <xacro:property name="corner1_prefix" value="front_left_cnr_"/>
-        <xacro:property name="corner2_prefix" value="rear_left_cnr_"/>
-        <xacro:property name="corner3_prefix" value="rear_right_cnr_"/>
-        <xacro:property name="corner4_prefix" value="front_right_cnr_"/>
+        <xacro:property name="corner1_prefix" value="front_left_"/>
+        <xacro:property name="corner2_prefix" value="rear_left_"/>
+        <xacro:property name="corner3_prefix" value="rear_right_"/>
+        <xacro:property name="corner4_prefix" value="front_right_"/>
 
         <xacro:property name="corner1_origin_xyz" value="0.2078 0.1880 -0.0632"/>
         <xacro:property name="corner2_origin_xyz" value="-0.2078 0.1880 -0.0632"/>
@@ -74,6 +76,9 @@
         <xacro:property name="torso_origin_xyz" value="-0.1738 0.0003 0.4184"/>
         <xacro:property name="torso_orientation_rpy" value="0 0 1.5708"/>
 
+        <xacro:property name="base_link_origin_xyz" value="0 0 0.2164"/>
+        <xacro:property name="base_link_orientation_rpy" value="0 0 0"/>
+
         <!-- Four instances of the wheel units -->
         <xacro:wheels_with_kelo_drive struct_prefix="${corner1_prefix}"/>
         <xacro:wheels_with_kelo_drive struct_prefix="${corner2_prefix}"/>
@@ -81,6 +86,12 @@
         <xacro:wheels_with_kelo_drive struct_prefix="${corner4_prefix}"/>
 
         <!-- Joints -->
+        <joint name="world_frame" type="fixed">
+            <parent link="world_link"/>
+            <child link="base_link"/>
+            <origin xyz="${base_link_origin_xyz}" rpy="${base_link_orientation_rpy}"/>
+        </joint>
+
         <joint name="base_torso_joint" type="fixed">
             <parent link="base_link"/>
             <child link="torso_link"/>
@@ -89,25 +100,25 @@
 
         <joint name="corner1_joint" type="fixed">
             <parent link="base_link"/>
-            <child link="${corner1_prefix}struct_attachment_plate_link"/>
+            <child link="${corner1_prefix}struct_attachment_link"/>
             <origin xyz="${corner1_origin_xyz}" rpy="${corner1_orientation_rpy}"/>
         </joint>
 
         <joint name="corner2_joint" type="fixed">
             <parent link="base_link"/>
-            <child link="${corner2_prefix}struct_attachment_plate_link"/>
+            <child link="${corner2_prefix}struct_attachment_link"/>
             <origin xyz="${corner2_origin_xyz}" rpy="${corner2_orientation_rpy}"/>
         </joint>
 
         <joint name="corner3_joint" type="fixed">
             <parent link="base_link"/>
-            <child link="${corner3_prefix}struct_attachment_plate_link"/>
+            <child link="${corner3_prefix}struct_attachment_link"/>
             <origin xyz="${corner3_origin_xyz}" rpy="${corner3_orientation_rpy}"/>
         </joint>
 
         <joint name="corner4_joint" type="fixed">
             <parent link="base_link"/>
-            <child link="${corner4_prefix}struct_attachment_plate_link"/>
+            <child link="${corner4_prefix}struct_attachment_link"/>
             <origin xyz="${corner4_origin_xyz}" rpy="${corner4_orientation_rpy}"/>
         </joint>
 
