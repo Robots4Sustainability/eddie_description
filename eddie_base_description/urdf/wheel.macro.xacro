@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="wheel">
+    <xacro:arg name="wheel_prefix" default=""/>
+
+    <!-- Define a macro for creating a wheel link with a prefix parameter -->
+    <xacro:macro name="wheel" params="wheel_prefix">
+        <!-- Properties -->
+        <xacro:property name="mesh_package" value="eddie_base_description"/>
+        <xacro:property name="wheel_mesh_file" value="hub_wheel.stl"/>
+
+        <!-- Wheel Link with the specified prefix -->
+        <link name="${wheel_prefix}wheel_link">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://${mesh_package}/meshes/${wheel_mesh_file}" />
+                </geometry>
+                <material name="black">
+                    <color rgba="0 0 0 1.0"/>
+                </material>
+            </visual>
+            <collision>
+                <geometry>
+                    <mesh filename="package://${mesh_package}/meshes/${wheel_mesh_file}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="1.0"/>
+                <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+            </inertial>                     
+        </link>
+    </xacro:macro>
+
+    <!-- Instantiate the wheel macro with a specified prefix -->
+    <!-- <xacro:wheel wheel_prefix=""/> -->
+</robot>

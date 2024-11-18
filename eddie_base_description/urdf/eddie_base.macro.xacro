@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="eddie_base_with_wheels">
+
+    <!-- Include the Wheel and Structure Configuration -->
+    <xacro:include filename="$(find eddie_base_description)/urdf/wheels_with_kelo_drive.macro.xacro"/>
+
+    <xacro:macro name="eddie_with_no_arm" params="">
+        <!-- Properties -->
+        <xacro:property name="mesh_package" value="eddie_base_description"/>
+        <xacro:property name="eddie_base_file" value="kelo_base.stl"/>
+        <xacro:property name="eddie_torso_file" value="kelo_torso.stl"/>
+
+        <!-- Additional Component at Center -->
+        <link name="base_link">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/> 
+                <geometry>
+                    <mesh filename="package://${mesh_package}/meshes/${eddie_base_file}"/>
+                </geometry>
+                <material name="light_gray">
+                    <color rgba="0.5 0.5 0.5 1.0"/>
+                </material>            
+            </visual>
+            <collision>
+                <geometry>
+                    <box size="0.622 0.659 0.308" />
+                </geometry>
+            </collision>
+            <!-- <inertial>
+                <mass value="1.0"/>
+                <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+            </inertial> -->
+        </link>
+
+        <link name="torso_link">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/> 
+                <geometry>
+                    <mesh filename="package://${mesh_package}/meshes/${eddie_torso_file}" />
+                </geometry>
+                <material name="metallic_silver">
+                    <color rgba="0.7 0.7 0.7 1.0"/>
+                </material>            
+            </visual>
+            <collision>
+                <geometry>
+                    <mesh filename="package://${mesh_package}/meshes/${eddie_torso_file}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="1.0"/>
+                <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+            </inertial>
+        </link>
+
+        <link name="left_arm_link" />
+        <link name="right_arm_link" />               
+
+        <xacro:property name="corner1_prefix" value="front_left_cnr_"/>
+        <xacro:property name="corner2_prefix" value="rear_left_cnr_"/>
+        <xacro:property name="corner3_prefix" value="rear_right_cnr_"/>
+        <xacro:property name="corner4_prefix" value="front_right_cnr_"/>
+
+        <xacro:property name="corner1_origin_xyz" value="0.2078 0.1880 -0.0632"/>
+        <xacro:property name="corner2_origin_xyz" value="-0.2078 0.1880 -0.0632"/>
+        <xacro:property name="corner3_origin_xyz" value="-0.2078 -0.1880 -0.0632"/>
+        <xacro:property name="corner4_origin_xyz" value="0.2078 -0.1880 -0.0632"/>
+
+        <xacro:property name="corner1_orientation_rpy" value="0 0 1.5708"/>
+        <xacro:property name="corner2_orientation_rpy" value="0 0 1.5708"/>
+        <xacro:property name="corner3_orientation_rpy" value="0 0 -1.5708"/>
+        <xacro:property name="corner4_orientation_rpy" value="0 0 -1.5708"/>
+
+        <xacro:property name="torso_origin_xyz" value="-0.1738 0.0003 0.4184"/>
+        <xacro:property name="torso_orientation_rpy" value="0 0 1.5708"/>
+
+        <!-- Four instances of the wheel units -->
+        <xacro:wheels_with_kelo_drive struct_prefix="${corner1_prefix}"/>
+        <xacro:wheels_with_kelo_drive struct_prefix="${corner2_prefix}"/>
+        <xacro:wheels_with_kelo_drive struct_prefix="${corner3_prefix}"/>
+        <xacro:wheels_with_kelo_drive struct_prefix="${corner4_prefix}"/>
+
+        <!-- Joints -->
+        <joint name="base_torso_joint" type="fixed">
+            <parent link="base_link"/>
+            <child link="torso_link"/>
+            <origin xyz="${torso_origin_xyz}" rpy="${torso_orientation_rpy}"/>
+        </joint>
+
+        <joint name="corner1_joint" type="fixed">
+            <parent link="base_link"/>
+            <child link="${corner1_prefix}struct_attachment_plate_link"/>
+            <origin xyz="${corner1_origin_xyz}" rpy="${corner1_orientation_rpy}"/>
+        </joint>
+
+        <joint name="corner2_joint" type="fixed">
+            <parent link="base_link"/>
+            <child link="${corner2_prefix}struct_attachment_plate_link"/>
+            <origin xyz="${corner2_origin_xyz}" rpy="${corner2_orientation_rpy}"/>
+            <axis xyz="0 0 1"/> <!-- Rotate about the z-axis -->
+            <limit effort="10" velocity="1.0" lower="-3.14" upper="3.14"/>
+        </joint>
+
+        <joint name="corner3_joint" type="fixed">
+            <parent link="base_link"/>
+            <child link="${corner3_prefix}struct_attachment_plate_link"/>
+            <origin xyz="${corner3_origin_xyz}" rpy="${corner3_orientation_rpy}"/>
+        </joint>
+
+        <joint name="corner4_joint" type="fixed">
+            <parent link="base_link"/>
+            <child link="${corner4_prefix}struct_attachment_plate_link"/>
+            <origin xyz="${corner4_origin_xyz}" rpy="${corner4_orientation_rpy}"/>
+        </joint>
+
+        <joint name="left_arm_joint" type="fixed">
+            <parent link="torso_link"/>
+            <child link="left_arm_link"/>
+            <origin xyz="0.0676 -0.0236 0.1160" rpy="0 0.09 -0.7783"/>
+        </joint>
+
+        <joint name="right_arm_joint" type="fixed">
+            <parent link="torso_link"/>
+            <child link="right_arm_link"/>
+            <origin xyz="-0.0676 -0.0236 0.1160" rpy="0 0.09 -2.3632"/>
+        </joint>  
+
+    </xacro:macro>
+
+    <!-- <xacro:eddie_with_no_arm/> -->
+
+</robot>
+

@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="wheels_with_kelo_drive">
+
+    <!-- Include the Wheel -->
+    <xacro:include filename="$(find eddie_base_description)/urdf/wheel.macro.xacro"/>
+    
+    <xacro:macro name="wheels_with_kelo_drive" params="struct_prefix">
+        <!-- Properties -->
+        <xacro:property name="mesh_package" value="eddie_base_description"/>
+        <xacro:property name="struct_mesh_file" value="kelo_drive.stl"/>
+        <xacro:property name="struct_attachment_plate_mesh_file" value="kelo_drive_attachment_plates.stl"/>
+
+        <!-- Attachment plate link -->
+        <link name="${struct_prefix}struct_attachment_plate_link">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://${mesh_package}/meshes/${struct_attachment_plate_mesh_file}" />
+                </geometry>
+                <material name="metallic_silver">
+                    <color rgba="0.7 0.7 0.7 1.0"/>
+                </material>
+            </visual>
+            <collision>
+                <geometry>
+                    <mesh filename="package://${mesh_package}/meshes/${struct_attachment_plate_mesh_file}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="1.0"/>
+                <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+            </inertial>
+        </link>
+
+        <!-- Structure Link -->
+        <link name="${struct_prefix}struct_link">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://${mesh_package}/meshes/${struct_mesh_file}" />
+                </geometry>
+                <material name="metallic_silver">
+                    <color rgba="0.7 0.7 0.7 1.0"/>
+                </material>
+            </visual>
+            <collision>
+                <geometry>
+                    <mesh filename="package://${mesh_package}/meshes/${struct_mesh_file}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="1.0"/>
+                <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+            </inertial>
+        </link>
+
+        <!-- Attachment plate location -->
+        <xacro:property name="attachment_plate_origin_xyz" value="-0.0100 -0.0006 -0.0641"/>
+        <xacro:property name="attachment_plate_orientation_rpy" value="0 0 1.5708"/>
+
+        <!-- Right Wheel Instance -->
+        <xacro:property name="wheel_prefix_right" value="${struct_prefix}right_"/>
+        <xacro:property name="wheel_orientation_rpy_right" value="-1.5708 0 0"/>
+        <xacro:property name="wheel_origin_xyz_right" value="0.0008 -0.0403 -0.0366"/>
+        <xacro:wheel wheel_prefix="${wheel_prefix_right}"/>
+
+        <!-- Left Wheel Instance -->
+        <xacro:property name="wheel_prefix_left" value="${struct_prefix}left_"/>
+        <xacro:property name="wheel_orientation_rpy_left" value="1.5708 0 0"/>
+        <xacro:property name="wheel_origin_xyz_left" value="0.0008 0.0407 -0.0366"/>
+        <xacro:wheel wheel_prefix="${wheel_prefix_left}"/>
+
+        <!-- Joints -->
+        <joint name="${struct_prefix}struct_to_attachment_plate_joint" type="continuous">
+            <parent link="${struct_prefix}struct_attachment_plate_link"/>
+            <child link="${struct_prefix}struct_link"/>
+            <origin xyz="${attachment_plate_origin_xyz}" rpy="${attachment_plate_orientation_rpy}"/>
+            <axis xyz="0 0 1"/>
+        </joint>
+
+        <joint name="${struct_prefix}${wheel_prefix_left}wheel_joint" type="continuous">
+            <parent link="${struct_prefix}struct_link"/>
+            <child link="${wheel_prefix_left}wheel_link"/>
+            <origin xyz="${wheel_origin_xyz_left}" rpy="${wheel_orientation_rpy_left}"/>
+            <axis xyz="0 0 1"/>
+        </joint>
+
+        <joint name="${struct_prefix}${wheel_prefix_right}wheel_joint" type="continuous">
+            <parent link="${struct_prefix}struct_link"/>
+            <child link="${wheel_prefix_right}wheel_link"/>
+            <origin xyz="${wheel_origin_xyz_right}" rpy="${wheel_orientation_rpy_right}"/>
+            <axis xyz="0 0 1"/>
+        </joint>
+    </xacro:macro>
+
+    <!-- <xacro:wheels_with_kelo_drive struct_prefix=""/> -->
+
+</robot>
