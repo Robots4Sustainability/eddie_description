@@ -28,6 +28,14 @@ Tested on:
   colcon build
   ```
 
+- Clone ependendent packages
+
+    ```bash
+  cd ~/eddie_ws/src
+
+  vcs import < eddie_description/dep.repos
+  ```
+
 ## Usage
 
 - View robot in rviz
