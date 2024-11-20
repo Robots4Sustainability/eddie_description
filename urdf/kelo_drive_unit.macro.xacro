@@ -1,28 +1,29 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="kelo_drive_unit">
 
-    <!-- Include the Wheel -->
+    <!-- Include macro files -->
     <xacro:include filename="$(find eddie_description)/urdf/kelo_hub_wheel.macro.xacro"/>
     
-    <xacro:macro name="kelo_drive_unit" params="struct_prefix">
-
+    <xacro:macro name="kelo_drive_unit" params="robot_prefix struct_prefix struct_origin_xyz struct_orientation_rpy attachment_cts_jnt_orientation_rpy">
+        
         <!-- Properties -->
         <xacro:property name="mesh_package" value="eddie_description"/>
         <xacro:property name="struct_mesh_file" value="kelo_drive.stl"/>
         <xacro:property name="struct_attachment_mesh_file" value="kelo_drive_attachments.stl"/>
-
         <xacro:property name="attachment_origin_xyz" value="-0.0100 -0.0006 -0.0641"/>
-        <xacro:property name="attachment_orientation_rpy" value="0 0 1.5708"/>
+        <xacro:property name="wheel_prefix_left" value="left_wheel_"/>
+        <xacro:property name="wheel_prefix_right" value="right_wheel_"/>
+        <xacro:property name="wheel_orientation_rpy_left" value="-1.5708 0 0"/>
+        <xacro:property name="wheel_origin_xyz_left" value="0.0008 -0.0403 -0.0366"/>
+        <xacro:property name="wheel_orientation_rpy_right" value="1.5708 0 0"/>
+        <xacro:property name="wheel_origin_xyz_right" value="0.0008 0.0407 -0.0366"/>
 
-        <xacro:property name="wheel_prefix_left" value="${struct_prefix}left_"/>
-        <xacro:property name="wheel_prefix_right" value="${struct_prefix}right_"/>
-        <xacro:property name="wheel_orientation_rpy_right" value="-1.5708 0 0"/>
-        <xacro:property name="wheel_origin_xyz_right" value="0.0008 -0.0403 -0.0366"/>
-        <xacro:property name="wheel_orientation_rpy_left" value="1.5708 0 0"/>
-        <xacro:property name="wheel_origin_xyz_left" value="0.0008 0.0407 -0.0366"/>
+        <!-- Instantiate wheels -->
+        <xacro:kelo_hub_wheel wheel_prefix="${wheel_prefix_right}" struct_prefix="${robot_prefix}${struct_prefix}" wheel_origin_xyz="${wheel_origin_xyz_right}" wheel_orientation_rpy="${wheel_orientation_rpy_right}"/>
+        <xacro:kelo_hub_wheel wheel_prefix="${wheel_prefix_left}" struct_prefix="${robot_prefix}${struct_prefix}" wheel_origin_xyz="${wheel_origin_xyz_left}" wheel_orientation_rpy="${wheel_orientation_rpy_left}"/>
 
         <!-- Links -->
-        <link name="${struct_prefix}struct_attachment_link">
+        <link name="${robot_prefix}${struct_prefix}attachment_link">
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 0"/>
                 <geometry>
@@ -42,8 +43,7 @@
                 <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
             </inertial>
         </link>
-
-        <link name="${struct_prefix}struct_link">
+        <link name="${robot_prefix}${struct_prefix}struct_link">
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 0"/>
                 <geometry>
@@ -59,36 +59,25 @@
                 </geometry>
             </collision>
             <inertial>
-                <mass value="1.0"/>
-                <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+                <mass value="1.892"/>
+                <origin xyz="0 0 0.006" rpy="0 0 0"/>
+                <inertia ixx="0.004574163" ixy="0" ixz="0" iyy="0.004344228" iyz="0" izz="0.004640438"/>
             </inertial>
         </link>
 
-        <!-- Instantiate wheels -->
-        <xacro:kelo_hub_wheel wheel_prefix="${wheel_prefix_right}"/>
-        <xacro:kelo_hub_wheel wheel_prefix="${wheel_prefix_left}"/>
-
         <!-- Joints -->
-        <joint name="${struct_prefix}struct_to_attachment_joint" type="continuous">
-            <parent link="${struct_prefix}struct_attachment_link"/>
-            <child link="${struct_prefix}struct_link"/>
-            <origin xyz="${attachment_origin_xyz}" rpy="${attachment_orientation_rpy}"/>
+        <joint name="${robot_prefix}${struct_prefix}attachment_joint" type="fixed">
+            <parent link="${robot_prefix}base_link"/>
+            <child link="${robot_prefix}${struct_prefix}attachment_link"/>
+            <origin xyz="${struct_origin_xyz}" rpy="${struct_orientation_rpy}"/>
+        </joint>
+        <joint name="${robot_prefix}${struct_prefix}struct_joint" type="continuous">
+            <parent link="${robot_prefix}${struct_prefix}attachment_link"/>
+            <child link="${robot_prefix}${struct_prefix}struct_link"/>
+            <origin xyz="${attachment_origin_xyz}" rpy="${attachment_cts_jnt_orientation_rpy}"/>
             <axis xyz="0 0 1"/>
         </joint>
 
-        <joint name="${struct_prefix}${wheel_prefix_left}wheel_joint" type="continuous">
-            <parent link="${struct_prefix}struct_link"/>
-            <child link="${wheel_prefix_left}wheel_link"/>
-            <origin xyz="${wheel_origin_xyz_left}" rpy="${wheel_orientation_rpy_left}"/>
-            <axis xyz="0 0 1"/>
-        </joint>
-
-        <joint name="${struct_prefix}${wheel_prefix_right}wheel_joint" type="continuous">
-            <parent link="${struct_prefix}struct_link"/>
-            <child link="${wheel_prefix_right}wheel_link"/>
-            <origin xyz="${wheel_origin_xyz_right}" rpy="${wheel_orientation_rpy_right}"/>
-            <axis xyz="0 0 1"/>
-        </joint>
     </xacro:macro>
 
 </robot>

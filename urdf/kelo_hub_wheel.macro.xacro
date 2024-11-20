@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="kelo_hub_wheel">
-    <xacro:arg name="wheel_prefix" default=""/>
 
-    <xacro:macro name="kelo_hub_wheel" params="wheel_prefix">
+    <xacro:macro name="kelo_hub_wheel" params="wheel_prefix struct_prefix wheel_origin_xyz wheel_orientation_rpy">
+
         <!-- Properties -->
         <xacro:property name="mesh_package" value="eddie_description"/>
-        <xacro:property name="wheel_mesh_file" value="hub_wheel.stl"/>
+        <xacro:property name="wheel_mesh_file" value="hub_wheel12.stl"/>
 
         <!-- Links -->
-        <link name="${wheel_prefix}wheel_link">
+        <link name="${struct_prefix}${wheel_prefix}link">
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 0"/>
                 <geometry>
@@ -24,10 +24,18 @@
                 </geometry>
             </collision>
             <inertial>
-                <mass value="1.0"/>
-                <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+                <mass value="1.563"/>
+                <inertia ixx="0.0010" ixy="0" ixz="0" iyy="0.0010" iyz="0" izz="0.0005"/>
             </inertial>                     
         </link>
-    </xacro:macro>
 
+        <!-- Joints -->
+        <joint name="${struct_prefix}${wheel_prefix}joint" type="continuous">
+            <parent link="${struct_prefix}struct_link"/>
+            <child link="${struct_prefix}${wheel_prefix}link"/>
+            <origin xyz="${wheel_origin_xyz}" rpy="${wheel_orientation_rpy}"/>
+            <axis xyz="0 0 1"/>
+        </joint>  
+
+    </xacro:macro>
 </robot>

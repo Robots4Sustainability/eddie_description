@@ -41,7 +41,7 @@
     <!-- Include Gen3 Arm -->
     <xacro:include filename="$(find eddie_description)/urdf/kinova_gen3.macro.xacro"/>
 
-    <xacro:eddie_base prefix="$(arg robot_name)" />
+    <xacro:eddie_base robot_prefix="$(arg robot_name)" />
 
     <xacro:kinova_gen3
         parent="$(arg robot_name)left_arm_attachment_link"
