@@ -49,7 +49,7 @@ def generate_launch_description():
     joint_state_publisher_gui_node = Node(
         package="joint_state_publisher_gui",
         executable="joint_state_publisher_gui",
-        name="joint_state_publisher_gui",
+        name="joint_state_publisher",
         condition=IfCondition(LaunchConfiguration("joint_state_gui")),
         output="screen",
         parameters=[zero_positions_config],
