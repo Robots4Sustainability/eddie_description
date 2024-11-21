@@ -2,6 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="eddie_base_with_wheels">
 
     <xacro:arg name="robot_name" default="eddie_" />
+    <xacro:arg name="joint_state_gui" default="true" />
 
     <xacro:arg name="robot_ip_left" default="192.168.1.10" />
     <xacro:arg name="robot_ip_right" default="192.168.1.11" />
@@ -41,7 +42,7 @@
     <!-- Include Gen3 Arm -->
     <xacro:include filename="$(find eddie_description)/urdf/kinova_gen3.macro.xacro"/>
 
-    <xacro:eddie_base robot_prefix="$(arg robot_name)" />
+    <xacro:eddie_base robot_prefix="$(arg robot_name)" joint_state_gui="$(arg joint_state_gui)"/>
 
     <xacro:kinova_gen3
         parent="$(arg robot_name)left_arm_attachment_link"

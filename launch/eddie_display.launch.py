@@ -24,7 +24,11 @@ def generate_launch_description():
     )
     
     eddie_description_config = Command(
-        [FindExecutable(name="xacro"), " ", eddie_xacro_file]
+        [FindExecutable(name="xacro"), 
+         " ", 
+         eddie_xacro_file,
+         " ",
+         "joint_state_gui:=", LaunchConfiguration("joint_state_gui")]
     )
 
     eddie_description = {

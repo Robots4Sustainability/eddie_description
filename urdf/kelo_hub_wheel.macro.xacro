@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="kelo_hub_wheel">
 
-    <xacro:macro name="kelo_hub_wheel" params="wheel_prefix struct_prefix wheel_origin_xyz wheel_orientation_rpy">
+    <xacro:macro name="kelo_hub_wheel" params="wheel_prefix struct_prefix wheel_origin_xyz wheel_orientation_rpy joint_state_gui">
 
         <!-- Properties -->
         <xacro:property name="mesh_package" value="eddie_description"/>
@@ -37,6 +37,38 @@
             <origin xyz="${wheel_origin_xyz}" rpy="${wheel_orientation_rpy}"/>
             <axis xyz="0 0 1"/>
         </joint>
-        
+
+        <!-- ros2 control tags -->
+        <xacro:if value="${joint_state_gui}">
+            <ros2_control name="${struct_prefix}${wheel_prefix}ctr" type="system">
+                <hardware>
+                    <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+                </hardware>
+                <joint name="${struct_prefix}${wheel_prefix}joint">
+                    <command_interface name="position">
+                    <param name="min">-1e+100</param>
+                    <param name="max">1e+100</param>
+                    </command_interface>
+                    <command_interface name="velocity">
+                    <param name="min">-1e+100</param>
+                    <param name="max">1e+100</param>
+                    </command_interface>
+                    <command_interface name="effort">
+                    <param name="min">-1e+100</param>
+                    <param name="max">1e+100</param>
+                    </command_interface>
+                    <state_interface name="position">
+                    <param name="initial_value">0.0</param>
+                    </state_interface>
+                    <state_interface name="velocity"/>
+                    <state_interface name="effort"/>
+                </joint>
+                <transmission name="${struct_prefix}${wheel_prefix}joint_transmission">
+                    <plugin>transmission_interface/SimpleTansmission</plugin>
+                    <param name="joint_to_actuator">1</param>
+                </transmission>
+            </ros2_control>
+        </xacro:if>
+
     </xacro:macro>
 </robot>

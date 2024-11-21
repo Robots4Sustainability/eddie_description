@@ -4,7 +4,7 @@
     <!-- Include macro files -->
     <xacro:include filename="$(find eddie_description)/urdf/kelo_drive_unit.macro.xacro"/>
 
-    <xacro:macro name="eddie_base" params="robot_prefix">
+    <xacro:macro name="eddie_base" params="robot_prefix joint_state_gui">
 
         <!-- Properties -->
         <xacro:property name="mesh_package" value="eddie_description"/>
@@ -28,10 +28,31 @@
         <xacro:property name="base_link_orientation_rpy" value="0 0 0"/>
 
         <!-- Instantiate wheel units -->
-        <xacro:kelo_drive_unit robot_prefix="${robot_prefix}" struct_prefix="front_left_drive_" struct_origin_xyz="${front_left_origin_xyz}" struct_orientation_rpy="${front_left_orientation_rpy}" struct_wrt_attachment_orientation_rpy="${front_left_struct_wrt_attachment_orientation_rpy}"/>
-        <xacro:kelo_drive_unit robot_prefix="${robot_prefix}" struct_prefix="rear_left_drive_" struct_origin_xyz="${rear_left_origin_xyz}" struct_orientation_rpy="${rear_left_orientation_rpy}"  struct_wrt_attachment_orientation_rpy="${rear_left_struct_wrt_attachment_orientation_rpy}"/>
-        <xacro:kelo_drive_unit robot_prefix="${robot_prefix}" struct_prefix="rear_right_drive_" struct_origin_xyz="${rear_right_origin_xyz}" struct_orientation_rpy="${rear_right_orientation_rpy}"  struct_wrt_attachment_orientation_rpy="${front_right_struct_wrt_attachment_orientation_rpy}"/>
-        <xacro:kelo_drive_unit robot_prefix="${robot_prefix}" struct_prefix="front_right_drive_" struct_origin_xyz="${front_right_origin_xyz}" struct_orientation_rpy="${front_right_orientation_rpy}"  struct_wrt_attachment_orientation_rpy="${rear_right_struct_wrt_attachment_orientation_rpy}"/>
+        <xacro:kelo_drive_unit 
+        robot_prefix="${robot_prefix}" 
+        joint_state_gui="${joint_state_gui}" 
+        struct_prefix="front_left_drive_" 
+        struct_origin_xyz="${front_left_origin_xyz}" 
+        struct_orientation_rpy="${front_left_orientation_rpy}" 
+        struct_wrt_attachment_orientation_rpy="${front_left_struct_wrt_attachment_orientation_rpy}"/>
+        <xacro:kelo_drive_unit robot_prefix="${robot_prefix}" 
+        joint_state_gui="${joint_state_gui}" 
+        struct_prefix="rear_left_drive_" 
+        struct_origin_xyz="${rear_left_origin_xyz}" 
+        struct_orientation_rpy="${rear_left_orientation_rpy}" 
+        struct_wrt_attachment_orientation_rpy="${rear_left_struct_wrt_attachment_orientation_rpy}"/>
+        <xacro:kelo_drive_unit robot_prefix="${robot_prefix}" 
+        joint_state_gui="${joint_state_gui}" 
+        struct_prefix="rear_right_drive_" 
+        struct_origin_xyz="${rear_right_origin_xyz}" 
+        struct_orientation_rpy="${rear_right_orientation_rpy}" 
+        struct_wrt_attachment_orientation_rpy="${front_right_struct_wrt_attachment_orientation_rpy}"/>
+        <xacro:kelo_drive_unit robot_prefix="${robot_prefix}" 
+        joint_state_gui="${joint_state_gui}"
+        struct_prefix="front_right_drive_" 
+        struct_origin_xyz="${front_right_origin_xyz}" 
+        struct_orientation_rpy="${front_right_orientation_rpy}" 
+        struct_wrt_attachment_orientation_rpy="${rear_right_struct_wrt_attachment_orientation_rpy}"/>
 
         <!-- Links -->
         <link name="${robot_prefix}base_footprint"/>
