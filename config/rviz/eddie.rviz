@@ -3,9 +3,7 @@ Panels:
     Help Height: 85
     Name: Displays
     Property Tree Widget:
-      Expanded:
-        - /Global Options1
-        - /TF1
+      Expanded: ~
       Splitter Ratio: 0.7321428656578064
     Tree Height: 1026
   - Class: rviz_common/Selection
@@ -74,42 +72,42 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        eddie_front_left_left_wheel_link:
+        eddie_front_left_drive_attachment_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        eddie_front_left_right_wheel_link:
+        eddie_front_left_drive_left_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        eddie_front_left_struct_attachment_link:
+        eddie_front_left_drive_right_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        eddie_front_left_struct_link:
+        eddie_front_left_drive_struct_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        eddie_front_right_left_wheel_link:
+        eddie_front_right_drive_attachment_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        eddie_front_right_right_wheel_link:
+        eddie_front_right_drive_left_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        eddie_front_right_struct_attachment_link:
+        eddie_front_right_drive_right_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        eddie_front_right_struct_link:
+        eddie_front_right_drive_struct_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -219,42 +217,42 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        eddie_rear_left_left_wheel_link:
+        eddie_rear_left_drive_attachment_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        eddie_rear_left_right_wheel_link:
+        eddie_rear_left_drive_left_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        eddie_rear_left_struct_attachment_link:
+        eddie_rear_left_drive_right_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        eddie_rear_left_struct_link:
+        eddie_rear_left_drive_struct_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        eddie_rear_right_left_wheel_link:
+        eddie_rear_right_drive_attachment_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        eddie_rear_right_right_wheel_link:
+        eddie_rear_right_drive_left_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        eddie_rear_right_struct_attachment_link:
+        eddie_rear_right_drive_right_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        eddie_rear_right_struct_link:
+        eddie_rear_right_drive_struct_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -368,7 +366,6 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-          Value: true
       Mass Properties:
         Inertia: false
         Mass: false
@@ -388,21 +385,21 @@ Visualization Manager:
           Value: false
         eddie_base_link:
           Value: false
-        eddie_front_left_left_wheel_link:
+        eddie_front_left_drive_attachment_link:
           Value: false
-        eddie_front_left_right_wheel_link:
+        eddie_front_left_drive_left_wheel_link:
           Value: false
-        eddie_front_left_struct_attachment_link:
+        eddie_front_left_drive_right_wheel_link:
           Value: false
-        eddie_front_left_struct_link:
+        eddie_front_left_drive_struct_link:
           Value: false
-        eddie_front_right_left_wheel_link:
+        eddie_front_right_drive_attachment_link:
           Value: false
-        eddie_front_right_right_wheel_link:
+        eddie_front_right_drive_left_wheel_link:
           Value: false
-        eddie_front_right_struct_attachment_link:
+        eddie_front_right_drive_right_wheel_link:
           Value: false
-        eddie_front_right_struct_link:
+        eddie_front_right_drive_struct_link:
           Value: false
         eddie_left_arm_attachment_link:
           Value: false
@@ -448,21 +445,21 @@ Visualization Manager:
           Value: false
         eddie_left_arm_spherical_wrist_2_link:
           Value: false
-        eddie_rear_left_left_wheel_link:
+        eddie_rear_left_drive_attachment_link:
           Value: false
-        eddie_rear_left_right_wheel_link:
+        eddie_rear_left_drive_left_wheel_link:
           Value: false
-        eddie_rear_left_struct_attachment_link:
+        eddie_rear_left_drive_right_wheel_link:
           Value: false
-        eddie_rear_left_struct_link:
+        eddie_rear_left_drive_struct_link:
           Value: false
-        eddie_rear_right_left_wheel_link:
+        eddie_rear_right_drive_attachment_link:
           Value: false
-        eddie_rear_right_right_wheel_link:
+        eddie_rear_right_drive_left_wheel_link:
           Value: false
-        eddie_rear_right_struct_attachment_link:
+        eddie_rear_right_drive_right_wheel_link:
           Value: false
-        eddie_rear_right_struct_link:
+        eddie_rear_right_drive_struct_link:
           Value: false
         eddie_right_arm_attachment_link:
           Value: false
@@ -518,29 +515,29 @@ Visualization Manager:
       Tree:
         eddie_base_footprint:
           eddie_base_link:
-            eddie_front_left_struct_attachment_link:
-              eddie_front_left_struct_link:
-                eddie_front_left_left_wheel_link:
+            eddie_front_left_drive_attachment_link:
+              eddie_front_left_drive_struct_link:
+                eddie_front_left_drive_left_wheel_link:
                   {}
-                eddie_front_left_right_wheel_link:
+                eddie_front_left_drive_right_wheel_link:
                   {}
-            eddie_front_right_struct_attachment_link:
-              eddie_front_right_struct_link:
-                eddie_front_right_left_wheel_link:
+            eddie_front_right_drive_attachment_link:
+              eddie_front_right_drive_struct_link:
+                eddie_front_right_drive_left_wheel_link:
                   {}
-                eddie_front_right_right_wheel_link:
+                eddie_front_right_drive_right_wheel_link:
                   {}
-            eddie_rear_left_struct_attachment_link:
-              eddie_rear_left_struct_link:
-                eddie_rear_left_left_wheel_link:
+            eddie_rear_left_drive_attachment_link:
+              eddie_rear_left_drive_struct_link:
+                eddie_rear_left_drive_left_wheel_link:
                   {}
-                eddie_rear_left_right_wheel_link:
+                eddie_rear_left_drive_right_wheel_link:
                   {}
-            eddie_rear_right_struct_attachment_link:
-              eddie_rear_right_struct_link:
-                eddie_rear_right_left_wheel_link:
+            eddie_rear_right_drive_attachment_link:
+              eddie_rear_right_drive_struct_link:
+                eddie_rear_right_drive_left_wheel_link:
                   {}
-                eddie_rear_right_right_wheel_link:
+                eddie_rear_right_drive_right_wheel_link:
                   {}
             eddie_torso_link:
               eddie_left_arm_attachment_link:
@@ -649,7 +646,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 4.275353908538818
+      Distance: 4.063175201416016
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -664,10 +661,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.3897974491119385
+      Pitch: 0.4497971534729004
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.010424384847283363
+      Yaw: 0.3604259490966797
     Saved: ~
 Window Geometry:
   Displays:
@@ -675,7 +672,7 @@ Window Geometry:
   Height: 1363
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd0000000400000000000001c2000004a0fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006f00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000048000004a0000000f300fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f000004a0fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730100000048000004a0000000c500fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000009ae00000042fc0100000002fb0000000800540069006d00650100000000000009ae000002dc00fffffffb0000000800540069006d00650100000000000004500000000000000000000006cf000004a000000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd000000040000000000000249000004a0fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006f00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000048000004a0000000f300fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f000004a0fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730100000048000004a0000000c500fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000009ae00000042fc0100000002fb0000000800540069006d00650100000000000009ae000002dc00fffffffb0000000800540069006d0065010000000000000450000000000000000000000648000004a000000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:

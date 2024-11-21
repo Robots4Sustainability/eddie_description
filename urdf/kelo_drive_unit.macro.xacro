@@ -4,18 +4,18 @@
     <!-- Include macro files -->
     <xacro:include filename="$(find eddie_description)/urdf/kelo_hub_wheel.macro.xacro"/>
     
-    <xacro:macro name="kelo_drive_unit" params="robot_prefix struct_prefix struct_origin_xyz struct_orientation_rpy attachment_cts_jnt_orientation_rpy">
+    <xacro:macro name="kelo_drive_unit" params="robot_prefix struct_prefix struct_origin_xyz struct_orientation_rpy struct_wrt_attachment_orientation_rpy">
         
         <!-- Properties -->
         <xacro:property name="mesh_package" value="eddie_description"/>
         <xacro:property name="struct_mesh_file" value="kelo_drive.stl"/>
         <xacro:property name="struct_attachment_mesh_file" value="kelo_drive_attachments.stl"/>
-        <xacro:property name="attachment_origin_xyz" value="-0.0100 -0.0006 -0.0641"/>
+        <xacro:property name="struct_wrt_attachment_origin_xyz" value="-0.0100 -0.0006 -0.0641"/>
         <xacro:property name="wheel_prefix_left" value="left_wheel_"/>
         <xacro:property name="wheel_prefix_right" value="right_wheel_"/>
-        <xacro:property name="wheel_orientation_rpy_left" value="-1.5708 0 0"/>
+        <xacro:property name="wheel_orientation_rpy_left" value="1.5708 3.1416 0"/>
         <xacro:property name="wheel_origin_xyz_left" value="0.0008 -0.0403 -0.0366"/>
-        <xacro:property name="wheel_orientation_rpy_right" value="1.5708 0 0"/>
+        <xacro:property name="wheel_orientation_rpy_right" value="-1.5708 0 0"/>
         <xacro:property name="wheel_origin_xyz_right" value="0.0008 0.0407 -0.0366"/>
 
         <!-- Instantiate wheels -->
@@ -39,8 +39,8 @@
                 </geometry>
             </collision>
             <inertial>
-                <mass value="1.0"/>
-                <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+                <mass value="0.5"/>
+                <inertia ixx="0.00042" ixy="0" ixz="0" iyy="0.00042" iyz="0" izz="0.0008"/>
             </inertial>
         </link>
         <link name="${robot_prefix}${struct_prefix}struct_link">
@@ -59,7 +59,7 @@
                 </geometry>
             </collision>
             <inertial>
-                <mass value="1.892"/>
+                <mass value="1.392"/>
                 <origin xyz="0 0 0.006" rpy="0 0 0"/>
                 <inertia ixx="0.004574163" ixy="0" ixz="0" iyy="0.004344228" iyz="0" izz="0.004640438"/>
             </inertial>
@@ -74,7 +74,7 @@
         <joint name="${robot_prefix}${struct_prefix}struct_joint" type="continuous">
             <parent link="${robot_prefix}${struct_prefix}attachment_link"/>
             <child link="${robot_prefix}${struct_prefix}struct_link"/>
-            <origin xyz="${attachment_origin_xyz}" rpy="${attachment_cts_jnt_orientation_rpy}"/>
+            <origin xyz="${struct_wrt_attachment_origin_xyz}" rpy="${struct_wrt_attachment_orientation_rpy}"/>
             <axis xyz="0 0 1"/>
         </joint>
 
