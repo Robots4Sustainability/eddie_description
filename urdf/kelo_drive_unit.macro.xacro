@@ -4,7 +4,7 @@
     <!-- Include macro files -->
     <xacro:include filename="$(find eddie_description)/urdf/kelo_hub_wheel.macro.xacro"/>
     
-    <xacro:macro name="kelo_drive_unit" params="robot_prefix joint_state_gui struct_prefix struct_origin_xyz struct_orientation_rpy struct_wrt_attachment_orientation_rpy">
+    <xacro:macro name="kelo_drive_unit" params="robot_prefix use_ros2_control struct_prefix struct_origin_xyz struct_orientation_rpy struct_wrt_attachment_orientation_rpy">
         
         <!-- Properties -->
         <xacro:property name="mesh_package" value="eddie_description"/>
@@ -20,12 +20,12 @@
 
         <!-- Instantiate wheels -->
         <xacro:kelo_hub_wheel wheel_prefix="${wheel_prefix_right}" 
-        joint_state_gui="${joint_state_gui}"
+        use_ros2_control="${use_ros2_control}"
         struct_prefix="${robot_prefix}${struct_prefix}" 
         wheel_origin_xyz="${wheel_origin_xyz_right}" 
         wheel_orientation_rpy="${wheel_orientation_rpy_right}"/>
         <xacro:kelo_hub_wheel wheel_prefix="${wheel_prefix_left}" 
-        joint_state_gui="${joint_state_gui}"
+        use_ros2_control="${use_ros2_control}"
         struct_prefix="${robot_prefix}${struct_prefix}" 
         wheel_origin_xyz="${wheel_origin_xyz_left}" 
         wheel_orientation_rpy="${wheel_orientation_rpy_left}"/>
@@ -85,6 +85,21 @@
             <origin xyz="${struct_wrt_attachment_origin_xyz}" rpy="${struct_wrt_attachment_orientation_rpy}"/>
             <axis xyz="0 0 1"/>
         </joint>
+
+        <!-- ros2 control tags -->
+        <xacro:if value="${use_ros2_control}">
+            <ros2_control name="${robot_prefix}${struct_prefix}ctr" type="system">
+                <hardware>
+                    <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+                </hardware>
+                <joint name="${robot_prefix}${struct_prefix}struct_joint">
+                    <state_interface name="position">
+                    <param name="initial_value">0.0</param>
+                    </state_interface>
+                    <state_interface name="velocity"/>
+                </joint>
+            </ros2_control>
+        </xacro:if>
 
     </xacro:macro>
 

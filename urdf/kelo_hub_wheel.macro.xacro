@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="kelo_hub_wheel">
 
     <xacro:macro name="kelo_hub_wheel"
-        params="wheel_prefix struct_prefix wheel_origin_xyz wheel_orientation_rpy joint_state_gui">
+        params="wheel_prefix struct_prefix wheel_origin_xyz wheel_orientation_rpy use_ros2_control">
 
         <!-- Properties -->
         <xacro:property name="mesh_package" value="eddie_description" />
@@ -41,7 +41,7 @@
         </joint>
 
         <!-- ros2 control tags -->
-        <xacro:if value="${joint_state_gui}">
+        <xacro:if value="${use_ros2_control}">
             <ros2_control name="${struct_prefix}${wheel_prefix}ctr" type="system">
                 <hardware>
                     <plugin>gz_ros2_control/GazeboSimSystem</plugin>
@@ -65,10 +65,6 @@
                     <state_interface name="velocity" />
                     <state_interface name="effort" />
                 </joint>
-                <!-- <transmission name="${struct_prefix}${wheel_prefix}joint_transmission">
-                    <plugin>transmission_interface/SimpleTansmission</plugin>
-                    <param name="joint_to_actuator">1</param>
-                </transmission> -->
             </ros2_control>
         </xacro:if>
 
