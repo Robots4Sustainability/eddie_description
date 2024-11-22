@@ -48,7 +48,7 @@
     <xacro:kinova_gen3
         parent="$(arg robot_name)left_arm_attachment_link"
         prefix="$(arg robot_name)left_arm_"
-        gripper="robotiq_2f_85"
+        gripper="$(arg gripper)"
         robot_ip="$(arg robot_ip_left)"
         username="$(arg username)"
         password="$(arg password)"
@@ -84,7 +84,7 @@
     <xacro:kinova_gen3
         parent="$(arg robot_name)right_arm_attachment_link"
         prefix="$(arg robot_name)right_arm_"
-        gripper="robotiq_2f_85"
+        gripper="$(arg gripper)"
         robot_ip="$(arg robot_ip_right)"
         username="$(arg username)"
         password="$(arg password)"
@@ -120,8 +120,8 @@
     <gazebo>
         <plugin filename="libgz_ros2_control-system.so"
             name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-            <!-- <robot_param>robot_description</robot_param>
-            <robot_param_node>robot_state_publisher</robot_param_node> -->
+            <robot_param>robot_description</robot_param>
+            <robot_param_node>robot_state_publisher</robot_param_node>
             <parameters>$(arg simulation_controllers)</parameters>
             <ros>
                 <remapping>~/odom:=odom</remapping>
@@ -129,6 +129,7 @@
                 <remapping>/tf_static:=tf_static</remapping>
               </ros>
         </plugin>
+        <self_collide>1</self_collide>
     </gazebo>
 
     <gazebo reference="base_link">

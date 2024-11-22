@@ -59,6 +59,7 @@
         <link name="${robot_prefix}left_arm_attachment_link" />
         <link name="${robot_prefix}right_arm_attachment_link" />
         <link name="${robot_prefix}torso_link" /> 
+        
         <link name="${robot_prefix}base_link">
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 0"/> 
@@ -74,6 +75,7 @@
                     <mesh filename="package://${mesh_package}/meshes/${eddie_base_file}"/>
                 </geometry>
             </collision>
+
             <visual>
                 <origin rpy="${torso_orientation_wrt_base_link_rpy}" xyz="${torso_origin_wrt_base_link_xyz}"/>
                 <geometry>
@@ -89,6 +91,7 @@
                 </geometry>
                 <origin rpy="${torso_orientation_wrt_base_link_rpy}" xyz="${torso_origin_wrt_base_link_xyz}"/>
             </collision>
+            
             <inertial>
                 <mass value="76.4377"/>
                 <origin xyz="0 0 0.0833" rpy="0 0 0"/>
