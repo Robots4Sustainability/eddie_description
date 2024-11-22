@@ -25,7 +25,7 @@
 
     <xacro:arg name="use_internal_bus_gripper_comm" default="false" />
     <xacro:arg name="simulation_controllers"
-        default="$(find eddie_gazebo)/config/eddie_controller.yaml" />
+        default="$(find eddie_gazebo)/config/eddie_controllers.yaml" />
 
     <!-- initial position for simulations (Mock Hardware, Gazebo, Ignition) -->
     <xacro:arg name="initial_positions_file_left"
@@ -120,11 +120,15 @@
     <gazebo>
         <plugin filename="libgz_ros2_control-system.so"
             name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-            <robot_param>robot_description</robot_param>
-            <robot_param_node>robot_state_publisher</robot_param_node>
+            <!-- <robot_param>robot_description</robot_param>
+            <robot_param_node>robot_state_publisher</robot_param_node> -->
             <parameters>$(arg simulation_controllers)</parameters>
+            <ros>
+                <remapping>~/odom:=odom</remapping>
+                <remapping>/tf:=tf</remapping>
+                <remapping>/tf_static:=tf_static</remapping>
+              </ros>
         </plugin>
-        <self_collide>1</self_collide>
     </gazebo>
 
     <gazebo reference="base_link">
