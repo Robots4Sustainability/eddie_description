@@ -6,13 +6,13 @@ Gripper not added.
 ## Environment
 
   Ubuntu: 24.04
-  
+
   ROS2: Jazzy
 
 ## Setup
 
 - Clone this repository into your workspace
-  
+
   ```bash
   # Create workspace
   mkdir -p ~/eddie_ws/src && cd ~/eddie_ws/src

@@ -44,7 +44,9 @@ def generate_launch_description():
     )
 
     eddie_xacro_file = os.path.join(
-        get_package_share_directory("eddie_description"), "urdf", "eddie_robot.urdf.xacro"
+        get_package_share_directory("eddie_description"),
+        "urdf",
+        "eddie_robot.urdf.xacro",
     )
 
     eddie_description_config = Command(
