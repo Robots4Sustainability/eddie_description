@@ -1,13 +1,14 @@
+import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.substitutions import LaunchConfiguration, Command, FindExecutable
 from launch_ros.actions import Node
-from launch_ros.descriptions import ParameterValue
 from launch.actions import DeclareLaunchArgument
-import os
 
 
 def generate_launch_description():
+    use_sim_time = LaunchConfiguration("use_sim_time")
+
     # use ros2 control arg
     use_ros2_control_arg = DeclareLaunchArgument(
         "use_ros2_control",
@@ -22,9 +23,15 @@ def generate_launch_description():
         description="Use gazebo simulation",
     )
 
+    use_sim_time_arg = DeclareLaunchArgument(
+        "use_sim_time",
+        default_value="false",
+        description="Use simulation time",
+    )
+
     # use isaac sim arg
     use_isaac_sim_arg = DeclareLaunchArgument(
-        "use_isaac_sim_arg",
+        "use_isaac_sim",
         default_value="false",
         description="Use Isaac sim",
     )
@@ -49,7 +56,7 @@ def generate_launch_description():
         "eddie_robot.urdf.xacro",
     )
 
-    eddie_description_config = Command(
+    eddie_description_urdf = Command(
         [
             FindExecutable(name="xacro"),
             " ",
@@ -60,23 +67,34 @@ def generate_launch_description():
             " ",
             "use_gz_sim:=",
             LaunchConfiguration("use_gz_sim"),
+            " ",
+            "use_sim_isaac:=",
+            LaunchConfiguration("use_isaac_sim"),
+            " ",
+            "use_fake_hardware:=",
+            LaunchConfiguration("use_fake_hardware"),
+            " ",
+            "use_fake_sensor_commands:=",
+            LaunchConfiguration("use_fake_sensor_commands"),
         ]
     )
-
-    eddie_description = {
-        "robot_description": ParameterValue(eddie_description_config, value_type=str)
-    }
 
     robot_state_publisher_node = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
         name="robot_state_publisher",
-        parameters=[eddie_description],
+        parameters=[
+            {
+                "robot_description": eddie_description_urdf,
+                "use_sim_time": use_sim_time,
+            }
+        ],
         output="screen",
     )
 
     return LaunchDescription(
         [
+            use_sim_time_arg,
             use_ros2_control_arg,
             use_gz_sim_arg,
             use_isaac_sim_arg,

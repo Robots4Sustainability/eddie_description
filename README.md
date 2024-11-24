@@ -48,13 +48,13 @@ Gripper not added.
   source install/setup.bash
 
   # View robot in rviz
-  ros2 launch eddie_description eddie_display.launch.py joint_state_gui:=false
+  ros2 launch eddie_description display_eddie.launch.py joint_state_gui:=false
   ```
 
 - View robot in rviz with joint state gui
 
   ```bash
-  ros2 launch eddie_description eddie_display.launch.py joint_state_gui:=true
+  ros2 launch eddie_description display_eddie.launch.py joint_state_gui:=true
   ```
 
 ## ROS Independent
