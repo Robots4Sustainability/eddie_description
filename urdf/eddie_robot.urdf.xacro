@@ -2,7 +2,14 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="eddie_base_with_wheels">
 
     <xacro:arg name="robot_name" default="eddie_" />
-    <xacro:arg name="use_ros2_control" default="true" />
+
+    <xacro:arg name="use_ros2_control" default="false" />
+
+    <xacro:arg name="use_gz_sim" default="false" />
+    <xacro:arg name="use_sim_isaac" default="false" />
+
+    <xacro:arg name="use_fake_hardware" default="false" />
+    <xacro:arg name="use_fake_sensor_commands" default="false" />
 
     <xacro:arg name="robot_ip_left" default="192.168.1.10" />
     <xacro:arg name="robot_ip_right" default="192.168.1.11" />
@@ -17,17 +24,11 @@
     <xacro:arg name="gripper" default="" />
     <xacro:arg name="gripper_joint_name" default="grasp_joint" />
 
-    <xacro:arg name="use_fake_hardware" default="false" />
-    <xacro:arg name="fake_sensor_commands" default="false" />
-
-    <xacro:arg name="sim_gz" default="true" />
-    <xacro:arg name="sim_isaac" default="false" />
-
     <xacro:arg name="use_internal_bus_gripper_comm" default="false" />
     <xacro:arg name="simulation_controllers"
         default="$(find eddie_gazebo)/config/eddie_controllers.yaml" />
 
-    <!-- initial position for simulations (Mock Hardware, Gazebo, Ignition) -->
+    <!-- initial position for simulations (Mock Hardware, Gazebo) -->
     <xacro:arg name="initial_positions_file_left"
         default="$(find eddie_description)/config/initial_positions_arm_left.yaml" />
     <xacro:arg name="initial_positions_file_right"
@@ -39,12 +40,16 @@
         default="$(arg initial_positions_file_right)" />
 
     <!-- Include macro files -->
-    <xacro:include filename="$(find eddie_description)/urdf/eddie_base.macro.xacro"/>
-    <xacro:include filename="$(find eddie_description)/urdf/kinova_gen3.macro.xacro"/>
+    <xacro:include filename="$(find eddie_description)/urdf/materials.xacro" />
+    <xacro:include filename="$(find eddie_description)/urdf/eddie_base.macro.xacro" />
+    <xacro:include filename="$(find eddie_description)/urdf/kinova_gen3.macro.xacro" />
     <xacro:include filename="$(find eddie_description)/urdf/kortex.ros2_gz_control.macro.xacro" />
 
-    <xacro:eddie_base robot_prefix="$(arg robot_name)" use_ros2_control="$(arg use_ros2_control)"/>
+    <!-- Eddie base with KELO hub wheels -->
+    <xacro:eddie_base robot_prefix="$(arg robot_name)" use_ros2_control="$(arg use_ros2_control)"
+        use_gz_sim="$(arg use_gz_sim)" />
 
+    <!-- Left Kinova Gen3 7 DoF arm -->
     <xacro:kinova_gen3
         parent="$(arg robot_name)left_arm_attachment_link"
         prefix="$(arg robot_name)left_arm_"
@@ -57,30 +62,32 @@
         session_inactivity_timeout_ms="$(arg session_inactivity_timeout_ms)"
         connection_inactivity_timeout_ms="$(arg connection_inactivity_timeout_ms)"
         use_fake_hardware="$(arg use_fake_hardware)"
-        fake_sensor_commands="$(arg fake_sensor_commands)"
+        fake_sensor_commands="$(arg use_fake_sensor_commands)"
         initial_positions="${xacro.load_yaml(initial_positions_file_left)}">
         <origin xyz="0.01549 0 0" rpy="1.5708 -1.5708 1.5708" />
     </xacro:kinova_gen3>
 
+    <xacro:if value="$(arg use_ros2_control)">
+        <xacro:kortex_ros2_control
+            name="$(arg robot_name)left_arm_KortexMultiInterfaceHardware"
+            prefix="$(arg robot_name)left_arm_"
+            use_fake_hardware="$(arg use_fake_hardware)"
+            fake_sensor_commands="$(arg use_fake_sensor_commands)"
+            sim_gz="$(arg use_gz_sim)"
+            tf_prefix=""
+            initial_positions="${xacro.load_yaml(initial_positions_file_left)}"
+            robot_ip="$(arg robot_ip_left)"
+            username="$(arg username)"
+            password="$(arg password)"
+            port="$(arg port)"
+            port_realtime="$(arg port_realtime)"
+            session_inactivity_timeout_ms="$(arg session_inactivity_timeout_ms)"
+            connection_inactivity_timeout_ms="$(arg connection_inactivity_timeout_ms)"
+            use_internal_bus_gripper_comm="$(arg use_internal_bus_gripper_comm)"
+            gripper_joint_name="$(arg gripper_joint_name)" />
+    </xacro:if>
 
-    <xacro:kortex_ros2_control
-        name="$(arg robot_name)left_arm_KortexMultiInterfaceHardware"
-        prefix="$(arg robot_name)left_arm_"
-        use_fake_hardware="$(arg use_fake_hardware)"
-        fake_sensor_commands="$(arg fake_sensor_commands)"
-        sim_gz="$(arg sim_gz)"
-        tf_prefix=""
-        initial_positions="${xacro.load_yaml(initial_positions_file_left)}"
-        robot_ip="$(arg robot_ip_left)"
-        username="$(arg username)"
-        password="$(arg password)"
-        port="$(arg port)"
-        port_realtime="$(arg port_realtime)"
-        session_inactivity_timeout_ms="$(arg session_inactivity_timeout_ms)"
-        connection_inactivity_timeout_ms="$(arg connection_inactivity_timeout_ms)"
-        use_internal_bus_gripper_comm="$(arg use_internal_bus_gripper_comm)" 
-        gripper_joint_name="$(arg gripper_joint_name)"/>
-
+    <!-- Right Kinova Gen3 7 DoF arm -->
     <xacro:kinova_gen3
         parent="$(arg robot_name)right_arm_attachment_link"
         prefix="$(arg robot_name)right_arm_"
@@ -93,62 +100,71 @@
         session_inactivity_timeout_ms="$(arg session_inactivity_timeout_ms)"
         connection_inactivity_timeout_ms="$(arg connection_inactivity_timeout_ms)"
         use_fake_hardware="$(arg use_fake_hardware)"
-        fake_sensor_commands="$(arg fake_sensor_commands)"
+        fake_sensor_commands="$(arg use_fake_sensor_commands)"
         initial_positions="${xacro.load_yaml(initial_positions_file_right)}">
         <origin xyz="0.01549 0 0" rpy="1.5708 -1.5708 1.5708" />
     </xacro:kinova_gen3>
 
-    <xacro:kortex_ros2_control
-        name="$(arg robot_name)right_arm_KortexMultiInterfaceHardware"
-        prefix="$(arg robot_name)right_arm_"
-        use_fake_hardware="$(arg use_fake_hardware)"
-        fake_sensor_commands="$(arg fake_sensor_commands)"
-        sim_gz="$(arg sim_gz)"
-        tf_prefix=""
-        initial_positions="${xacro.load_yaml(initial_positions_file_right)}"
-        robot_ip="$(arg robot_ip_right)"
-        username="$(arg username)"
-        password="$(arg password)"
-        port="$(arg port)"
-        port_realtime="$(arg port_realtime)"
-        session_inactivity_timeout_ms="$(arg session_inactivity_timeout_ms)"
-        connection_inactivity_timeout_ms="$(arg connection_inactivity_timeout_ms)"
-        use_internal_bus_gripper_comm="$(arg use_internal_bus_gripper_comm)" 
-        gripper_joint_name="$(arg gripper_joint_name)"/>
+    <xacro:if value="$(arg use_ros2_control)">
+        <xacro:kortex_ros2_control
+            name="$(arg robot_name)right_arm_KortexMultiInterfaceHardware"
+            prefix="$(arg robot_name)right_arm_"
+            use_fake_hardware="$(arg use_fake_hardware)"
+            fake_sensor_commands="$(arg use_fake_sensor_commands)"
+            sim_gz="$(arg use_gz_sim)"
+            tf_prefix=""
+            initial_positions="${xacro.load_yaml(initial_positions_file_right)}"
+            robot_ip="$(arg robot_ip_right)"
+            username="$(arg username)"
+            password="$(arg password)"
+            port="$(arg port)"
+            port_realtime="$(arg port_realtime)"
+            session_inactivity_timeout_ms="$(arg session_inactivity_timeout_ms)"
+            connection_inactivity_timeout_ms="$(arg connection_inactivity_timeout_ms)"
+            use_internal_bus_gripper_comm="$(arg use_internal_bus_gripper_comm)"
+            gripper_joint_name="$(arg gripper_joint_name)" />
+    </xacro:if>
 
-    <!-- gazebo tag for ros2 control -->
-    <gazebo>
-        <plugin filename="libgz_ros2_control-system.so"
-            name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-            <robot_param>robot_description</robot_param>
-            <robot_param_node>robot_state_publisher</robot_param_node>
-            <parameters>$(arg simulation_controllers)</parameters>
-            <ros>
-                <remapping>~/odom:=odom</remapping>
-                <remapping>/tf:=tf</remapping>
-                <remapping>/tf_static:=tf_static</remapping>
-              </ros>
-        </plugin>
-        <self_collide>1</self_collide>
-    </gazebo>
+    <!-- gazebo and ros2 control -->
+    <xacro:if value="$(arg use_ros2_control)">
+        <xacro:if value="$(arg use_gz_sim)">
+            <gazebo>
+                <plugin filename="libgz_ros2_control-system.so"
+                    name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+                    <robot_param>robot_description</robot_param>
+                    <robot_param_node>robot_state_publisher</robot_param_node>
+                    <parameters>$(arg simulation_controllers)</parameters>
+                    <!-- <ros>
+                        <remapping>~/odom:=odom</remapping>
+                        <remapping>/tf:=tf</remapping>
+                        <remapping>/tf_static:=tf_static</remapping>
+                    </ros> -->
+                </plugin>
+            </gazebo>
+        </xacro:if>
+    </xacro:if>
 
-    <gazebo reference="base_link">
-        <gravity>true</gravity>
-        <self_collide>false</self_collide>
-    </gazebo>
+    <xacro:if value="$(arg use_gz_sim)">
+        <gazebo>
+            <self_collide>1</self_collide>
 
-    <gazebo>
-        <plugin
-            filename="gz-sim-odometry-publisher-system"
-            name="gz::sim::systems::OdometryPublisher">
-            <odom_frame>odom</odom_frame>
-            <robot_base_frame>eddie_base_link</robot_base_frame>
-        </plugin>
+            <plugin
+                filename="gz-sim-odometry-publisher-system"
+                name="gz::sim::systems::OdometryPublisher">
+                <odom_frame>odom</odom_frame>
+                <robot_base_frame>$(arg robot_name)base_footprint</robot_base_frame>
+            </plugin>
 
-        <plugin
-            filename="gz-sim-velocity-control-system"
-            name="gz::sim::systems::VelocityControl">
-        </plugin>
-    </gazebo>
+            <plugin
+                filename="gz-sim-velocity-control-system"
+                name="gz::sim::systems::VelocityControl">
+            </plugin>
+        </gazebo>
+
+        <gazebo reference="$(arg robot_name)base_link">
+            <gravity>true</gravity>
+            <self_collide>false</self_collide>
+        </gazebo>
+    </xacro:if>
 
 </robot>

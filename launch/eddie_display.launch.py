@@ -1,9 +1,10 @@
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
-from launch.substitutions import LaunchConfiguration, Command, FindExecutable
+from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
-from launch_ros.descriptions import ParameterValue
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.conditions import IfCondition, UnlessCondition
 import os
 
@@ -15,32 +16,8 @@ def generate_launch_description():
         description="Launch joint state gui publisher",
     )
 
-    eddie_xacro_file = os.path.join(
-        get_package_share_directory("eddie_description"), "urdf", "eddie_robot.urdf.xacro"
-    )
-
     eddie_rviz_config_file = os.path.join(
         get_package_share_directory("eddie_description"), "config/rviz", "eddie.rviz"
-    )
-    
-    eddie_description_config = Command(
-        [FindExecutable(name="xacro"), 
-         " ", 
-         eddie_xacro_file,
-         " ",
-         "joint_state_gui:=", LaunchConfiguration("joint_state_gui")]
-    )
-
-    eddie_description = {
-        "robot_description": ParameterValue(eddie_description_config, value_type=str)
-    }
-
-    robot_state_publisher_node = Node(
-        package="robot_state_publisher",
-        executable="robot_state_publisher",
-        name="robot_state_publisher",
-        parameters=[eddie_description],
-        output="screen",
     )
 
     # initial positions
@@ -72,14 +49,27 @@ def generate_launch_description():
         package="rviz2",
         executable="rviz2",
         name="rviz2",
-        arguments=['-d', eddie_rviz_config_file],
+        arguments=["-d", eddie_rviz_config_file],
         output="screen",
+    )
+
+    # load_eddie launch file
+    load_eddie_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [
+                os.path.join(
+                    get_package_share_directory("eddie_description"),
+                    "launch",
+                    "load_eddie.launch.py",
+                )
+            ]
+        )
     )
 
     return LaunchDescription(
         [
             declare_joint_state_gui,
-            robot_state_publisher_node,
+            load_eddie_launch,
             joint_state_publisher_gui_node,
             joint_state_publisher_node,
             rviz2_node,

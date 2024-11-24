@@ -2,104 +2,121 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="kelo_drive_unit">
 
     <!-- Include macro files -->
-    <xacro:include filename="$(find eddie_description)/urdf/kelo_hub_wheel.macro.xacro"/>
-    
-    <xacro:macro name="kelo_drive_unit" params="robot_prefix use_ros2_control struct_prefix struct_origin_xyz struct_orientation_rpy struct_wrt_attachment_orientation_rpy">
-        
-        <!-- Properties -->
-        <xacro:property name="mesh_package" value="eddie_description"/>
-        <xacro:property name="struct_mesh_file" value="kelo_drive.stl"/>
-        <xacro:property name="struct_attachment_mesh_file" value="kelo_drive_attachments.stl"/>
-        <xacro:property name="struct_wrt_attachment_origin_xyz" value="-0.0100 -0.0006 -0.0641"/>
-        <xacro:property name="wheel_prefix_left" value="left_wheel_"/>
-        <xacro:property name="wheel_prefix_right" value="right_wheel_"/>
-        <xacro:property name="wheel_orientation_rpy_left" value="1.5708 3.1416 0"/>
-        <xacro:property name="wheel_origin_xyz_left" value="0.0008 -0.0403 -0.0366"/>
-        <xacro:property name="wheel_orientation_rpy_right" value="-1.5708 0 0"/>
-        <xacro:property name="wheel_origin_xyz_right" value="0.0008 0.0407 -0.0366"/>
+    <xacro:include filename="$(find eddie_description)/urdf/kelo_hub_wheel.macro.xacro" />
 
-        <!-- Instantiate wheels -->
-        <xacro:kelo_hub_wheel wheel_prefix="${wheel_prefix_right}" 
-        use_ros2_control="${use_ros2_control}"
-        struct_prefix="${robot_prefix}${struct_prefix}" 
-        wheel_origin_xyz="${wheel_origin_xyz_right}" 
-        wheel_orientation_rpy="${wheel_orientation_rpy_right}"/>
-        <xacro:kelo_hub_wheel wheel_prefix="${wheel_prefix_left}" 
-        use_ros2_control="${use_ros2_control}"
-        struct_prefix="${robot_prefix}${struct_prefix}" 
-        wheel_origin_xyz="${wheel_origin_xyz_left}" 
-        wheel_orientation_rpy="${wheel_orientation_rpy_left}"/>
+    <xacro:macro name="kelo_drive_unit"
+        params="parent use_ros2_control use_gz_sim struct_prefix *attachment_origin struct_wrt_attachment_rpy">
+
+        <!-- Properties -->
+        <xacro:property name="mesh_package" value="eddie_description" />
+        <xacro:property name="struct_mesh_file" value="kelo_drive.stl" />
+        <xacro:property name="struct_attachment_mesh_file" value="kelo_drive_attachments.stl" />
+
+        <!-- struct -->
+        <xacro:property name="struct_wrt_attachment_origin">
+            <origin xyz="-0.0100 -0.0006 -0.0641" rpy="${struct_wrt_attachment_rpy}" />
+        </xacro:property>
 
         <!-- Links -->
-        <link name="${robot_prefix}${struct_prefix}attachment_link">
+        <link name="${struct_prefix}attachment_link">
             <visual>
-                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <origin rpy="0 0 0" xyz="0 0 0" />
                 <geometry>
                     <mesh filename="package://${mesh_package}/meshes/${struct_attachment_mesh_file}" />
                 </geometry>
-                <material name="metallic_silver">
-                    <color rgba="0.7 0.7 0.7 1.0"/>
-                </material>
+                <material name="metallic_silver" />
             </visual>
             <collision>
                 <geometry>
-                    <mesh filename="package://${mesh_package}/meshes/${struct_attachment_mesh_file}"/>
+                    <mesh filename="package://${mesh_package}/meshes/${struct_attachment_mesh_file}" />
                 </geometry>
             </collision>
             <inertial>
-                <mass value="0.5"/>
-                <inertia ixx="0.00042" ixy="0" ixz="0" iyy="0.00042" iyz="0" izz="0.0008"/>
-            </inertial>
-        </link>
-        <link name="${robot_prefix}${struct_prefix}struct_link">
-            <visual>
-                <origin rpy="0 0 0" xyz="0 0 0"/>
-                <geometry>
-                    <mesh filename="package://${mesh_package}/meshes/${struct_mesh_file}" />
-                </geometry>
-                <material name="metallic_silver">
-                    <color rgba="0.7 0.7 0.7 1.0"/>
-                </material>
-            </visual>
-            <collision>
-                <geometry>
-                    <mesh filename="package://${mesh_package}/meshes/${struct_mesh_file}"/>
-                </geometry>
-            </collision>
-            <inertial>
-                <mass value="1.392"/>
-                <origin xyz="0 0 0.006" rpy="0 0 0"/>
-                <inertia ixx="0.004574163" ixy="0" ixz="0" iyy="0.004344228" iyz="0" izz="0.004640438"/>
+                <mass value="0.5" />
+                <inertia ixx="0.00042" ixy="0" ixz="0" iyy="0.00042" iyz="0" izz="0.0008" />
             </inertial>
         </link>
 
-        <!-- Joints -->
-        <joint name="${robot_prefix}${struct_prefix}attachment_joint" type="fixed">
-            <parent link="${robot_prefix}base_link"/>
-            <child link="${robot_prefix}${struct_prefix}attachment_link"/>
-            <origin xyz="${struct_origin_xyz}" rpy="${struct_orientation_rpy}"/>
+        <!-- attachment joint -->
+        <joint name="${struct_prefix}attachment_joint" type="fixed">
+            <parent link="${parent}" />
+            <child link="${struct_prefix}attachment_link" />
+            <xacro:insert_block name="attachment_origin" />
         </joint>
-        <joint name="${robot_prefix}${struct_prefix}struct_joint" type="continuous">
-            <parent link="${robot_prefix}${struct_prefix}attachment_link"/>
-            <child link="${robot_prefix}${struct_prefix}struct_link"/>
-            <origin xyz="${struct_wrt_attachment_origin_xyz}" rpy="${struct_wrt_attachment_orientation_rpy}"/>
-            <axis xyz="0 0 1"/>
+
+        <link name="${struct_prefix}struct_link">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://${mesh_package}/meshes/${struct_mesh_file}" />
+                </geometry>
+                <material name="metallic_silver" />
+            </visual>
+            <collision>
+                <geometry>
+                    <mesh filename="package://${mesh_package}/meshes/${struct_mesh_file}" />
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="1.392" />
+                <origin xyz="0 0 0.006" rpy="0 0 0" />
+                <inertia ixx="0.004574163" ixy="0" ixz="0" iyy="0.004344228" iyz="0"
+                    izz="0.004640438" />
+            </inertial>
+        </link>
+
+        <!-- pivot joint -->
+        <joint name="${struct_prefix}pivot_joint" type="continuous">
+            <parent link="${struct_prefix}attachment_link" />
+            <child link="${struct_prefix}struct_link" />
+            <xacro:insert_block name="struct_wrt_attachment_origin" />
+            <axis xyz="0 0 1" />
         </joint>
 
         <!-- ros2 control tags -->
         <xacro:if value="${use_ros2_control}">
-            <ros2_control name="${robot_prefix}${struct_prefix}ctr" type="system">
-                <hardware>
-                    <plugin>gz_ros2_control/GazeboSimSystem</plugin>
-                </hardware>
-                <joint name="${robot_prefix}${struct_prefix}struct_joint">
+            <ros2_control name="${struct_prefix}ctr" type="system">
+                <xacro:if value="${use_gz_sim}">
+                    <hardware>
+                        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+                    </hardware>
+                </xacro:if>
+                <joint name="${struct_prefix}pivot_joint">
                     <state_interface name="position">
-                    <param name="initial_value">0.0</param>
+                        <param name="initial_value">0.0</param>
                     </state_interface>
-                    <state_interface name="velocity"/>
+                    <state_interface name="velocity" />
                 </joint>
             </ros2_control>
         </xacro:if>
+
+        <!-- wheels -->
+
+        <!-- right wheel -->
+        <xacro:property name="right_wheel_prefix" value="r_wheel_" />
+        <xacro:property name="right_wheel_origin">
+            <origin xyz="0.0008 0.0407 -0.0366" rpy="-1.5708 0 0" />
+        </xacro:property>
+
+        <xacro:kelo_hub_wheel wheel_prefix="${struct_prefix}${right_wheel_prefix}"
+            parent="${struct_prefix}struct_link"
+            use_ros2_control="${use_ros2_control}"
+            use_gz_sim="${use_gz_sim}">
+            <xacro:insert_block name="right_wheel_origin" />
+        </xacro:kelo_hub_wheel>
+
+        <!-- left wheel -->
+        <xacro:property name="left_wheel_prefix" value="l_wheel_" />
+        <xacro:property name="left_wheel_origin">
+            <origin xyz="0.0008 -0.0403 -0.0366" rpy="1.5708 3.1416 0" />
+        </xacro:property>
+
+        <xacro:kelo_hub_wheel wheel_prefix="${struct_prefix}${left_wheel_prefix}"
+            parent="${struct_prefix}struct_link"
+            use_ros2_control="${use_ros2_control}"
+            use_gz_sim="${use_gz_sim}">
+            <xacro:insert_block name="left_wheel_origin" />
+        </xacro:kelo_hub_wheel>
 
     </xacro:macro>
 

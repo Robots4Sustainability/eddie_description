@@ -1,14 +1,13 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>eddie_description</name>
-  <version>0.0.0</version>
+  <version>0.0.1</version>
   <description>The eddie_description package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
-  <maintainer email="vamsi.kalagaturu@uni-bremen.de">Vamsi</maintainer>
+  <maintainer email="vamsikalagaturu@gmail.com">Vamsi</maintainer>
   <maintainer email="kishan.sawant@uni-bremen.de">Kishan</maintainer>
 
-  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
   <license>MIT</license>
 
   <!-- Dependencies -->
