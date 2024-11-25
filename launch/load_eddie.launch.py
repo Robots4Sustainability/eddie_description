@@ -3,7 +3,7 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.substitutions import LaunchConfiguration, Command, FindExecutable
 from launch_ros.actions import Node
-from launch.actions import DeclareLaunchArgument
+from launch.actions import DeclareLaunchArgument, LogInfo
 
 
 def generate_launch_description():
@@ -16,6 +16,13 @@ def generate_launch_description():
         description="Use ros2 control",
     )
 
+    # use kelo_tulip arg
+    use_use_kelo_tulip_arg = DeclareLaunchArgument(
+        "use_kelo_tulip",
+        default_value="false",
+        description="Use kelo_tulip driver to control wheels",
+    )
+    
     # use gazebo simulation arg
     use_gz_sim_arg = DeclareLaunchArgument(
         "use_gz_sim",
@@ -65,6 +72,9 @@ def generate_launch_description():
             "use_ros2_control:=",
             LaunchConfiguration("use_ros2_control"),
             " ",
+            "use_kelo_tulip:=",
+            LaunchConfiguration("use_kelo_tulip"),            
+            " ",
             "use_gz_sim:=",
             LaunchConfiguration("use_gz_sim"),
             " ",
@@ -78,6 +88,9 @@ def generate_launch_description():
             LaunchConfiguration("use_fake_sensor_commands"),
         ]
     )
+    
+    use_kelo_tulip = LaunchConfiguration("use_kelo_tulip")
+    log_use_kelo_tulip = LogInfo(msg=["use_kelo_tulip: ", use_kelo_tulip])
 
     robot_state_publisher_node = Node(
         package="robot_state_publisher",
@@ -96,10 +109,12 @@ def generate_launch_description():
         [
             use_sim_time_arg,
             use_ros2_control_arg,
+            use_use_kelo_tulip_arg,
             use_gz_sim_arg,
             use_isaac_sim_arg,
             use_fake_hardware_arg,
             use_fake_sensor_commands_arg,
             robot_state_publisher_node,
+            log_use_kelo_tulip,
         ]
     )

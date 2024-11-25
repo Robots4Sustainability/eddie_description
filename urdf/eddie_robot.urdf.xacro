@@ -4,6 +4,7 @@
     <xacro:arg name="robot_name" default="eddie_" />
 
     <xacro:arg name="use_ros2_control" default="false" />
+    <xacro:arg name="use_kelo_tulip" default="false" />
 
     <xacro:arg name="use_gz_sim" default="false" />
     <xacro:arg name="use_sim_isaac" default="false" />
@@ -154,11 +155,12 @@
                 <odom_frame>odom</odom_frame>
                 <robot_base_frame>$(arg robot_name)base_footprint</robot_base_frame>
             </plugin>
-
-            <plugin
-                filename="gz-sim-velocity-control-system"
-                name="gz::sim::systems::VelocityControl">
-            </plugin>
+            <xacro:unless value="$(arg use_kelo_tulip)">
+                <plugin
+                    filename="gz-sim-velocity-control-system"
+                    name="gz::sim::systems::VelocityControl">
+                </plugin>
+            </xacro:unless>
         </gazebo>
 
         <gazebo reference="$(arg robot_name)base_link">
