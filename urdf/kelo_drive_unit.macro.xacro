@@ -5,7 +5,16 @@
     <xacro:include filename="$(find eddie_description)/urdf/kelo_hub_wheel.macro.xacro" />
 
     <xacro:macro name="kelo_drive_unit"
-        params="parent use_ros2_control use_gz_sim struct_prefix *attachment_origin struct_wrt_attachment_rpy">
+        params="parent use_ros2_control use_gz_sim use_kelo_tulip struct_prefix *attachment_origin
+    struct_wrt_attachment_rpy">
+
+        <!-- pivot joint type based on use_kelo_tulip -->
+        <xacro:if value="${use_kelo_tulip}">
+            <xacro:property name="pivot_joint_type" value="continuous" />
+        </xacro:if>
+        <xacro:unless value="${use_kelo_tulip}">
+            <xacro:property name="pivot_joint_type" value="fixed" />
+        </xacro:unless>
 
         <!-- Properties -->
         <xacro:property name="mesh_package" value="eddie_description" />
@@ -66,28 +75,30 @@
         </link>
 
         <!-- pivot joint -->
-        <joint name="${struct_prefix}pivot_joint" type="continuous">
+        <joint name="${struct_prefix}pivot_joint" type="${pivot_joint_type}">
             <parent link="${struct_prefix}attachment_link" />
             <child link="${struct_prefix}struct_link" />
             <xacro:insert_block name="struct_wrt_attachment_origin" />
             <axis xyz="0 0 1" />
         </joint>
 
-        <!-- ros2 control tags -->
-        <xacro:if value="${use_ros2_control}">
-            <ros2_control name="${struct_prefix}ctr" type="system">
-                <xacro:if value="${use_gz_sim}">
-                    <hardware>
-                        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
-                    </hardware>
-                </xacro:if>
-                <joint name="${struct_prefix}pivot_joint">
-                    <state_interface name="position">
-                        <param name="initial_value">0.0</param>
-                    </state_interface>
-                    <state_interface name="velocity" />
-                </joint>
-            </ros2_control>
+        <xacro:if value="${use_kelo_tulip}">
+            <!-- ros2 control tags -->
+            <xacro:if value="${use_ros2_control}">
+                <ros2_control name="${struct_prefix}ctr" type="system">
+                    <xacro:if value="${use_gz_sim}">
+                        <hardware>
+                            <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+                        </hardware>
+                    </xacro:if>
+                    <joint name="${struct_prefix}pivot_joint">
+                        <state_interface name="position">
+                            <param name="initial_value">0.0</param>
+                        </state_interface>
+                        <state_interface name="velocity" />
+                    </joint>
+                </ros2_control>
+            </xacro:if>
         </xacro:if>
 
         <!-- wheels -->
@@ -101,7 +112,8 @@
         <xacro:kelo_hub_wheel wheel_prefix="${struct_prefix}${right_wheel_prefix}"
             parent="${struct_prefix}struct_link"
             use_ros2_control="${use_ros2_control}"
-            use_gz_sim="${use_gz_sim}">
+            use_gz_sim="${use_gz_sim}"
+            use_kelo_tulip="${use_kelo_tulip}">
             <xacro:insert_block name="right_wheel_origin" />
         </xacro:kelo_hub_wheel>
 
@@ -114,7 +126,8 @@
         <xacro:kelo_hub_wheel wheel_prefix="${struct_prefix}${left_wheel_prefix}"
             parent="${struct_prefix}struct_link"
             use_ros2_control="${use_ros2_control}"
-            use_gz_sim="${use_gz_sim}">
+            use_gz_sim="${use_gz_sim}"
+            use_kelo_tulip="${use_kelo_tulip}">
             <xacro:insert_block name="left_wheel_origin" />
         </xacro:kelo_hub_wheel>
 

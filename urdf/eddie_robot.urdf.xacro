@@ -47,8 +47,10 @@
     <xacro:include filename="$(find eddie_description)/urdf/kortex.ros2_gz_control.macro.xacro" />
 
     <!-- Eddie base with KELO hub wheels -->
-    <xacro:eddie_base robot_prefix="$(arg robot_name)" use_ros2_control="$(arg use_ros2_control)"
-        use_gz_sim="$(arg use_gz_sim)" />
+    <xacro:eddie_base robot_prefix="$(arg robot_name)"
+        use_ros2_control="$(arg use_ros2_control)"
+        use_gz_sim="$(arg use_gz_sim)"
+        use_kelo_tulip="$(arg use_kelo_tulip)" />
 
     <!-- Left Kinova Gen3 7 DoF arm -->
     <xacro:kinova_gen3

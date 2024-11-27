@@ -4,7 +4,7 @@
     <!-- Include macro files -->
     <xacro:include filename="$(find eddie_description)/urdf/kelo_drive_unit.macro.xacro" />
 
-    <xacro:macro name="eddie_base" params="robot_prefix use_ros2_control use_gz_sim">
+    <xacro:macro name="eddie_base" params="robot_prefix use_ros2_control use_gz_sim use_kelo_tulip">
 
         <!-- Properties -->
         <xacro:property name="mesh_package" value="eddie_description" />
@@ -117,6 +117,45 @@
             <xacro:insert_block name="right_arm_attachment_origin" />
         </joint>
 
+        <!-- laser scanners -->
+        <link name="${robot_prefix}front_right_laser_attachment_link" />
+        <link name="${robot_prefix}rear_left_laser_attachment_link" />
+
+        <joint name="${robot_prefix}front_right_laser_attachment_joint" type="fixed">
+            <parent link="${robot_prefix}base_link" />
+            <child link="${robot_prefix}front_right_laser_attachment_link" />
+            <origin xyz="0.2193 -0.2391 0.0682" rpy="0 0 0" />
+        </joint>
+
+        <joint name="${robot_prefix}rear_left_laser_attachment_joint" type="fixed">
+            <parent link="${robot_prefix}base_link" />
+            <child link="${robot_prefix}rear_left_laser_attachment_link" />
+            <origin xyz="-0.2193 0.2386 0.0682" rpy="0 0 0" />
+        </joint>
+
+        <!-- instantiate laser scanners -->
+        <xacro:include filename="$(find eddie_description)/urdf/sensors/hokuyo.urdf.xacro" />
+
+        <!-- front right -->
+        <xacro:hokuyo
+            name="${robot_prefix}front_right_laser_"
+            parent="${robot_prefix}front_right_laser_attachment_link"
+            topic="/${robot_prefix}front_right_laser"
+            use_gz_sim="${use_gz_sim}"
+            min_angle="-1.5" >
+            <origin xyz="0 0 0" rpy="${pi} 0 0" />
+        </xacro:hokuyo>
+
+        <!-- rear left -->
+        <xacro:hokuyo
+            name="${robot_prefix}rear_left_laser_"
+            parent="${robot_prefix}rear_left_laser_attachment_link"
+            topic="/${robot_prefix}rear_left_laser"
+            use_gz_sim="${use_gz_sim}"
+            min_angle="-1.3" >
+            <origin xyz="0 0 0" rpy="${pi} 0 ${pi}" />
+        </xacro:hokuyo>
+
         <!-- Instantiate wheel units -->
 
         <!-- front left -->
@@ -124,6 +163,7 @@
             parent="${robot_prefix}base_link"
             use_ros2_control="${use_ros2_control}"
             use_gz_sim="${use_gz_sim}"
+            use_kelo_tulip="${use_kelo_tulip}"
             struct_prefix="${robot_prefix}front_left_drive_"
             struct_wrt_attachment_rpy="${front_left_struct_wrt_attachment_rpy}">
             <xacro:insert_block name="front_left_attachment_origin" />
@@ -134,6 +174,7 @@
             parent="${robot_prefix}base_link"
             use_ros2_control="${use_ros2_control}"
             use_gz_sim="${use_gz_sim}"
+            use_kelo_tulip="${use_kelo_tulip}"
             struct_prefix="${robot_prefix}rear_left_drive_"
             struct_wrt_attachment_rpy="${rear_left_struct_wrt_attachment_rpy}">
             <xacro:insert_block name="rear_left_attachment_origin" />
@@ -144,6 +185,7 @@
             parent="${robot_prefix}base_link"
             use_ros2_control="${use_ros2_control}"
             use_gz_sim="${use_gz_sim}"
+            use_kelo_tulip="${use_kelo_tulip}"
             struct_prefix="${robot_prefix}rear_right_drive_"
             struct_wrt_attachment_rpy="${front_right_struct_wrt_attachment_rpy}">
             <xacro:insert_block name="rear_right_attachment_origin" />
@@ -154,6 +196,7 @@
             parent="${robot_prefix}base_link"
             use_ros2_control="${use_ros2_control}"
             use_gz_sim="${use_gz_sim}"
+            use_kelo_tulip="${use_kelo_tulip}"
             struct_prefix="${robot_prefix}front_right_drive_"
             struct_wrt_attachment_rpy="${rear_right_struct_wrt_attachment_rpy}">
             <xacro:insert_block name="front_right_attachment_origin" />
