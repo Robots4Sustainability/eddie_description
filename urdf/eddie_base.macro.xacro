@@ -54,15 +54,6 @@
                 rpy="${0} ${0 + 0.09} ${1.5708 - 2.3632}" />
         </xacro:property>
 
-        <!-- odom -->
-        <link name="odom" />
-
-        <joint name="odom_joint" type="fixed">
-            <parent link="odom" />
-            <child link="${robot_prefix}base_footprint" />
-            <origin xyz="0 0 0" rpy="0 0 0" />
-        </joint>
-
         <!-- Links -->
         <link name="${robot_prefix}base_footprint" />
         <link name="${robot_prefix}left_arm_attachment_link" />
