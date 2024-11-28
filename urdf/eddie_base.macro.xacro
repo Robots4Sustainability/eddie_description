@@ -54,6 +54,15 @@
                 rpy="${0} ${0 + 0.09} ${1.5708 - 2.3632}" />
         </xacro:property>
 
+        <!-- odom -->
+        <link name="odom" />
+
+        <joint name="odom_joint" type="fixed">
+            <parent link="odom" />
+            <child link="${robot_prefix}base_footprint" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
+        </joint>
+
         <!-- Links -->
         <link name="${robot_prefix}base_footprint" />
         <link name="${robot_prefix}left_arm_attachment_link" />
@@ -142,7 +151,7 @@
             parent="${robot_prefix}front_right_laser_attachment_link"
             topic="/${robot_prefix}front_right_laser"
             use_gz_sim="${use_gz_sim}"
-            min_angle="-1.5" >
+            min_angle="-1.5">
             <origin xyz="0 0 0" rpy="${pi} 0 0" />
         </xacro:hokuyo>
 
@@ -152,9 +161,28 @@
             parent="${robot_prefix}rear_left_laser_attachment_link"
             topic="/${robot_prefix}rear_left_laser"
             use_gz_sim="${use_gz_sim}"
-            min_angle="-1.3" >
+            min_angle="-1.3">
             <origin xyz="0 0 0" rpy="${pi} 0 ${pi}" />
         </xacro:hokuyo>
+
+        <!-- imu -->
+        <link name="${robot_prefix}imu_link" />
+        <joint name="${robot_prefix}imu_joint" type="fixed">
+            <parent link="${robot_prefix}base_link" />
+            <child link="${robot_prefix}imu_link" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
+        </joint>
+
+        <xacro:if value="${use_gz_sim}">
+            <gazebo reference="${robot_prefix}imu_link">
+                <sensor name="${robot_prefix}imu_sensor" type="imu">
+                    <always_on>1</always_on>
+                    <update_rate>1</update_rate>
+                    <visualize>true</visualize>
+                    <topic>${robot_prefix}imu</topic>
+                </sensor>
+            </gazebo>
+        </xacro:if>
 
         <!-- Instantiate wheel units -->
 
