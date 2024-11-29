@@ -142,8 +142,9 @@
             parent="${robot_prefix}front_right_laser_attachment_link"
             topic="/${robot_prefix}front_right_laser"
             use_gz_sim="${use_gz_sim}"
-            min_angle="-1.5">
-            <origin xyz="0 0 0" rpy="${pi} 0 0" />
+            max_angle="1.7"
+            min_angle="-1.7">
+            <origin xyz="0 0 0" rpy="${pi} 0 -0.7854" />
         </xacro:hokuyo>
 
         <!-- rear left -->
@@ -152,8 +153,9 @@
             parent="${robot_prefix}rear_left_laser_attachment_link"
             topic="/${robot_prefix}rear_left_laser"
             use_gz_sim="${use_gz_sim}"
-            min_angle="-1.3">
-            <origin xyz="0 0 0" rpy="${pi} 0 ${pi}" />
+            max_angle="1.7"
+            min_angle="-1.7">
+            <origin xyz="0 0 0" rpy="${pi} 0 2.3562" />
         </xacro:hokuyo>
 
         <!-- imu -->
