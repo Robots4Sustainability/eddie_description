@@ -31,14 +31,14 @@
                 </geometry>
             </collision>
 
-            <surface>
+            <!-- <surface>
                 <friction>
                     <ode>
                         <mu>1.0</mu>
                         <mu2>1.0</mu2>
                     </ode>
                 </friction>
-            </surface>
+            </surface> -->
 
             <inertial>
                 <mass value="1.563" />
