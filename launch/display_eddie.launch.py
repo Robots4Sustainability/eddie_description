@@ -63,7 +63,10 @@ def generate_launch_description():
                     "load_eddie.launch.py",
                 )
             ]
-        )
+        ),
+        launch_arguments={
+            "use_kelo_tulip": "true",
+        }.items(),
     )
 
     return LaunchDescription(
