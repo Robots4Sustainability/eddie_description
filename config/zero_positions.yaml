@@ -1,0 +1,20 @@
+# NOTE: Used for both 6 and 7 dof bots. The joint_7 value will be unused for 6 dof bots
+joint_state_publisher:
+  ros__parameters:
+    zeros:
+      # left arm
+      eddie_left_arm_joint_1: -0.70
+      eddie_left_arm_joint_2: -2.05
+      eddie_left_arm_joint_3: 2.14
+      eddie_left_arm_joint_4: -2.44
+      eddie_left_arm_joint_5: -1.57
+      eddie_left_arm_joint_6: 0.00
+      eddie_left_arm_joint_7: 0.00
+      # right arm
+      eddie_right_arm_joint_1: 0.70
+      eddie_right_arm_joint_2: -2.05
+      eddie_right_arm_joint_3: 0.90
+      eddie_right_arm_joint_4: 2.44
+      eddie_right_arm_joint_5: 1.57
+      eddie_right_arm_joint_6: 0.00
+      eddie_right_arm_joint_7: 0.00

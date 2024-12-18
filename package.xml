@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>eddie_description</name>
+  <version>0.0.1</version>
+  <description>The eddie_description package</description>
+
+  <!-- One maintainer tag required, multiple allowed, one person per tag -->
+  <maintainer email="vamsikalagaturu@gmail.com">Vamsi</maintainer>
+  <maintainer email="kishan.sawant@uni-bremen.de">Kishan</maintainer>
+
+  <license>MIT</license>
+
+  <!-- Dependencies -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>ros2launch</exec_depend>
+  <exec_depend>kortex_description</exec_depend>
+  <exec_depend>robotiq_description</exec_depend>
+
+  <!-- Export build information -->
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+</package>

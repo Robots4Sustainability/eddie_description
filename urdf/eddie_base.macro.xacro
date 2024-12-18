@@ -1,0 +1,228 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="eddie_base">
+
+    <!-- Include macro files -->
+    <xacro:include filename="$(find eddie_description)/urdf/kelo_drive_unit.macro.xacro" />
+
+    <xacro:macro name="eddie_base" params="robot_prefix use_ros2_control use_gz_sim use_kelo_tulip">
+
+        <!-- Properties -->
+        <xacro:property name="mesh_package" value="eddie_description" />
+        <xacro:property name="eddie_base_file" value="kelo_base.stl" />
+        <xacro:property name="eddie_torso_file" value="kelo_torso.stl" />
+
+        <!-- wheel unit attachments -->
+        <xacro:property name="front_left_attachment_origin">
+            <origin xyz="0.2078 0.1880 -0.0632" rpy="0 0 1.5708" />
+        </xacro:property>
+
+        <xacro:property name="rear_left_attachment_origin">
+            <origin xyz="-0.2078 0.1880 -0.0632" rpy="0 0 1.5708" />
+        </xacro:property>
+
+        <xacro:property name="rear_right_attachment_origin">
+            <origin xyz="-0.2078 -0.1880 -0.0632" rpy="0 0 -1.5708" />
+        </xacro:property>
+
+        <xacro:property name="front_right_attachment_origin">
+            <origin xyz="0.2078 -0.1880 -0.0632" rpy="0 0 -1.5708" />
+        </xacro:property>
+
+        <xacro:property name="front_right_struct_wrt_attachment_rpy" value="0 0 -1.5708" />
+        <xacro:property name="front_left_struct_wrt_attachment_rpy" value="0 0 1.5708" />
+        <xacro:property name="rear_right_struct_wrt_attachment_rpy" value="0 0 -1.5708" />
+        <xacro:property name="rear_left_struct_wrt_attachment_rpy" value="0 0 1.5708" />
+
+        <!-- base link origin -->
+        <xacro:property name="base_link_origin">
+            <origin xyz="0 0 0.2164" rpy="0 0 0" />
+        </xacro:property>
+
+        <!-- torso origin -->
+        <xacro:property name="torso_origin_wrt_base_link">
+            <origin xyz="-0.1738 0.0003 0.4184" rpy="0 0 1.5708" />
+        </xacro:property>
+
+        <!-- arm attachment origins -->
+        <xacro:property name="left_arm_attachment_origin">
+            <origin xyz="${-0.1738 + 0.0236} ${0.0003 + 0.0676} ${0.4184 + 0.1160}"
+                rpy="${0} ${0 + 0.09} ${1.5708 - 0.7783}" />
+        </xacro:property>
+
+        <xacro:property name="right_arm_attachment_origin">
+            <origin xyz="${-0.1738 + 0.0236} ${0.0003 - 0.0676} ${0.4184 + 0.1160}"
+                rpy="${0} ${0 + 0.09} ${1.5708 - 2.3632}" />
+        </xacro:property>
+
+        <!-- Links -->
+        <link name="${robot_prefix}base_footprint" />
+        <link name="${robot_prefix}left_arm_attachment_link" />
+        <link name="${robot_prefix}right_arm_attachment_link" />
+
+        <link name="${robot_prefix}base_link">
+            <!-- base -->
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://${mesh_package}/meshes/${eddie_base_file}" />
+                </geometry>
+                <material name="light_gray" />
+            </visual>
+            <collision>
+                <geometry>
+                    <mesh filename="package://${mesh_package}/meshes/${eddie_base_file}" />
+                </geometry>
+            </collision>
+
+            <!-- torso -->
+            <visual>
+                <xacro:insert_block name="torso_origin_wrt_base_link" />
+                <geometry>
+                    <mesh filename="package://${mesh_package}/meshes/${eddie_torso_file}" />
+                </geometry>
+                <material name="metallic_silver" />
+            </visual>
+            <collision>
+                <xacro:insert_block name="torso_origin_wrt_base_link" />
+                <geometry>
+                    <mesh filename="package://${mesh_package}/meshes/${eddie_torso_file}" />
+                </geometry>
+            </collision>
+
+            <!-- base + torso -->
+            <inertial>
+                <mass value="76.4377" />
+                <origin xyz="0 0 0.0833" rpy="0 0 0" />
+                <inertia ixx="4.128795216" ixy="0" ixz="0" iyy="4.117596854" iyz="0"
+                    izz="3.364397364" />
+            </inertial>
+        </link>
+
+        <!-- Joints -->
+        <joint name="${robot_prefix}base_link_joint" type="fixed">
+            <parent link="${robot_prefix}base_footprint" />
+            <child link="${robot_prefix}base_link" />
+            <xacro:insert_block name="base_link_origin" />
+        </joint>
+
+        <joint name="${robot_prefix}left_arm_attachment_joint" type="fixed">
+            <parent link="${robot_prefix}base_link" />
+            <child link="${robot_prefix}left_arm_attachment_link" />
+            <xacro:insert_block name="left_arm_attachment_origin" />
+        </joint>
+
+        <joint name="${robot_prefix}right_arm_attachment_joint" type="fixed">
+            <parent link="${robot_prefix}base_link" />
+            <child link="${robot_prefix}right_arm_attachment_link" />
+            <xacro:insert_block name="right_arm_attachment_origin" />
+        </joint>
+
+        <!-- laser scanners -->
+        <link name="${robot_prefix}front_right_laser_attachment_link" />
+        <link name="${robot_prefix}rear_left_laser_attachment_link" />
+
+        <joint name="${robot_prefix}front_right_laser_attachment_joint" type="fixed">
+            <parent link="${robot_prefix}base_link" />
+            <child link="${robot_prefix}front_right_laser_attachment_link" />
+            <origin xyz="0.2193 -0.2391 0.0682" rpy="0 0 0" />
+        </joint>
+
+        <joint name="${robot_prefix}rear_left_laser_attachment_joint" type="fixed">
+            <parent link="${robot_prefix}base_link" />
+            <child link="${robot_prefix}rear_left_laser_attachment_link" />
+            <origin xyz="-0.2193 0.2386 0.0682" rpy="0 0 0" />
+        </joint>
+
+        <!-- instantiate laser scanners -->
+        <xacro:include filename="$(find eddie_description)/urdf/sensors/hokuyo.urdf.xacro" />
+
+        <!-- front right -->
+        <xacro:hokuyo
+            name="${robot_prefix}front_right_laser_"
+            parent="${robot_prefix}front_right_laser_attachment_link"
+            topic="/${robot_prefix}front_right_laser"
+            use_gz_sim="${use_gz_sim}"
+            max_angle="1.7"
+            min_angle="-1.7">
+            <origin xyz="0 0 0" rpy="${pi} 0 -0.7854" />
+        </xacro:hokuyo>
+
+        <!-- rear left -->
+        <xacro:hokuyo
+            name="${robot_prefix}rear_left_laser_"
+            parent="${robot_prefix}rear_left_laser_attachment_link"
+            topic="/${robot_prefix}rear_left_laser"
+            use_gz_sim="${use_gz_sim}"
+            max_angle="1.7"
+            min_angle="-1.7">
+            <origin xyz="0 0 0" rpy="${pi} 0 2.3562" />
+        </xacro:hokuyo>
+
+        <!-- imu -->
+        <link name="${robot_prefix}imu_link" />
+        <joint name="${robot_prefix}imu_joint" type="fixed">
+            <parent link="${robot_prefix}base_link" />
+            <child link="${robot_prefix}imu_link" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
+        </joint>
+
+        <xacro:if value="${use_gz_sim}">
+            <gazebo reference="${robot_prefix}imu_link">
+                <sensor name="${robot_prefix}imu_sensor" type="imu">
+                    <always_on>1</always_on>
+                    <update_rate>1</update_rate>
+                    <visualize>true</visualize>
+                    <topic>${robot_prefix}imu</topic>
+                </sensor>
+            </gazebo>
+        </xacro:if>
+
+        <!-- Instantiate wheel units -->
+
+        <!-- front left -->
+        <xacro:kelo_drive_unit
+            parent="${robot_prefix}base_link"
+            use_ros2_control="${use_ros2_control}"
+            use_gz_sim="${use_gz_sim}"
+            use_kelo_tulip="${use_kelo_tulip}"
+            struct_prefix="${robot_prefix}front_left_drive_"
+            struct_wrt_attachment_rpy="${front_left_struct_wrt_attachment_rpy}">
+            <xacro:insert_block name="front_left_attachment_origin" />
+        </xacro:kelo_drive_unit>
+
+        <!-- rear left -->
+        <xacro:kelo_drive_unit
+            parent="${robot_prefix}base_link"
+            use_ros2_control="${use_ros2_control}"
+            use_gz_sim="${use_gz_sim}"
+            use_kelo_tulip="${use_kelo_tulip}"
+            struct_prefix="${robot_prefix}rear_left_drive_"
+            struct_wrt_attachment_rpy="${rear_left_struct_wrt_attachment_rpy}">
+            <xacro:insert_block name="rear_left_attachment_origin" />
+        </xacro:kelo_drive_unit>
+
+        <!-- rear right -->
+        <xacro:kelo_drive_unit
+            parent="${robot_prefix}base_link"
+            use_ros2_control="${use_ros2_control}"
+            use_gz_sim="${use_gz_sim}"
+            use_kelo_tulip="${use_kelo_tulip}"
+            struct_prefix="${robot_prefix}rear_right_drive_"
+            struct_wrt_attachment_rpy="${front_right_struct_wrt_attachment_rpy}">
+            <xacro:insert_block name="rear_right_attachment_origin" />
+        </xacro:kelo_drive_unit>
+
+        <!-- front right -->
+        <xacro:kelo_drive_unit
+            parent="${robot_prefix}base_link"
+            use_ros2_control="${use_ros2_control}"
+            use_gz_sim="${use_gz_sim}"
+            use_kelo_tulip="${use_kelo_tulip}"
+            struct_prefix="${robot_prefix}front_right_drive_"
+            struct_wrt_attachment_rpy="${rear_right_struct_wrt_attachment_rpy}">
+            <xacro:insert_block name="front_right_attachment_origin" />
+        </xacro:kelo_drive_unit>
+
+    </xacro:macro>
+
+</robot>
