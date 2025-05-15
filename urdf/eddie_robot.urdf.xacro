@@ -27,7 +27,7 @@
 
     <xacro:arg name="use_internal_bus_gripper_comm" default="false" />
     <xacro:arg name="simulation_controllers"
-        default="$(find eddie_gazebo)/config/eddie_controllers.yaml" />
+        default="$(find eddie_description)/config/eddie_controllers.yaml" />
 
     <!-- initial position for simulations (Mock Hardware, Gazebo) -->
     <xacro:arg name="initial_positions_file_left"

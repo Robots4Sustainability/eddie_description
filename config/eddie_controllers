@@ -1,0 +1,123 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 1000 # Hz
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+    arm_right_joint_trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+    arm_left_joint_trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+    arm_right_effort_controller:
+      type: effort_controllers/JointGroupEffortController
+    arm_left_effort_controller:
+      type: effort_controllers/JointGroupEffortController
+    base_velocity_controller:
+      type: velocity_controllers/JointGroupVelocityController
+    base_effort_controller:
+      type: effort_controllers/JointGroupEffortController
+arm_left_joint_trajectory_controller:
+  ros__parameters:
+    joints:
+      - eddie_left_arm_joint_1
+      - eddie_left_arm_joint_2
+      - eddie_left_arm_joint_3
+      - eddie_left_arm_joint_4
+      - eddie_left_arm_joint_5
+      - eddie_left_arm_joint_6
+      - eddie_left_arm_joint_7
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+    allow_partial_joints_goal: false
+    constraints:
+      stopped_velocity_tolerance: 0.0
+      goal_time: 0.0
+arm_right_joint_trajectory_controller:
+  ros__parameters:
+    joints:
+      - eddie_right_arm_joint_1
+      - eddie_right_arm_joint_2
+      - eddie_right_arm_joint_3
+      - eddie_right_arm_joint_4
+      - eddie_right_arm_joint_5
+      - eddie_right_arm_joint_6
+      - eddie_right_arm_joint_7
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+    allow_partial_joints_goal: false
+    constraints:
+      stopped_velocity_tolerance: 0.0
+      goal_time: 0.0
+arm_right_effort_controller:
+  ros__parameters:
+    joints:
+      - eddie_right_arm_joint_1
+      - eddie_right_arm_joint_2
+      - eddie_right_arm_joint_3
+      - eddie_right_arm_joint_4
+      - eddie_right_arm_joint_5
+      - eddie_right_arm_joint_6
+      - eddie_right_arm_joint_7
+    command_interfaces:
+      - effort
+    state_interfaces:
+      - position
+      - velocity
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+    allow_partial_joints_goal: false
+    constraints:
+      stopped_velocity_tolerance: 0.0
+      goal_time: 0.0
+arm_left_effort_controller:
+  ros__parameters:
+    joints:
+      - eddie_left_arm_joint_1
+      - eddie_left_arm_joint_2
+      - eddie_left_arm_joint_3
+      - eddie_left_arm_joint_4
+      - eddie_left_arm_joint_5
+      - eddie_left_arm_joint_6
+      - eddie_left_arm_joint_7
+    command_interfaces:
+      - effort
+    state_interfaces:
+      - position
+      - velocity
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+    allow_partial_joints_goal: false
+    constraints:
+      stopped_velocity_tolerance: 0.0
+      goal_time: 0.0
+base_velocity_controller:
+  ros__parameters:
+    joints:
+      - eddie_front_left_drive_l_wheel_joint
+      - eddie_front_left_drive_r_wheel_joint
+      - eddie_rear_left_drive_l_wheel_joint
+      - eddie_rear_left_drive_r_wheel_joint
+      - eddie_rear_right_drive_l_wheel_joint
+      - eddie_rear_right_drive_r_wheel_joint
+      - eddie_front_right_drive_l_wheel_joint
+      - eddie_front_right_drive_r_wheel_joint
+base_effort_controller:
+  ros__parameters:
+    joints:
+      - eddie_front_left_drive_l_wheel_joint
+      - eddie_front_left_drive_r_wheel_joint
+      - eddie_rear_left_drive_l_wheel_joint
+      - eddie_rear_left_drive_r_wheel_joint
+      - eddie_rear_right_drive_l_wheel_joint
+      - eddie_rear_right_drive_r_wheel_joint
+      - eddie_front_right_drive_l_wheel_joint
+      - eddie_front_right_drive_r_wheel_joint
