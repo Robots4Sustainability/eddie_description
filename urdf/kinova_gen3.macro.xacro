@@ -102,6 +102,18 @@
         <origin xyz="0 0 0" rpy="0 0 0" />
       </xacro:robotiq_gripper>
 
+      <!-- robotiq 2f-85 length parameters -->
+      <xacro:property name="robotiq_85_base_tip_open_length" value="0.1489" />
+      <xacro:property name="robotiq_85_base_tip_closed_length" value="0.1628" />
+
+      <!-- robotiq 2f-85 grasp link -->
+      <link name="${prefix}robotiq_85_grasp_link" />
+      <joint name="${prefix}robotiq_85_grasp_joint" type="fixed">
+        <parent link="${prefix}robotiq_85_base_link"/>
+        <child link="${prefix}robotiq_85_grasp_link"/>
+        <origin rpy="0 0 0" xyz="0 0 ${robotiq_85_base_tip_open_length}"/>
+      </joint>
+
     </xacro:unless>
 
   </xacro:macro>
