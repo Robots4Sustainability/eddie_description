@@ -42,53 +42,18 @@
 
     <!-- Include macro files -->
     <xacro:include filename="$(find eddie_description)/urdf/materials.xacro" />
-    <xacro:include filename="$(find eddie_description)/urdf/eddie_base.macro.xacro" />
     <xacro:include filename="$(find eddie_description)/urdf/kinova_gen3.macro.xacro" />
     <xacro:include filename="$(find eddie_description)/urdf/kortex.ros2_gz_control.macro.xacro" />
 
-    <!-- Eddie base with KELO hub wheels -->
-    <xacro:eddie_base robot_prefix="$(arg robot_name)"
-        use_ros2_control="$(arg use_ros2_control)"
-        use_gz_sim="$(arg use_gz_sim)"
-        use_kelo_tulip="$(arg use_kelo_tulip)" />
+    <!-- Minimal root links for right-arm-only debug model -->
+    <link name="$(arg robot_name)base_footprint" />
+    <link name="$(arg robot_name)right_arm_attachment_link" />
 
-    <!-- Left Kinova Gen3 7 DoF arm -->
-    <xacro:kinova_gen3
-        parent="$(arg robot_name)left_arm_attachment_link"
-        prefix="$(arg robot_name)left_arm_"
-        gripper="$(arg gripper)"
-        robot_ip="$(arg robot_ip_left)"
-        username="$(arg username)"
-        password="$(arg password)"
-        port="$(arg port)"
-        port_realtime="$(arg port_realtime)"
-        session_inactivity_timeout_ms="$(arg session_inactivity_timeout_ms)"
-        connection_inactivity_timeout_ms="$(arg connection_inactivity_timeout_ms)"
-        use_fake_hardware="$(arg use_fake_hardware)"
-        fake_sensor_commands="$(arg use_fake_sensor_commands)"
-        initial_positions="${xacro.load_yaml(initial_positions_file_left)}">
-        <origin xyz="0.01549 0 0" rpy="1.5708 -1.5708 1.5708" />
-    </xacro:kinova_gen3>
-
-    <xacro:if value="$(arg use_ros2_control)">
-        <xacro:kortex_ros2_control
-            name="$(arg robot_name)left_arm_KortexMultiInterfaceHardware"
-            prefix="$(arg robot_name)left_arm_"
-            use_fake_hardware="$(arg use_fake_hardware)"
-            fake_sensor_commands="$(arg use_fake_sensor_commands)"
-            sim_gz="$(arg use_gz_sim)"
-            tf_prefix=""
-            initial_positions="${xacro.load_yaml(initial_positions_file_left)}"
-            robot_ip="$(arg robot_ip_left)"
-            username="$(arg username)"
-            password="$(arg password)"
-            port="$(arg port)"
-            port_realtime="$(arg port_realtime)"
-            session_inactivity_timeout_ms="$(arg session_inactivity_timeout_ms)"
-            connection_inactivity_timeout_ms="$(arg connection_inactivity_timeout_ms)"
-            use_internal_bus_gripper_comm="$(arg use_internal_bus_gripper_comm)"
-            gripper_joint_name="$(arg gripper_joint_name)" />
-    </xacro:if>
+    <joint name="$(arg robot_name)right_arm_attachment_joint" type="fixed">
+        <parent link="$(arg robot_name)base_footprint" />
+        <child link="$(arg robot_name)right_arm_attachment_link" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
+    </joint>
 
     <!-- Right Kinova Gen3 7 DoF arm -->
     <xacro:kinova_gen3
@@ -108,7 +73,7 @@
         use_fake_hardware="$(arg use_fake_hardware)"
         fake_sensor_commands="$(arg use_fake_sensor_commands)"
         initial_positions="${xacro.load_yaml(initial_positions_file_right)}">
-        <origin xyz="0.01549 0 0" rpy="1.5708 -1.5708 1.5708" />
+        <origin xyz="0 0 0.707" rpy="0 0 0" />
     </xacro:kinova_gen3>
 
     <xacro:if value="$(arg use_ros2_control)">
@@ -168,7 +133,7 @@
             </xacro:unless>
         </gazebo>
 
-        <gazebo reference="$(arg robot_name)base_link">
+        <gazebo reference="$(arg robot_name)right_arm_attachment_link">
             <gravity>true</gravity>
             <self_collide>false</self_collide>
         </gazebo>

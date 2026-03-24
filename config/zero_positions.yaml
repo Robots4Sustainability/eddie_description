@@ -11,10 +11,10 @@ joint_state_publisher:
       eddie_left_arm_joint_6: 0.00
       eddie_left_arm_joint_7: 0.00
       # right arm
-      eddie_right_arm_joint_1: 0.70
-      eddie_right_arm_joint_2: -2.05
-      eddie_right_arm_joint_3: 0.90
-      eddie_right_arm_joint_4: 2.44
-      eddie_right_arm_joint_5: 1.57
-      eddie_right_arm_joint_6: 0.00
-      eddie_right_arm_joint_7: 0.00
+      eddie_right_arm_joint_1: 0.00
+      eddie_right_arm_joint_2: 0.30
+      eddie_right_arm_joint_3: 0.00
+      eddie_right_arm_joint_4: 2.30
+      eddie_right_arm_joint_5: 0.00
+      eddie_right_arm_joint_6: -1.00
+      eddie_right_arm_joint_7: -1.60
