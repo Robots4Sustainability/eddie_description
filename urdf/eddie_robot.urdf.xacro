@@ -44,9 +44,13 @@
     <xacro:include filename="$(find eddie_description)/urdf/materials.xacro" />
     <xacro:include filename="$(find eddie_description)/urdf/kinova_gen3.macro.xacro" />
     <xacro:include filename="$(find eddie_description)/urdf/kortex.ros2_gz_control.macro.xacro" />
+    <xacro:include filename="$(find eddie_description)/urdf/table.macro.xacro" />
+
+    <!-- Choose table as base -->
+    <xacro:table prefix="$(arg robot_name)" />
 
     <!-- Minimal root links for right-arm-only debug model -->
-    <link name="$(arg robot_name)base_footprint" />
+    <!-- <link name="$(arg robot_name)base_footprint" />-->
     <link name="$(arg robot_name)right_arm_attachment_link" />
 
     <joint name="$(arg robot_name)right_arm_attachment_joint" type="fixed">
