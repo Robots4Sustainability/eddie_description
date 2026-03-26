@@ -7,7 +7,7 @@
         <!-- Tabletop -->
         <origin xyz="-0.305 0 0.682" rpy="0 0 0" />
         <geometry>
-          <box size="0.8 0.8 0.05" />
+          <box size="0.8 1.6 0.05" />
         </geometry>
         <material name="Grey">
           <color rgba="0.6 0.6 0.6 1.0" />
@@ -16,7 +16,7 @@
 
       <visual>
         <!-- Leg 1 -->
-        <origin xyz="0.045 0.35 0.3285" rpy="0 0 0" />
+        <origin xyz="0.045 0.70 0.3285" rpy="0 0 0" />
         <geometry>
           <box size="0.05 0.05 0.657" />
         </geometry>
@@ -27,7 +27,7 @@
 
       <visual>
         <!-- Leg 2 -->
-        <origin xyz="0.045 -0.35 0.3285" rpy="0 0 0" />
+        <origin xyz="0.045 -0.70 0.3285" rpy="0 0 0" />
         <geometry>
           <box size="0.05 0.05 0.657" />
         </geometry>
@@ -38,7 +38,7 @@
 
       <visual>
         <!-- Leg 3 -->
-        <origin xyz="-0.655 0.35 0.3285" rpy="0 0 0" />
+        <origin xyz="-0.655 0.70 0.3285" rpy="0 0 0" />
         <geometry>
           <box size="0.05 0.05 0.657" />
         </geometry>
@@ -49,7 +49,7 @@
 
       <visual>
         <!-- Leg 4 -->
-        <origin xyz="-0.655 -0.35 0.3285" rpy="0 0 0" />
+        <origin xyz="-0.655 -0.70 0.3285" rpy="0 0 0" />
         <geometry>
           <box size="0.05 0.05 0.657" />
         </geometry>
@@ -62,13 +62,13 @@
         <!-- Tabletop -->
         <origin xyz="-0.305 0 0.682" rpy="0 0 0" />
         <geometry>
-          <box size="0.8 0.8 0.05" />
+          <box size="0.8 1.6 0.05" />
         </geometry>
       </collision>
 
       <collision>
         <!-- Leg 1 -->
-        <origin xyz="0.045 0.35 0.3285" rpy="0 0 0" />
+        <origin xyz="0.045 0.70 0.3285" rpy="0 0 0" />
         <geometry>
           <box size="0.05 0.05 0.657" />
         </geometry>
@@ -76,7 +76,7 @@
 
       <collision>
         <!-- Leg 2 -->
-        <origin xyz="0.045 -0.35 0.3285" rpy="0 0 0" />
+        <origin xyz="0.045 -0.70 0.3285" rpy="0 0 0" />
         <geometry>
           <box size="0.05 0.05 0.657" />
         </geometry>
@@ -84,7 +84,7 @@
 
       <collision>
         <!-- Leg 3 -->
-        <origin xyz="-0.655 0.35 0.3285" rpy="0 0 0" />
+        <origin xyz="-0.655 0.70 0.3285" rpy="0 0 0" />
         <geometry>
           <box size="0.05 0.05 0.657" />
         </geometry>
@@ -92,7 +92,7 @@
 
       <collision>
         <!-- Leg 4 -->
-        <origin xyz="-0.655 -0.35 0.3285" rpy="0 0 0" />
+        <origin xyz="-0.655 -0.70 0.3285" rpy="0 0 0" />
         <geometry>
           <box size="0.05 0.05 0.657" />
         </geometry>
